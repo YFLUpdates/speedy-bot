@@ -85,14 +85,14 @@ client.on('message', async (channel, tags, message, self) => {
         await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
             .then(user => {
                 if(user === null) {
-                    client.say(channel, `@${tags.username}, pluje na cały czat D: `);
+                    client.say(channel, `${tags.username} pluje na cały czat D: `);
                 }
                 else {
                     let { name } = user;
-                    client.say(channel, `@${tags.username}, pluje na @${name} `);
+                    client.say(channel, `${tags.username} pluje na ${name} `);
                 }
             })
-        .catch(err => client.say(channel, `@${tags.username}, pluje na cały czat D: `));
+        .catch(err => client.say(channel, `${tags.username} pluje na cały czat D: `));
         //client.say(channel, `@${tags.username}, pluje na cały czat D: `)
 	}
 });
