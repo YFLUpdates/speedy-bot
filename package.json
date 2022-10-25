@@ -1,8 +1,9 @@
 {
-  "name": "speedy-bot",
-  "version": "1.0.0",
+  "name": "xspeedyq-bot",
+  "version": "1.0.1",
   "description": "https://www.twitch.tv/xspeedyq",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js"
   },
