@@ -6,7 +6,7 @@ dotenv.config()
 
 let lastOpluj = 0;
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 
 app.set('json spaces', 2);
 app.use(express.json());
