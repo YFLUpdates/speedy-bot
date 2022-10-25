@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import getRandomChatter from "./functions/getRandomChatter.js";
 import randomNumber from "./functions/randomNumber.js";
+import censor from "./functions/Censor.js";
 
 dotenv.config()
 
@@ -43,7 +44,7 @@ client.on('message', async (channel, tags, message, self) => {
         lastCommand = Date.now();
 
         if(args[0]){
-            client.say(channel, `${tags.username} opluł ${args[0]} Spit `);
+            client.say(channel, `${tags.username} opluł ${censor(args[0])} Spit `);
         }else{
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
             .then(user => {
@@ -66,7 +67,7 @@ client.on('message', async (channel, tags, message, self) => {
         lastCommand = Date.now();
 
         if(args[0]){
-            client.say(channel, `${tags.username} kochasz ${args[0]} na ${randomNumber(0, 100)}% <3  `);
+            client.say(channel, `${tags.username} kochasz ${censor(args[0])} na ${randomNumber(0, 100)}% <3  `);
         }else{
             client.say(channel, `${tags.username} kochasz ${tags.username} na ${randomNumber(0, 100)}% <3  `);
         }
