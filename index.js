@@ -71,5 +71,27 @@ client.on('message', async (channel, tags, message, self) => {
         }else{
             client.say(channel, `${tags.username} kochasz ${tags.username} na ${randomNumber(0, 100)}% <3  `);
         }
+    }else if(command === 'kogut'){
+        if (lastCommand > (Date.now() - 4000)) {
+            return;
+        }
+        lastCommand = Date.now();
+
+        if(args[0]){
+            client.say(channel, `${tags.username} opierdolił(a) koguta ${censor(args[0])} jasperGaleczka `);
+        }else{
+            await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
+            .then(user => {
+                if(user === null) {
+                    client.say(channel, `${tags.username} opierdolił(a) koguta xspeedyq jasperGaleczka `);
+                }
+                else {
+                    let { name } = user;
+                    client.say(channel, `${tags.username} opierdolił(a) koguta ${name} jasperGaleczka `);
+                }
+            })
+            // .catch(err => console.log(err));
+            .catch(err => client.say(channel, `${tags.username} opierdolił(a) koguta xspeedyq jasperGaleczka `));
+        }
     }
 });
