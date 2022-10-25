@@ -1,9 +1,23 @@
 const tmi = require('tmi.js');
+const express = require("express");
 const dotenv = require("dotenv");
 const axios = require("axios")
 dotenv.config()
 
 let lastOpluj = 0;
+const app = express();
+const PORT = process.env.PORT || 80;
+
+app.set('json spaces', 2);
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.json({ message: "speedy.yfl.es" });
+});
+
+app.listen(PORT, () =>
+  console.log(`API Server listening on port ${PORT}`)
+);
 
 async function getChatters(channelName, _attemptCount = 0) {
     return await axios.get(`https://tmi.twitch.tv/group/user/${channelName}/chatters`, {headers: {'Content-type': 'application/json'}})
