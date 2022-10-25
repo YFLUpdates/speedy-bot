@@ -89,7 +89,7 @@ client.on('message', async (channel, tags, message, self) => {
                 }
                 else {
                     let { name } = user;
-                    client.say(channel, `@${tags.username}, pluje na ${name} `);
+                    client.say(channel, `@${tags.username}, pluje na @${name} `);
                 }
             })
         .catch(err => client.say(channel, `@${tags.username}, pluje na cały czat D: `));
