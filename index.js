@@ -1,7 +1,8 @@
 import tmi from "tmi.js";
 import express from "express";
 import dotenv from "dotenv";
-import {getRandomChatter, Censor, randomNumber, checkEwron} from "./functions/index.js"
+import { promises as fs } from 'fs';
+import {getRandomChatter, Censor, randomNumber, checkEwron, who_is_watching_famous} from "./functions/index.js"
 
 dotenv.config()
 
@@ -15,6 +16,8 @@ const client = new tmi.Client({
 	},
 	channels: [ 'xspeedyq' ]
 });
+
+const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
 
 app.set('json spaces', 2);
 app.use(express.json());
@@ -118,6 +121,25 @@ client.on('message', async (channel, tags, message, self) => {
             }else if(ratio > 0.5){
                 client.say(channel, `${tags.username} jesteś ultra zaklinowany(a) xddd`);
             }
+        }
+    }else if(command === 'kto'){
+        const popularni = await who_is_watching_famous("xspeedyq", znaniUsers);
+        let users = "";
+
+        await Promise.all(
+            popularni.map((i) => {
+                users += i + ', '
+            })
+        )
+
+        if(popularni.length === 0){
+            return client.say(channel, `Nikt z listy nie oglada streama speediego jasperSad`);
+        }
+
+        if(users.length < 480 ){
+            client.say(channel, `${users} oglada stream speediego ok`);
+        }else{
+            client.say(channel, `Speediego ogląda tyle osób, że nie da się ich wypisać na czat. Sadge`);
         }
     }
 });
