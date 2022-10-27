@@ -1,5 +1,5 @@
 export default function Censored(text) {
-    var regex = /nigger|nugger|pedał|czarnuch|killjews|sex|vagina|whore|hopeyoudie|pedal/gi;
+    var regex = /ky5|garnuch|nigger|niger|nigga|niggaz|niggas|niga|murzyny|N.I.G.G.A.Z|N.I.G.G.A.Z...|czarnuchu|pedal|pedał|cwel|cwelus|murzyn|jp2gmd|jpdwagmd|murżyn|palic żydów|Czarnuchu|jebał małe|czarmuchy|myszyn|mużyn|palić żydów|palic zydow|palić zydow|żydzi do gazu|niqqa|n1gger|ngga|nikker|niker|czarnuch|czar nuch|czarnuchy|nig3r|nigg3r|n1gg3r|nigerze|h1tler|hitler/gi;
     
     var str = text;
 
