@@ -13,7 +13,7 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_PASSWORD
 	},
-	channels: [ 'xspeedyq' ]
+	channels: [ '3xanax' ]
 });
 
 app.set('json spaces', 2);
@@ -91,12 +91,13 @@ client.on('message', async (channel, tags, message, self) => {
             // .catch(err => console.log(err));
             .catch(err => client.say(channel, `${tags.username} opierdolił(a) koguta xspeedyq jasperGaleczka `));
         }
-    }else if(command === 'ewroniarz'){
+    }else if(command === 'ewroniarz' || command === 'ewron'){
         if (lastCommand > (Date.now() - 4000)) {
             return;
         }
         lastCommand = Date.now();
 
+        //Kiedyś się zrobi switch okok
         if(args[0]){
             const ratio = await checkEwron(args[0].replaceAll("@", "").toLowerCase());
 
@@ -106,6 +107,16 @@ client.on('message', async (channel, tags, message, self) => {
                 client.say(channel, `${Censor(args[0])} jest widzem ewrona jasperSTARE`);
             }else if(ratio > 0.5){
                 client.say(channel, `${Censor(args[0])} jest ultra zaklinowany(a) xddd`);
+            }
+        }else{
+            const ratio = await checkEwron(tags.username.toLowerCase());
+
+            if (ratio < 0.3){
+                client.say(channel, `${tags.username} jesteś czysty(a) okok `);
+            }else if(ratio < 0.5){
+                client.say(channel, `${tags.username} jesteś widzem ewrona jasperSTARE`);
+            }else if(ratio > 0.5){
+                client.say(channel, `${tags.username} jesteś ultra zaklinowany(a) xddd`);
             }
         }
     }
