@@ -13,7 +13,7 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_PASSWORD
 	},
-	channels: [ '3xanax' ]
+	channels: [ 'xspeedyq' ]
 });
 
 app.set('json spaces', 2);
