@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 import { getRandomChatter, Censor, randomNumber, checkEwron, whosFamous, ratioSwitch, checkYFL } from "./functions/index.js";
+import { checkSemps } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 
 dotenv.config()
@@ -14,7 +15,7 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_PASSWORD
 	},
-	channels: [ 'xspeedyq', 'adrian1g__', 'grubamruwa' ]
+	channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq' ]
 });
 
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
@@ -37,7 +38,7 @@ app.set('json spaces', 2);
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.json({ message: "xspeedyq.yfl.es" });
+    res.json({ message: "xspeedyq, adrian1g__, grubamruwa bot okok" });
 });
 
 app.listen(PORT, () =>
@@ -214,6 +215,21 @@ client.on('message', async (channel, tags, message, self) => {
             })
             // .catch(err => console.log(err));
             .catch(err => client.say(channel, `${tags.username} daje całusa YFLUpdates yoooo `));
+        }
+    }else if(command === "ksiezniczki" || command === "topdupeczki" || command === "topsemp"){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        if(args[0]){
+            const semps = await checkSemps(args[0].replaceAll("@", "").toLowerCase());
+
+            client.say(channel, semps);
+        }else{
+            const semps = await checkSemps(tags.username.toLowerCase());
+
+            client.say(channel, semps);
         }
     }
 });
