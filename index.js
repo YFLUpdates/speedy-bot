@@ -9,7 +9,6 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-let lastCommand = 0;
 const client = new tmi.Client({
 	identity: {
 		username: process.env.TWITCH_USERNAME,
@@ -19,6 +18,20 @@ const client = new tmi.Client({
 });
 
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
+const cooldowns = {
+    "#adrian1g__": {
+        last: 0
+    },
+    "#grubamruwa": {
+        last: 0
+    },
+    "#xspeedyq": {
+        last: 0
+    },
+    "#3xanax": {
+        last: 0
+    }
+}
 
 app.set('json spaces', 2);
 app.use(express.json());
@@ -65,13 +78,13 @@ client.on('message', async (channel, tags, message, self) => {
 	if(command === 'opluj') {
         if(channel === "#adrian1g__") return;
 
-        if (lastCommand > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
-        lastCommand = Date.now();
+        cooldowns[channel].last = Date.now();
 
         if(args[0]){
-            client.say(channel, `${tags.username} opluł ${Censor(args[0])} Spit `);
+            client.say(channel, `${tags.username} opluł(a) ${Censor(args[0])} Spit `);
         }else{
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
             .then(user => {
@@ -80,7 +93,7 @@ client.on('message', async (channel, tags, message, self) => {
                 }
                 else {
                     let { name } = user;
-                    client.say(channel, `${tags.username} opluł ${name} Spit `);
+                    client.say(channel, `${tags.username} opluł(a) ${name} Spit `);
                 }
             })
             // .catch(err => console.log(err));
@@ -90,10 +103,10 @@ client.on('message', async (channel, tags, message, self) => {
 	}else if(command === 'love'){
         if(channel === "#grubamruwa") return;
 
-        if (lastCommand > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
-        lastCommand = Date.now();
+        cooldowns[channel].last = Date.now();
 
         if(args[0]){
             client.say(channel, `${tags.username} kochasz ${Censor(args[0])} na ${randomNumber(0, 100)}% <3  `);
@@ -101,10 +114,10 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${tags.username} kochasz ${tags.username} na ${randomNumber(0, 100)}% <3  `);
         }
     }else if(command === 'kogut'){
-        if (lastCommand > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
-        lastCommand = Date.now();
+        cooldowns[channel].last = Date.now();
 
         if(args[0]){
             client.say(channel, `${tags.username} opierdolił(a) koguta ${Censor(args[0])} jasperGaleczka `);
@@ -123,10 +136,10 @@ client.on('message', async (channel, tags, message, self) => {
             .catch(err => client.say(channel, `${tags.username} opierdolił(a) koguta YFLUpdates Glumlenie `));
         }
     }else if(command === 'ewroniarz' || command === 'ewron'){
-        if (lastCommand > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
-        lastCommand = Date.now();
+        cooldowns[channel].last = Date.now();
 
         if(args[0]){
             const ratio = await checkEwron(args[0].replaceAll("@", "").toLowerCase());
@@ -140,10 +153,10 @@ client.on('message', async (channel, tags, message, self) => {
 
 
     }else if(command === 'kto'){
-        if (lastCommand > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
-        lastCommand = Date.now();
+        cooldowns[channel].last = Date.now();
 
         const cleanChannel = channel.replaceAll("#", "");
         const popularni = await whosFamous(cleanChannel, znaniUsers);
@@ -164,11 +177,11 @@ client.on('message', async (channel, tags, message, self) => {
         }else{
             client.say(channel, `${cleanChannel} ogląda tyle osób, że nie da się ich wypisać na czacie. Sadge`);
         }
-    }else if(command === 'yflwatchtime'){
-        if (lastCommand > (Date.now() - 4000)) {
+    }else if(command === 'yflwatchtime' || command === 'yfl'){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
-        lastCommand = Date.now();
+        cooldowns[channel].last = Date.now();
 
         if(args[0]){
             const ratio = await checkYFL(args[0].replaceAll("@", "").toLowerCase());

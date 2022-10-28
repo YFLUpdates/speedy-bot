@@ -7,6 +7,8 @@ export default async function whosFamous(channelName, Users) {
     await Promise.all(
         users.map((i) => {
             if(Users.includes(i.name)){
+                if(i.name === channelName) return;
+                
                 usersToReturn.push(i.name)
             }
         })
