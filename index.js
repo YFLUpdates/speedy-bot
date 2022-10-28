@@ -88,6 +88,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
         
 	}else if(command === 'love'){
+        if(channel === "#grubamruwa") return;
+
         if (lastCommand > (Date.now() - 4000)) {
             return;
         }
