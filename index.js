@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 import { getRandomChatter, Censor, randomNumber, checkEwron, whosFamous, ratioSwitch, checkYFL } from "./functions/index.js";
-import { checkSemps } from "./functions/semps/index.js";
+import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 
 dotenv.config()
@@ -15,7 +15,7 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_PASSWORD
 	},
-	channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq' ]
+	channels: [ '3xanax' ]
 });
 
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
@@ -228,6 +228,21 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, semps);
         }else{
             const semps = await checkSemps(tags.username.toLowerCase());
+
+            client.say(channel, semps);
+        }
+    }else if(command === "ileogladalkobiet" || command === "semp"){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        if(args[0]){
+            const semps = await sempTime(args[0].replaceAll("@", "").toLowerCase());
+
+            client.say(channel, semps);
+        }else{
+            const semps = await sempTime(tags.username.toLowerCase());
 
             client.say(channel, semps);
         }

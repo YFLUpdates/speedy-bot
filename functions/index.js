@@ -5,6 +5,6 @@ import randomNumber from "./randomNumber.js";
 import checkEwron from "./checkEwron.js";
 import checkYFL from "./checkYFL.js";
 import whosFamous from "./whosFamous.js";
-import ratioSwitch from "./ratioSwitch.js"
+import ratioSwitch from "./ratioSwitch.js";
 
 export { Censor, getChatters, getRandomChatter, randomNumber, checkEwron, whosFamous, ratioSwitch, checkYFL};
