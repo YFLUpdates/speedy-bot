@@ -193,6 +193,27 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
         }
 
+    }else if(command === 'kiss' || command === "calus"){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
 
+        if(args[0]){
+            client.say(channel, `${tags.username} daje całusa ${Censor(args[0])} yoooo `);
+        }else{
+            await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
+            .then(user => {
+                if(user === null) {
+                    client.say(channel, `${tags.username} daje całusa YFLUpdates yoooo `);
+                }
+                else {
+                    let { name } = user;
+                    client.say(channel, `${tags.username} daje całusa ${name} yoooo `);
+                }
+            })
+            // .catch(err => console.log(err));
+            .catch(err => client.say(channel, `${tags.username} daje całusa YFLUpdates yoooo `));
+        }
     }
 });
