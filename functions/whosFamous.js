@@ -1,6 +1,6 @@
 import getChatters from "./getChatters.js";
 
-export default async function getRandomChatter(channelName, Users) {
+export default async function whosFamous(channelName, Users) {
     const users = await getChatters(channelName);
     let usersToReturn = [];
 

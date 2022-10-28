@@ -2,7 +2,8 @@ import tmi from "tmi.js";
 import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
-import {getRandomChatter, Censor, randomNumber, checkEwron, who_is_watching_famous} from "./functions/index.js"
+import { getRandomChatter, Censor, randomNumber, checkEwron, whosFamous, ratioSwitch, checkYFL } from "./functions/index.js";
+import insertToDatabase from "./components/insertToDatabase.js";
 
 dotenv.config()
 
@@ -14,7 +15,7 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_PASSWORD
 	},
-	channels: [ 'xspeedyq' ]
+	channels: [ 'xspeedyq', 'adrian1g__' ]
 });
 
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
@@ -32,6 +33,29 @@ app.listen(PORT, () =>
 
 client.connect();
 
+client.on("ban", (channel, username, reason, userstate) => {
+
+    insertToDatabase("bans" , {
+        user: username,
+        channel: channel,
+        channel_group: "YFL",
+        action: 'ban'
+    })
+
+});
+
+client.on("timeout", (channel, username, reason, duration, userstate) => {
+
+    insertToDatabase("bans" , {
+        user: username,
+        channel: channel,
+        channel_group: "YFL",
+        action: 'timeout',
+        duration: duration
+    })
+    
+});
+
 client.on('message', async (channel, tags, message, self) => {
 	if(self || !message.startsWith('!')) return;
 
@@ -39,6 +63,8 @@ client.on('message', async (channel, tags, message, self) => {
 	const command = args.shift().toLowerCase();
 
 	if(command === 'opluj') {
+        if(channel === "#adrian1g__") return;
+
         if (lastCommand > (Date.now() - 4000)) {
             return;
         }
@@ -84,7 +110,7 @@ client.on('message', async (channel, tags, message, self) => {
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
             .then(user => {
                 if(user === null) {
-                    client.say(channel, `${tags.username} opierdolił(a) koguta xspeedyq jasperGaleczka `);
+                    client.say(channel, `${tags.username} opierdolił(a) koguta YFLUpdates Glumlenie `);
                 }
                 else {
                     let { name } = user;
@@ -92,7 +118,7 @@ client.on('message', async (channel, tags, message, self) => {
                 }
             })
             // .catch(err => console.log(err));
-            .catch(err => client.say(channel, `${tags.username} opierdolił(a) koguta xspeedyq jasperGaleczka `));
+            .catch(err => client.say(channel, `${tags.username} opierdolił(a) koguta YFLUpdates Glumlenie `));
         }
     }else if(command === 'ewroniarz' || command === 'ewron'){
         if (lastCommand > (Date.now() - 4000)) {
@@ -100,30 +126,25 @@ client.on('message', async (channel, tags, message, self) => {
         }
         lastCommand = Date.now();
 
-        //Kiedyś się zrobi switch okok
         if(args[0]){
             const ratio = await checkEwron(args[0].replaceAll("@", "").toLowerCase());
 
-            if (ratio < 0.3){
-                client.say(channel, `${Censor(args[0])} jest czysty(a) okok `);
-            }else if(ratio < 0.5){
-                client.say(channel, `${Censor(args[0])} jest widzem ewrona jasperSTARE`);
-            }else if(ratio > 0.5){
-                client.say(channel, `${Censor(args[0])} jest ultra zaklinowany(a) xddd`);
-            }
+            client.say(channel, `${Censor(args[0])} ${ratioSwitch.ewron(ratio)} `);
         }else{
             const ratio = await checkEwron(tags.username.toLowerCase());
 
-            if (ratio < 0.3){
-                client.say(channel, `${tags.username} jesteś czysty(a) okok `);
-            }else if(ratio < 0.5){
-                client.say(channel, `${tags.username} jesteś widzem ewrona jasperSTARE`);
-            }else if(ratio > 0.5){
-                client.say(channel, `${tags.username} jesteś ultra zaklinowany(a) xddd`);
-            }
+            client.say(channel, `${tags.username} ${ratioSwitch.ewron(ratio)} `);
         }
+
+
     }else if(command === 'kto'){
-        const popularni = await who_is_watching_famous("xspeedyq", znaniUsers);
+        if (lastCommand > (Date.now() - 4000)) {
+            return;
+        }
+        lastCommand = Date.now();
+
+        const cleanChannel = channel.replaceAll("#", "");
+        const popularni = await whosFamous(cleanChannel, znaniUsers);
         let users = "";
 
         await Promise.all(
@@ -133,13 +154,30 @@ client.on('message', async (channel, tags, message, self) => {
         )
 
         if(popularni.length === 0){
-            return client.say(channel, `Nikt z listy nie oglada streama speediego jasperSad`);
+            return client.say(channel, `Nikt z listy nie oglada streama ${cleanChannel} jasperSad`);
         }
 
         if(users.length < 480 ){
-            client.say(channel, `${users} oglada stream speediego ok`);
+            client.say(channel, `${users} oglada stream ${cleanChannel} ok`);
         }else{
-            client.say(channel, `Speediego ogląda tyle osób, że nie da się ich wypisać na czat. Sadge`);
+            client.say(channel, `${cleanChannel} ogląda tyle osób, że nie da się ich wypisać na czacie. Sadge`);
         }
+    }else if(command === 'yflwatchtime'){
+        if (lastCommand > (Date.now() - 4000)) {
+            return;
+        }
+        lastCommand = Date.now();
+
+        if(args[0]){
+            const ratio = await checkYFL(args[0].replaceAll("@", "").toLowerCase());
+
+            client.say(channel, `${Censor(args[0])} ${ratioSwitch.yfl(ratio)} `);
+        }else{
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }
+
+
     }
 });
