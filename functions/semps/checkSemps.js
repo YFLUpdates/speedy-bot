@@ -96,7 +96,7 @@ export default async function getChatters(channelName) {
             channels.map((i) => {
                 if(streamerki.includes(i.streamer) && i.count > 12){
                     num += 1;
-                    fav_streamer.push(i.streamer === "grubamruwa" ? "grubamruwa(50/50)" : i.streamer);
+                    fav_streamer.push(i.streamer);
 
                     if(num === 3) return;
                 }
