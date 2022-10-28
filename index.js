@@ -16,7 +16,7 @@ const client = new tmi.Client({
 		password: process.env.TWITCH_PASSWORD
 	},
 	channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq' ]
-     //channels: ['3xanax']
+    //  channels: ['3xanax']
 });
 
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));

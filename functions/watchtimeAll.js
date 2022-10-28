@@ -13,17 +13,14 @@ export default async function getChatters(channelName) {
                 time_all += i.count * 5
             })
         )
-        // const today = new Date().toLocaleDateString('en-ca');
-        // const xayopl_creation_date = new Date(2021, 7, 26).toLocaleDateString('en-ca');
-        // const datediff_min = new Date(today - xayopl_creation_date).getDay() * 24 * 60;
+        const date_math = Math.abs(new Date() - new Date(2021, 7, 26));
+        const datediff_min = Math.floor((date_math / 1000) / 60);
         
-        // const percentage = Math.round(time_all * 100 / datediff_min, 2);
+        const percentage = Math.round((time_all / datediff_min) * 100, 2);
         const time = humanizeDuration(time_all * 60000, { language: "pl" });
 
-        // console.log(datediff_min, percentage, time)
-
-        // return `${Censor(channelName)} spedził ${time} na PL twitch od 26 lipca, co daje ${percentage}% jego życia.`
-        return `${Censor(channelName)} spedził ${time} na PL twitch od 26 lipca.`
+        return `${Censor(channelName)} spedził ${time} na PL twitch od 26 lipca, co daje ${percentage}% jego życia.`
+        //return `${Censor(channelName)} spedził ${time} na PL twitch od 26 lipca.`
     })
     .catch(err => {
         console.log(err)
