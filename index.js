@@ -21,16 +21,20 @@ const client = new tmi.Client({
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
 const cooldowns = {
     "#adrian1g__": {
-        last: 0
+        last: 0,
+        longer: 0
     },
     "#grubamruwa": {
-        last: 0
+        last: 0,
+        longer: 0
     },
     "#xspeedyq": {
-        last: 0
+        last: 0,
+        longer: 0
     },
     "#3xanax": {
-        last: 0
+        last: 0,
+        longer: 0
     }
 }
 
@@ -217,10 +221,10 @@ client.on('message', async (channel, tags, message, self) => {
             .catch(err => client.say(channel, `${tags.username} daje całusa YFLUpdates yoooo `));
         }
     }else if(command === "ksiezniczki" || command === "topdupeczki" || command === "topsemp"){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        cooldowns[channel].longer = Date.now();
 
         if(args[0]){
             const semps = await checkSemps(args[0].replaceAll("@", "").toLowerCase());
@@ -232,10 +236,10 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, semps);
         }
     }else if(command === "ileogladalkobiet" || command === "semp"){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        cooldowns[channel].longer = Date.now();
 
         if(args[0]){
             const semps = await sempTime(args[0].replaceAll("@", "").toLowerCase());
