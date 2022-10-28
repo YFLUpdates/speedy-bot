@@ -1,4 +1,5 @@
 import axios from "axios";
+const ewronTeam = ["ewroon", "exhiie", "xn0rth", "xth0rek", "angela35", "diables"]
 
 export default async function getChatters(channelName) {
     return await axios.get(`https://xayo.pl/api/mostWatched/${channelName}`, {headers: {'Content-type': 'application/json'}})
@@ -9,7 +10,7 @@ export default async function getChatters(channelName) {
         await Promise.all(
             channels.map((i) => {
                 time_all += i.count * 5
-                if(i.streamer === "ewroon"){
+                if(ewronTeam.includes(i.streamer)){
                     ewron_time += i.count * 5
                 }
             })
