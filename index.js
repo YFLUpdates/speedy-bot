@@ -89,7 +89,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             client.say(channel, `${tags.username} opluł(a) ${Censor(args[0])} Spit `);
         }else{
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
@@ -114,7 +118,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             client.say(channel, `${tags.username} kochasz ${Censor(args[0])} na ${randomNumber(0, 100)}% <3  `);
         }else{
             client.say(channel, `${tags.username} kochasz ${tags.username} na ${randomNumber(0, 100)}% <3  `);
@@ -125,7 +133,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             client.say(channel, `${tags.username} opierdolił(a) koguta ${Censor(args[0])} jasperGaleczka `);
         }else{
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
@@ -147,7 +159,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             const ratio = await checkEwron(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, `${Censor(args[0])} ${ratioSwitch.ewron(ratio)} `);
@@ -189,7 +205,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             const ratio = await checkYFL(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, `${Censor(args[0])} ${ratioSwitch.yfl(ratio)} `);
@@ -205,7 +225,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             client.say(channel, `${tags.username} daje całusa ${Censor(args[0])} yoooo `);
         }else{
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
@@ -227,7 +251,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].longer = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             const semps = await checkSemps(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, semps);
@@ -242,7 +270,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].longer = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             const semps = await sempTime(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, semps);
@@ -257,7 +289,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].longer = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             const watchtime = await watchtimeAll(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, watchtime);
@@ -272,7 +308,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0]){
+        if(args[0] === " "){
+            const ratio = await checkYFL(tags.username.toLowerCase());
+
+            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+        }else if(args[0]){
             client.say(channel, `${tags.username} przytula ${Censor(args[0])} donkSex `);
         }else{
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
