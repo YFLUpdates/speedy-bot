@@ -314,7 +314,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(command === "watchtime" || command === "xayopl"){
-        if(channel === "#xspeedyq" && command === "watchtime" || channel === "#grubamruwa" && command === "watchtime" || channel === "dobrypt" && command === "watchtime") return;
+        if(channel === "#xspeedyq" && command === "watchtime" || channel === "#grubamruwa" && command === "watchtime" || channel === "#dobrypt" && command === "watchtime") return;
 
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
