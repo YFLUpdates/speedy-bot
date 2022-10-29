@@ -6,6 +6,7 @@ import { getRandomChatter, Censor, randomNumber, whosFamous, ratioSwitch } from 
 import { checkEwron, checkYFL, watchtimeAll, watchtimeGet } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
+import check_if_user_in_channel from "./functions/lewus/index.js";
 
 dotenv.config()
 
@@ -16,7 +17,7 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_PASSWORD
 	},
-	channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq' ]
+	 channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq' ]
     //channels: ['3xanax']
 });
 
@@ -344,6 +345,26 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, watchtimeFunc);
         }
 
+    }else if(command === 'gdzie' || command === 'przesladowanie' || command === "where"){
+        if (cooldowns[channel].last > (Date.now() - 15000)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        if(args[0] === " "){
+            const where = await check_if_user_in_channel(tags.username.toLowerCase());
+
+            client.say(channel, where);
+        }else if(args[0]){
+            const where = await check_if_user_in_channel(args[0].replaceAll("@", "").toLowerCase());
+
+            client.say(channel, where);
+        }else{
+            const where = await check_if_user_in_channel(tags.username.toLowerCase());
+
+            client.say(channel, where);
+        }
+
     }else if(command === 'hug' || command === "przytul"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
@@ -377,7 +398,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        client.say(channel, `${tags.username}, !hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kiss, !kto okok`);
+        client.say(channel, `!hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kiss, !kto, !gdzie okok Opisane na https://yfl.es/bot`);
     }
 
 });
