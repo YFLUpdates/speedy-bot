@@ -398,16 +398,18 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
+        const cleanChannel = channel.replaceAll("#", "");
+
         if(args[0] === " "){
-            const whenEnds = await checkTimeout(tags.username.toLowerCase());
+            const whenEnds = await checkTimeout(tags.username.toLowerCase(), cleanChannel);
 
             client.say(channel, whenEnds);
         }else if(args[0]){
-            const whenEnds = await checkTimeout(args[0].replaceAll("@", "").toLowerCase());
+            const whenEnds = await checkTimeout(args[0].replaceAll("@", "").toLowerCase(), cleanChannel);
 
             client.say(channel, whenEnds);
         }else{
-            const whenEnds = await checkTimeout(tags.username.toLowerCase());
+            const whenEnds = await checkTimeout(tags.username.toLowerCase(), cleanChannel);
 
             client.say(channel, whenEnds);
         }
