@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 import { getRandomChatter, Censor, randomNumber, whosFamous, ratioSwitch } from "./functions/index.js";
-import { checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook } from "./functions/requests/index.js";
+import { checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missing } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
@@ -35,7 +35,7 @@ const cooldowns = {
         last: 0,
         longer: 0
     },
-    "#xspeedyq": {
+    "#3xanax": {
         last: 0,
         longer: 0
     },
@@ -418,6 +418,20 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, whenEnds);
         }
 
+    }else if(command === 'missing' || command === "ostatnio"){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        if(args[0] === " ") return;
+
+        if(args[0]){
+            const whereMissing = await missing(args[0].replaceAll("@", "").toLowerCase());
+
+            client.say(channel, whereMissing);
+        }
+
     }else if(command === 'dodajznany'){
         if (cooldowns[channel].longer > (Date.now() - 7000)) {
             return;
@@ -438,7 +452,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        client.say(channel, `!hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kiss, !kto, !gdzie, !ilejeszcze okok Opisane na https://yfl.es/bot`);
+        client.say(channel, `!hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kiss, !kto, !gdzie, !ilejeszcze, !missing okok Opisane na https://yfl.es/bot`);
     }
 
 });
