@@ -346,10 +346,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(command === 'gdzie' || command === 'przesladowanie' || command === "where"){
-        if (cooldowns[channel].last > (Date.now() - 15000)) {
+        if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        cooldowns[channel].longer = Date.now();
 
         if(args[0] === " "){
             const where = await check_if_user_in_channel(tags.username.toLowerCase());
