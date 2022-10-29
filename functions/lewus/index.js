@@ -186,9 +186,9 @@ async function check_if_user_in_channel(user){
     if(imOnIt.length === 0){
         return `${Censor(user)} nie ogląda żadnego kanału Sadge`;
     }else if(channels_message.length < 400){
-        return `PepoG ${Censor(user)} ogląda kanały: ${channels_message}`;
+        return `aha ${Censor(user)} ogląda kanały: ${channels_message}`;
     }else{
-        return `PepoG ${Censor(user)} ogląda ${imOnIt.length} kanałów. Jest ich tyle, że na da się ich wypisać GG Sadge`;
+        return `aha ${Censor(user)} ogląda ${imOnIt.length} kanałów. Jest ich tyle, że na da się ich wypisać GG Sadge`;
     }
 }
 

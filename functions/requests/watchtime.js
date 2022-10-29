@@ -16,11 +16,11 @@ export default async function getChatters(user, target_channel) {
             })
         )
 
-        if(time_all === 0 ) return `MrDestructoid ${Censor(user)} nie oglądał w ogóle kanału ${target_channel}.`;
+        if(time_all === 0 ) return `MrDestructoid ${Censor(user)} nie oglądał(a) w ogóle kanału ${target_channel}.`;
 
         const time = humanizeDuration(time_all * 60000, { language: "pl" });
 
-        return `MrDestructoid ${Censor(user)} ogladał kanał ${target_channel} przez ${time}.`;
+        return `MrDestructoid ${Censor(user)} ogladał(a) kanał ${target_channel} przez ${time}.`;
     })
     .catch(err => {
         console.log(err)
