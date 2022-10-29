@@ -82,7 +82,8 @@ const streamerki = [
     "reniferka_",
     "andusia",
     "vayana",
-    "grubamruwa"
+    "grubamruwa",
+    "srokaaa_"
 ]
 
 export default async function getChatters(channelName) {
