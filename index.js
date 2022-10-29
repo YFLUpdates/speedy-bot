@@ -380,20 +380,20 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
         }else if(args[0]){
-            client.say(channel, `${tags.username} przytula ${Censor(args[0])} jasperKiss `);
+            client.say(channel, `${tags.username} przytula ${Censor(args[0])} segz `);
         }else{
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
             .then(user => {
                 if(user === null) {
-                    client.say(channel, `${tags.username} przytula YFLUpdates jasperKiss `);
+                    client.say(channel, `${tags.username} przytula YFLUpdates segz `);
                 }
                 else {
                     let { name } = user;
-                    client.say(channel, `${tags.username} przytula ${name} jasperKiss `);
+                    client.say(channel, `${tags.username} przytula ${name} segz `);
                 }
             })
             // .catch(err => console.log(err));
-            .catch(err => client.say(channel, `${tags.username} przytula YFLUpdates jasperKiss `));
+            .catch(err => client.say(channel, `${tags.username} przytula YFLUpdates segz `));
         }
 
     }else if(command === 'ilejeszcze' || command === "wruc"){
