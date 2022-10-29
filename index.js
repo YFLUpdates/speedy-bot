@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 import { getRandomChatter, Censor, randomNumber, whosFamous, ratioSwitch } from "./functions/index.js";
-import { checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout } from "./functions/requests/index.js";
+import { checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
@@ -17,7 +17,7 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_PASSWORD
 	},
-	channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq' ]
+	channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt' ]
     //channels: ['3xanax']
 });
 
@@ -35,7 +35,11 @@ const cooldowns = {
         last: 0,
         longer: 0
     },
-    "#3xanax": {
+    "#xspeedyq": {
+        last: 0,
+        longer: 0
+    },
+    "#dobrypt": {
         last: 0,
         longer: 0
     }
@@ -376,20 +380,20 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
         }else if(args[0]){
-            client.say(channel, `${tags.username} przytula ${Censor(args[0])} donkSex `);
+            client.say(channel, `${tags.username} przytula ${Censor(args[0])} jasperKiss `);
         }else{
             await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
             .then(user => {
                 if(user === null) {
-                    client.say(channel, `${tags.username} przytula YFLUpdates donkSex `);
+                    client.say(channel, `${tags.username} przytula YFLUpdates jasperKiss `);
                 }
                 else {
                     let { name } = user;
-                    client.say(channel, `${tags.username} przytula ${name} donkSex `);
+                    client.say(channel, `${tags.username} przytula ${name} jasperKiss `);
                 }
             })
             // .catch(err => console.log(err));
-            .catch(err => client.say(channel, `${tags.username} przytula YFLUpdates donkSex `));
+            .catch(err => client.say(channel, `${tags.username} przytula YFLUpdates jasperKiss `));
         }
 
     }else if(command === 'ilejeszcze' || command === "wruc"){
@@ -412,6 +416,20 @@ client.on('message', async (channel, tags, message, self) => {
             const whenEnds = await checkTimeout(tags.username.toLowerCase(), cleanChannel);
 
             client.say(channel, whenEnds);
+        }
+
+    }else if(command === 'dodajznany'){
+        if (cooldowns[channel].longer > (Date.now() - 7000)) {
+            return;
+        }
+        cooldowns[channel].longer = Date.now();
+
+        if(args[0] === " ") return;
+        
+        if(args[0]){
+            callWebhook(args[0])
+
+            client.say(channel, `${tags.username} zapisane ok`);
         }
 
     }else if(command === "help"){
