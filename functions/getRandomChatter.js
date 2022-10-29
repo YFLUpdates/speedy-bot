@@ -1,4 +1,4 @@
-import getChatters from "./getChatters.js";
+import {getChatters} from "./requests/index.js";
 
 export default async function getRandomChatter(channelName, opts = {}) {
     let {

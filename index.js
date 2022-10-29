@@ -2,7 +2,8 @@ import tmi from "tmi.js";
 import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
-import { getRandomChatter, Censor, randomNumber, checkEwron, whosFamous, ratioSwitch, checkYFL, watchtimeAll } from "./functions/index.js";
+import { getRandomChatter, Censor, randomNumber, whosFamous, ratioSwitch } from "./functions/index.js";
+import { checkEwron, checkYFL, watchtimeAll, watchtimeGet } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 
@@ -16,7 +17,7 @@ const client = new tmi.Client({
 		password: process.env.TWITCH_PASSWORD
 	},
 	channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq' ]
-    //  channels: ['3xanax']
+    //channels: ['3xanax']
 });
 
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
@@ -127,6 +128,7 @@ client.on('message', async (channel, tags, message, self) => {
         }else{
             client.say(channel, `${tags.username} kochasz ${tags.username} na ${randomNumber(0, 100)}% <3  `);
         }
+
     }else if(command === 'kogut'){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
@@ -150,9 +152,9 @@ client.on('message', async (channel, tags, message, self) => {
                     client.say(channel, `${tags.username} opierdolił(a) koguta ${name} jasperGaleczka `);
                 }
             })
-            // .catch(err => console.log(err));
             .catch(err => client.say(channel, `${tags.username} opierdolił(a) koguta YFLUpdates Glumlenie `));
         }
+
     }else if(command === 'ewroniarz' || command === 'ewron'){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
@@ -199,6 +201,7 @@ client.on('message', async (channel, tags, message, self) => {
         }else{
             client.say(channel, `${cleanChannel} ogląda tyle osób, że nie da się ich wypisać na czacie. Sadge`);
         }
+
     }else if(command === 'yflwatchtime' || command === 'yfl'){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
@@ -264,6 +267,7 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, semps);
         }
+
     }else if(command === "ileogladalkobiet" || command === "semp"){
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
@@ -283,6 +287,7 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, semps);
         }
+
     }else if(command === "watchtimeall"){
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
@@ -302,6 +307,43 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, watchtime);
         }
+
+    }else if(command === "watchtime" || command === "xayopl"){
+        if(channel === "#xspeedyq" || channel === "#grubamruwa") return;
+
+        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+            return;
+        }
+        cooldowns[channel].longer = Date.now();
+
+        const cleanChannel = channel.toLowerCase().replaceAll("#", "")
+        if(args[0] === " "){
+            //User requests his: Current channel on watchtime
+            const watchtimeFunc = await watchtimeGet(tags.username.toLowerCase(), cleanChannel);
+
+            client.say(channel, watchtimeFunc);
+
+        }else if(args[0]){
+
+             if(args[1]){
+                //User requests: User X a watchtime on selected channel
+                const watchtimeFunc = await watchtimeGet(args[0].replaceAll("@", "").toLowerCase(), args[1].replaceAll("@", "").toLowerCase());
+
+                client.say(channel, watchtimeFunc);
+             }else{
+                //User requests: User X a watchtime on current channel
+                const watchtimeFunc = await watchtimeGet(args[0].replaceAll("@", "").toLowerCase(), cleanChannel);
+
+                client.say(channel, watchtimeFunc);
+             }
+
+        }else{
+            //User requests his: Current channel on watchtime
+            const watchtimeFunc = await watchtimeGet(tags.username.toLowerCase(), cleanChannel);
+
+            client.say(channel, watchtimeFunc);
+        }
+
     }else if(command === 'hug' || command === "przytul"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
@@ -328,12 +370,14 @@ client.on('message', async (channel, tags, message, self) => {
             // .catch(err => console.log(err));
             .catch(err => client.say(channel, `${tags.username} przytula YFLUpdates donkSex `));
         }
+
     }else if(command === "help"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
         cooldowns[channel].last = Date.now();
 
-        client.say(channel, `${tags.username}, !hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !ileogladalkobiet, !ksiezniczki, !kiss, !kto okok`);
+        client.say(channel, `${tags.username}, !hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kiss, !kto okok`);
     }
+
 });

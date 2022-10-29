@@ -1,6 +1,6 @@
 import axios from "axios";
 import humanizeDuration from "humanize-duration";
-import {Censor} from "./index.js"
+import {Censor} from "../index.js"
 
 export default async function getChatters(channelName) {
     return await axios.get(`https://xayo.pl/api/mostWatched/${channelName}`, {headers: {'Content-type': 'application/json'}})
