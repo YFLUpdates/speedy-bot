@@ -22,7 +22,7 @@ function missing (user){
         const data = xayoJson.props.pageProps.chatEntry.lastSeen;
 
         if(data){
-            return `${user} ostatnio był widzany(a) u ${data.streamer.login} (${new Date(data.timestamp).toLocaleString("pl")}) oho`;
+            return `${user} ostatnio był(a) widzany(a) u ${data.streamer.login} (${new Date(data.timestamp).toLocaleString("pl")}) oho`;
         }else{
             return `${user} nie był(a) nigdzie widziany(a) aha`;
         }
