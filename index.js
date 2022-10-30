@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom } from "./commands/index.js";
+import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom } from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
@@ -365,6 +365,16 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
+    }else if(command === 'top3' || command === 'top3watchtime'){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        /* Taking the argumentClean variable and passing it to the EwronCom function. */
+        const commands = await Top3watchtimeCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
     }else if(command === 'dodajznany'){
         if (cooldowns[channel].longer > (Date.now() - 7000)) {
             return;

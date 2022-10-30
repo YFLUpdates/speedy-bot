@@ -8,5 +8,6 @@ import KtoCom from "./kto.js";
 import KissCom from "./kiss.js";
 import MarryCom from "./marry.js";
 import IleYFLCom from "./ileyfl.js";
+import Top3watchtimeCom from "./top3watchtime.js";
 
-export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom };
+export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom };
