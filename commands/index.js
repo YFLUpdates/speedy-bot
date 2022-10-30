@@ -9,5 +9,6 @@ import KissCom from "./kiss.js";
 import MarryCom from "./marry.js";
 import IleYFLCom from "./ileyfl.js";
 import Top3watchtimeCom from "./top3watchtime.js";
+import WiekCom from "./wiek.js";
 
-export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom };
+export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom };

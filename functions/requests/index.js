@@ -8,5 +8,6 @@ import callWebhook from "./callWebhook.js";
 import missingAll from "./missingAll.js";
 import missing from "./missing.js";
 import top3Watchtime from "./top3Watchtime.js";
+import howOld from "./howOld.js";
 
-export { getChatters, checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, top3Watchtime};
+export { getChatters, checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, top3Watchtime, howOld};
