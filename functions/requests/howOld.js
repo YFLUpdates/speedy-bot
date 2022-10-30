@@ -86,7 +86,7 @@ export default async function guessAge(channelName) {
         const watchtime_all = kid_num + teen_num + dinozaur_num;
         const starting_age = 10 + account_age + 2 * (kid_num / watchtime_all) + 4 * (teen_num / watchtime_all) + 8 * (dinozaur_num / watchtime_all)
 
-        return `${channelName} zgaduje że masz ${Math.round(starting_age)} lat jasperFajka `;
+        return `Zgaduje że ${channelName} ma ${Math.round(starting_age)} lat jasperFajka `;
         
     })
     .catch(err => {
