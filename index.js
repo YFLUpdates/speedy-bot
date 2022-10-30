@@ -2,10 +2,9 @@ import tmi from "tmi.js";
 import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
-import humanizeDuration from "humanize-duration";
 
-import { getRandomChatter, Censor, randomNumber, whosFamous, ratioSwitch } from "./functions/index.js";
-import { checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing } from "./functions/requests/index.js";
+import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom } from "./commands/index.js";
+import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
@@ -16,6 +15,7 @@ dotenv.config()
 const app = express();
 const PORT = process.env.PORT || 3000;
 const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt' ];
+//const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
 		username: process.env.TWITCH_USERNAME,
@@ -97,6 +97,7 @@ client.on('message', async (channel, tags, message, self) => {
 	const args = message.slice(1).split(' ');
 	const command = args.shift().toLowerCase();
     const cleanChannel = channel.replaceAll("#", "");
+    const argumentClean = args[0] ? (args[0].replaceAll("@", "").toLowerCase()):(null)
 
 	if(command === 'opluj') {
         if(channel === "#adrian1g__") return;
@@ -106,24 +107,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0] === " "){
-            client.say(channel, `${tags.username} opluł(a) samego(ą) siebie Spit `);
-        }else if(args[0]){
-            client.say(channel, `${tags.username} opluł(a) ${Censor(args[0])} Spit `);
-        }else{
-            await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
-            .then(user => {
-                if(user === null) {
-                    client.say(channel, `${tags.username} pluje na cały czat D: `);
-                }
-                else {
-                    let { name } = user;
-                    client.say(channel, `${tags.username} opluł(a) ${name} Spit `);
-                }
-            })
-            // .catch(err => console.log(err));
-            .catch(err => client.say(channel, `${tags.username} pluje na cały czat D: `));
-        }
+        /* Taking the argumentClean variable and passing it to the SpitCom function. */
+        const commands = await SpitCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
         
 	}else if(command === 'love'){
         if(channel === "#grubamruwa") return;
@@ -133,14 +120,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0] === " "){
+        /* Taking the argumentClean variable and passing it to the LoveCom function. */
+        const commands = await LoveCom(cleanChannel, tags.username, argumentClean);
 
-            client.say(channel, `${tags.username} kochasz ${tags.username} na ${randomNumber(0, 100)}% <3  `);
-        }else if(args[0]){
-            client.say(channel, `${tags.username} kochasz ${Censor(args[0])} na ${randomNumber(0, 100)}% <3  `);
-        }else{
-            client.say(channel, `${tags.username} kochasz ${tags.username} na ${randomNumber(0, 100)}% <3  `);
-        }
+        client.say(channel, commands);
 
     }else if(command === 'kogut'){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
@@ -148,23 +131,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0] === " "){
-            client.say(channel, `${tags.username} opierdolił(a) koguta samemu(a) sobie jasperGaleczka `);
-        }else if(args[0]){
-            client.say(channel, `${tags.username} opierdolił(a) koguta ${Censor(args[0])} jasperGaleczka `);
-        }else{
-            await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
-            .then(user => {
-                if(user === null) {
-                    client.say(channel, `${tags.username} opierdolił(a) koguta YFLUpdates Glumlenie `);
-                }
-                else {
-                    let { name } = user;
-                    client.say(channel, `${tags.username} opierdolił(a) koguta ${name} jasperGaleczka `);
-                }
-            })
-            .catch(err => client.say(channel, `${tags.username} opierdolił(a) koguta YFLUpdates Glumlenie `));
-        }
+        /* Taking the argumentClean variable and passing it to the KogutCom function. */
+        const commands = await KogutCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
 
     }else if(command === 'ewroniarz' || command === 'ewron'){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
@@ -172,45 +142,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0] === " "){
-            const ratio = await checkEwron(tags.username.toLowerCase());
+        /* Taking the argumentClean variable and passing it to the EwronCom function. */
+        const commands = await EwronCom(cleanChannel, tags.username, argumentClean);
 
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
-        }else if(args[0]){
-            const ratio = await checkEwron(args[0].replaceAll("@", "").toLowerCase());
+        client.say(channel, commands);
 
-            client.say(channel, `${Censor(args[0])} ${ratioSwitch.ewron(ratio)} `);
-        }else{
-            const ratio = await checkEwron(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.ewron(ratio)} `);
-        }
-
-
-    }else if(command === 'kto'){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
-            return;
-        }
-        cooldowns[channel].last = Date.now();
-
-        const popularni = await whosFamous(cleanChannel, znaniUsers);
-        let users = "";
-
-        await Promise.all(
-            popularni.map((i) => {
-                users += i + ', '
-            })
-        )
-
-        if(popularni.length === 0){
-            return client.say(channel, `Nikt z listy nie oglada streama ${cleanChannel} jasperSad`);
-        }
-
-        if(users.length < 480 ){
-            client.say(channel, `${users} oglada stream ${cleanChannel} ok`);
-        }else{
-            client.say(channel, `${cleanChannel} ogląda tyle osób, że nie da się ich wypisać na czacie. Sadge`);
-        }
 
     }else if(command === 'yflwatchtime' || command === 'yfl'){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
@@ -218,19 +154,21 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
+        /* Taking the argumentClean variable and passing it to the YFLCom function. */
+        const commands = await YFLCom(cleanChannel, tags.username, argumentClean);
 
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
-        }else if(args[0]){
-            const ratio = await checkYFL(args[0].replaceAll("@", "").toLowerCase());
+        client.say(channel, commands);
 
-            client.say(channel, `${Censor(args[0])} ${ratioSwitch.yfl(ratio)} `);
-        }else{
-            const ratio = await checkYFL(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+    }else if(command === 'kto'){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
+            return;
         }
+        cooldowns[channel].last = Date.now();
+
+        /* Taking the message from the user and sending it to the ktoCom function. */
+        const commands = await KtoCom(cleanChannel, tags.username, argumentClean, znaniUsers);
+
+        client.say(channel, commands);
 
     }else if(command === 'kiss' || command === "calus"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
@@ -238,24 +176,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0] === " "){
-            client.say(channel, `${tags.username} daje całusa swojemu ego yoooo `);
-        }else if(args[0]){
-            client.say(channel, `${tags.username} daje całusa ${Censor(args[0])} yoooo `);
-        }else{
-            await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
-            .then(user => {
-                if(user === null) {
-                    client.say(channel, `${tags.username} daje całusa YFLUpdates yoooo `);
-                }
-                else {
-                    let { name } = user;
-                    client.say(channel, `${tags.username} daje całusa ${name} yoooo `);
-                }
-            })
-            // .catch(err => console.log(err));
-            .catch(err => client.say(channel, `${tags.username} daje całusa YFLUpdates yoooo `));
-        }
+        /* Taking the message from the user and sending it to the kissCom function. */
+        const commands = await KissCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
+
     }else if(command === "ksiezniczki" || command === "topdupeczki" || command === "topsemp"){
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
@@ -365,24 +290,9 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0] === " "){
-            client.say(channel, `${tags.username} przytula sam siebie, nie udacznik xd `);
-        }else if(args[0]){
-            client.say(channel, `${tags.username} przytula ${Censor(args[0])} segz `);
-        }else{
-            await getRandomChatter(channel.replaceAll("#", ""), { skipList: [ tags.username ] })
-            .then(user => {
-                if(user === null) {
-                    client.say(channel, `${tags.username} przytula YFLUpdates segz `);
-                }
-                else {
-                    let { name } = user;
-                    client.say(channel, `${tags.username} przytula ${name} segz `);
-                }
-            })
-            // .catch(err => console.log(err));
-            .catch(err => client.say(channel, `${tags.username} przytula YFLUpdates segz `));
-        }
+        const commands = await HugCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
 
     }else if(command === 'slub' || command === "marry"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
@@ -390,14 +300,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        if(args[0] === " "){
+        /* Taking the argumentClean variable and passing it to the LoveCom function. */
+        const commands = await MarryCom(cleanChannel, tags.username, argumentClean);
 
-            client.say(channel, `${tags.username} nigdy nie weźmie ślubu xd `);
-        }else if(args[0]){
-            client.say(channel, `${tags.username} weźmie ślub z ${Censor(args[0])} za ${humanizeDuration(randomNumber(1440, 1051200) * 60000, { language: "pl" })} jupijej `);
-        }else{
-            client.say(channel, `${tags.username} ma w planach wzięcie ślubu z mamy sobą aha`);
-        }
+        client.say(channel, commands);
 
     }else if(command === 'ilejeszcze' || command === "wruc"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
@@ -434,7 +340,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, whereMissing);
         }
 
-    }else if(command === 'missing' || command === "ostatnio" || command === "lastseen"){
+    }else if(command === 'missing' || command === "ostatnio" || command === "lastseen" || command === "kiedy"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
