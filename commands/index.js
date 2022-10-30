@@ -7,5 +7,6 @@ import YFLCom from "./yfl.js";
 import KtoCom from "./kto.js";
 import KissCom from "./kiss.js";
 import MarryCom from "./marry.js";
+import IleYFLCom from "./ileyfl.js";
 
-export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom };
+export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom };
