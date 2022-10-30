@@ -24,7 +24,7 @@ const client = new tmi.Client({
 	channels: joinThem
     //channels: ['3xanax']
 });
-
+// " 󠀀"
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
 const cooldowns = {
     "#adrian1g__": {
