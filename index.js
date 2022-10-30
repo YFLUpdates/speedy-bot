@@ -2,22 +2,26 @@ import tmi from "tmi.js";
 import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
+import humanizeDuration from "humanize-duration";
+
 import { getRandomChatter, Censor, randomNumber, whosFamous, ratioSwitch } from "./functions/index.js";
-import { checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missing } from "./functions/requests/index.js";
+import { checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
+import lastSeenUpdate from "./components/lastSeenUpdate.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 
 dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt' ];
 const client = new tmi.Client({
 	identity: {
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_PASSWORD
 	},
-	channels: [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt' ]
+	channels: joinThem
     //channels: ['3xanax']
 });
 
@@ -56,6 +60,12 @@ app.listen(PORT, () =>
   console.log(`API Server listening on port ${PORT}`)
 );
 
+lastSeenUpdate(joinThem);
+
+setTimeout(() => {
+    lastSeenUpdate(joinThem)
+}, 60 * 60 * 1000);
+
 client.connect();
 
 client.on("ban", (channel, username, reason, userstate) => {
@@ -86,6 +96,7 @@ client.on('message', async (channel, tags, message, self) => {
 
 	const args = message.slice(1).split(' ');
 	const command = args.shift().toLowerCase();
+    const cleanChannel = channel.replaceAll("#", "");
 
 	if(command === 'opluj') {
         if(channel === "#adrian1g__") return;
@@ -96,9 +107,7 @@ client.on('message', async (channel, tags, message, self) => {
         cooldowns[channel].last = Date.now();
 
         if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+            client.say(channel, `${tags.username} opluł(a) samego(ą) siebie Spit `);
         }else if(args[0]){
             client.say(channel, `${tags.username} opluł(a) ${Censor(args[0])} Spit `);
         }else{
@@ -125,9 +134,8 @@ client.on('message', async (channel, tags, message, self) => {
         cooldowns[channel].last = Date.now();
 
         if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
 
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+            client.say(channel, `${tags.username} kochasz ${tags.username} na ${randomNumber(0, 100)}% <3  `);
         }else if(args[0]){
             client.say(channel, `${tags.username} kochasz ${Censor(args[0])} na ${randomNumber(0, 100)}% <3  `);
         }else{
@@ -141,9 +149,7 @@ client.on('message', async (channel, tags, message, self) => {
         cooldowns[channel].last = Date.now();
 
         if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+            client.say(channel, `${tags.username} opierdolił(a) koguta samemu(a) sobie jasperGaleczka `);
         }else if(args[0]){
             client.say(channel, `${tags.username} opierdolił(a) koguta ${Censor(args[0])} jasperGaleczka `);
         }else{
@@ -167,7 +173,7 @@ client.on('message', async (channel, tags, message, self) => {
         cooldowns[channel].last = Date.now();
 
         if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
+            const ratio = await checkEwron(tags.username.toLowerCase());
 
             client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
         }else if(args[0]){
@@ -187,7 +193,6 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        const cleanChannel = channel.replaceAll("#", "");
         const popularni = await whosFamous(cleanChannel, znaniUsers);
         let users = "";
 
@@ -234,9 +239,7 @@ client.on('message', async (channel, tags, message, self) => {
         cooldowns[channel].last = Date.now();
 
         if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+            client.say(channel, `${tags.username} daje całusa swojemu ego yoooo `);
         }else if(args[0]){
             client.say(channel, `${tags.username} daje całusa ${Censor(args[0])} yoooo `);
         }else{
@@ -259,11 +262,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].longer = Date.now();
 
-        if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
-        }else if(args[0]){
+        if(args[0] && args[0] !== " "){
             const semps = await checkSemps(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, semps);
@@ -279,11 +278,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].longer = Date.now();
 
-        if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
-        }else if(args[0]){
+        if(args[0]  && args[0] !== " "){
             const semps = await sempTime(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, semps);
@@ -299,11 +294,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].longer = Date.now();
 
-        if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
-        }else if(args[0]){
+        if(args[0] && args[0] !== " "){
             const watchtime = await watchtimeAll(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, watchtime);
@@ -321,7 +312,6 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].longer = Date.now();
 
-        const cleanChannel = channel.toLowerCase().replaceAll("#", "")
         if(args[0] === " "){
             //User requests his: Current channel on watchtime
             const watchtimeFunc = await watchtimeGet(tags.username.toLowerCase(), cleanChannel);
@@ -376,9 +366,7 @@ client.on('message', async (channel, tags, message, self) => {
         cooldowns[channel].last = Date.now();
 
         if(args[0] === " "){
-            const ratio = await checkYFL(tags.username.toLowerCase());
-
-            client.say(channel, `${tags.username} ${ratioSwitch.yfl(ratio)} `);
+            client.say(channel, `${tags.username} przytula sam siebie, nie udacznik xd `);
         }else if(args[0]){
             client.say(channel, `${tags.username} przytula ${Censor(args[0])} segz `);
         }else{
@@ -396,13 +384,27 @@ client.on('message', async (channel, tags, message, self) => {
             .catch(err => client.say(channel, `${tags.username} przytula YFLUpdates segz `));
         }
 
+    }else if(command === 'slub' || command === "marry"){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        if(args[0] === " "){
+
+            client.say(channel, `${tags.username} nigdy nie weźmie ślubu xd `);
+        }else if(args[0]){
+            client.say(channel, `${tags.username} weźmie ślub z ${Censor(args[0])} za ${humanizeDuration(randomNumber(1440, 1051200) * 60000, { language: "pl" })} jupijej `);
+        }else{
+            client.say(channel, `${tags.username} ma w planach wzięcie ślubu z mamy sobą aha`);
+        }
+
     }else if(command === 'ilejeszcze' || command === "wruc"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
         cooldowns[channel].last = Date.now();
 
-        const cleanChannel = channel.replaceAll("#", "");
 
         if(args[0] === " "){
             const whenEnds = await checkTimeout(tags.username.toLowerCase(), cleanChannel);
@@ -418,7 +420,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, whenEnds);
         }
 
-    }else if(command === 'missing' || command === "ostatnio"){
+    }else if(command === 'missingall' || command === "ostatnioall"){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -427,7 +429,21 @@ client.on('message', async (channel, tags, message, self) => {
         if(args[0] === " ") return;
 
         if(args[0]){
-            const whereMissing = await missing(args[0].replaceAll("@", "").toLowerCase());
+            const whereMissing = await missingAll(args[0].replaceAll("@", "").toLowerCase());
+
+            client.say(channel, whereMissing);
+        }
+
+    }else if(command === 'missing' || command === "ostatnio" || command === "lastseen"){
+        if (cooldowns[channel].last > (Date.now() - 4000)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        if(args[0] === " ") return;
+
+        if(args[0]){
+            const whereMissing = await missing(args[0].replaceAll("@", "").toLowerCase(), cleanChannel);
 
             client.say(channel, whereMissing);
         }
@@ -452,7 +468,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         cooldowns[channel].last = Date.now();
 
-        client.say(channel, `!hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kiss, !kto, !gdzie, !ilejeszcze, !missing okok Opisane na https://yfl.es/bot`);
+        client.say(channel, `!hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kiss, !kto, !gdzie, !ilejeszcze, !missing, !missingall... więcej na https://yfl.es/bot ok`);
     }
 
 });
