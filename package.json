@@ -1,12 +1,31 @@
 {
   "name": "xspeedyq-bot",
-  "version": "1.0.1",
-  "description": "https://www.twitch.tv/xspeedyq",
+  "version": "1.0.5",
+  "description": "Twitch bot with functions similar to LewusBot",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YFLUpdates/speedy-bot.git"
+  },
   "type": "module",
   "scripts": {
     "start": "node index.js"
   },
+  "bugs": {
+    "url": "https://github.com/YFLUpdates/speedy-bot/issues"
+  },
+  "homepage": "https://github.com/YFLUpdates/speedy-bot#readme",
+  "keywords": [
+    "twitch",
+    "bot",
+    "tmi",
+    "xspeedyq",
+    "dobrypt",
+    "adrian1g__",
+    "yfl",
+    "yflupdates",
+    "grubamruwa"
+  ],
   "author": "3xanax",
   "license": "MIT",
   "dependencies": {

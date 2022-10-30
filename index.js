@@ -53,7 +53,14 @@ app.set('json spaces', 2);
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.json({ message: "xspeedyq, adrian1g__, grubamruwa bot okok" });
+    res.json(
+        { 
+            message: "Bot successfully started",
+            build_name: process.env.npm_package_name,
+            version: process.env.npm_package_version,
+            channels: joinThem
+        }
+    );
 });
 
 app.listen(PORT, () =>

@@ -107,6 +107,28 @@ async function get_live_from_follows(follows){
     return live_follows;
 
 }
+function get_top_streams_query(language){
+    return `streams?first=100&language=${language}`
+}
+async function get_top_streams_names(){
+    let streams = [];
+    const languages = ["pl","en"];
+
+    await Promise.all(
+        languages.map(async (i) => {
+            const query = get_top_streams_query(i)
+            const response = await get_response(query)
+
+            await Promise.all(
+                response.data.map(async (i) => {
+                    streams.push(i.user_login)
+                })
+            )
+
+        })
+    )
+    return streams;
+}
 function get_user_query(user_login){
     return 'users?login='+user_login;
 }
@@ -164,13 +186,14 @@ async function get_all_follows(user_id){
 
 }
 async function check_if_user_in_channel(user){
-    // const top_streams = get_top_streams_names()
     let imOnIt = [];
-    const follows = await get_live_from_follows(await get_all_follows(user))
+    const top_streams = await get_top_streams_names();
+    const follows = await get_live_from_follows(await get_all_follows(user));
+    const merged = top_streams.concat(follows);
 
     //console.log("Follows ", follows)
     await Promise.all(
-        follows.map(async (i) => {
+        merged.map(async (i) => {
             const chatters = await getChatters(i)
 
             if(chatters.find(i => i.name === user) !== undefined){
