@@ -197,7 +197,10 @@ async function check_if_user_in_channel(user){
             const chatters = await getChatters(i)
 
             if(chatters.find(i => i.name === user) !== undefined){
-                //console.log("INSIDE ", user);
+
+                if(imOnIt.includes(i)) return;
+
+                //console.log("INSIDE ", i);
 
                 imOnIt.push(i)
             }
