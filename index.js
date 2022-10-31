@@ -26,6 +26,8 @@ const client = new tmi.Client({
 });
 // " 󠀀"
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
+const bad_words = JSON.parse(await fs.readFile('./bad_words.json', 'UTF-8'));
+
 const cooldowns = {
     "#adrian1g__": {
         last: 0,
@@ -110,6 +112,8 @@ client.on('message', async (channel, tags, message, self) => {
 	const command = args.shift().toLowerCase();
     const cleanChannel = channel.replaceAll("#", "");
     const argumentClean = args[0] ? (args[0].replaceAll("@", "").toLowerCase()):(null)
+
+    if(bad_words.includes(args[0]) || bad_words.includes(args[1])) return;
 
 	if(["opluj"].includes(command)) {
         if(channel === "#adrian1g__") return;
