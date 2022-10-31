@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom } from "./commands/index.js";
+import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom } from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
@@ -22,30 +22,34 @@ const client = new tmi.Client({
 		password: process.env.TWITCH_PASSWORD
 	},
 	channels: joinThem
-    //channels: ['3xanax']
 });
 // " 󠀀"
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
 const cooldowns = {
     "#adrian1g__": {
         last: 0,
-        longer: 0
+        longer: 0,
+        special: 0
     },
     "#grubamruwa": {
         last: 0,
-        longer: 0
+        longer: 0,
+        special: 0
     },
     "#xspeedyq": {
         last: 0,
-        longer: 0
+        longer: 0,
+        special: 0
     },
     "#3xanax": {
         last: 0,
-        longer: 0
+        longer: 0,
+        special: 0
     },
     "#dobrypt": {
         last: 0,
-        longer: 0
+        longer: 0,
+        special: 0
     }
 }
 
@@ -407,6 +411,17 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${tags.username} zapisane ok`);
         }
 
+    }else if(["liveTop", "topkanazywo", "livetopwatchtime"].includes(command)){
+        if (cooldowns[channel].special > (Date.now() - 30000)) {
+            return;
+        }
+        cooldowns[channel].special = Date.now();
+        client.say(channel, `${tags.username} to chwile zajmie hehe`);
+
+        /* Taking the argumentClean variable and passing it to the EwronCom function. */
+        const commands = await TopchannelwatchtimesCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
     }else if(["help", "commands", "komendy", "pomoc"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
