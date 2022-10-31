@@ -44,7 +44,7 @@ export default async function guessAge(channelName) {
         if([420, 69, 2137, 1337, 2115].includes(number)){
             //console.log("hehe numbers")
 
-            return account_age + 13;
+            account_age = account_age + 13;
         }
         // else if(1970 < number < 2009){
         //     console.log("grandp date")
@@ -54,12 +54,12 @@ export default async function guessAge(channelName) {
         else if(number === 2 && 9 >= number >= 0){
             //console.log("2000s")
 
-            return new Date().getFullYear()  % 100 - number;
+            account_age = new Date().getFullYear()  % 100 - number;
         }else /* It's checking if the number is between 80 and 99. */
         if(number === 2 && 99 >= number >= 80){
             //console.log("1990s")
 
-            return new Date().getFullYear() - number - 1900;
+            account_age = new Date().getFullYear() - number - 1900;
         }
     }
 
@@ -91,5 +91,6 @@ export default async function guessAge(channelName) {
     })
     .catch(err => {
         console.log(err)
+        return `${channelName} coś się rozjebało japierdole `;
     })
 }
