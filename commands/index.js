@@ -10,6 +10,7 @@ import MarryCom from "./marry.js";
 import IleYFLCom from "./ileyfl.js";
 import Top3watchtimeCom from "./top3watchtime.js";
 import WiekCom from "./wiek.js";
-import TopchannelwatchtimesCom from "./topchannelwatchtimes.js"
+import TopchannelwatchtimesCom from "./topchannelwatchtimes.js";
+import FivecityCom from "./5city.js"
 
-export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom };
+export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, FivecityCom };
