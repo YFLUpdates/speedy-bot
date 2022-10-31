@@ -78,7 +78,7 @@ lastSeenUpdate(joinThem);
 
 setTimeout(() => {
     lastSeenUpdate(joinThem)
-}, 30 * 60 * 1000);
+}, 15 * 60 * 1000);
 
 client.connect();
 
