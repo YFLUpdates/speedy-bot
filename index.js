@@ -148,10 +148,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["ewroniarz", "ewron"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        cooldowns[channel].longer = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await EwronCom(cleanChannel, tags.username, argumentClean);
@@ -160,10 +160,10 @@ client.on('message', async (channel, tags, message, self) => {
 
 
     }else if(["yflwatchtime", "yfl"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        cooldowns[channel].longer = Date.now();
 
         /* Taking the argumentClean variable and passing it to the YFLCom function. */
         const commands = await YFLCom(cleanChannel, tags.username, argumentClean);
