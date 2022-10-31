@@ -9,7 +9,7 @@ export default async function checkTimeout(user, channelName) {
         if(res.message) return `${Censor(user)} nie był(a) jeszcze widziany(a) u ${channelName} aha`;
 
         if(data){
-            return `${Censor(user)} ostatnio był(a) widziana (${new Date(res.date).toLocaleString("pl")}) oho`;
+            return `${Censor(user)} ostatnio był(a) widziany(a) (${new Date(res.date).toLocaleString("pl")}) oho`;
         }else{
             return `${Censor(user)} nie był(a) jeszcze widziany(a) aha`;
         }
