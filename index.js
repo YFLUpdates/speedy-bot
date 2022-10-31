@@ -423,10 +423,10 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["fivecity", "5city"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+        if (cooldowns[channel].special > (Date.now() - 30000)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        cooldowns[channel].special = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await FivecityCom(cleanChannel, tags.username, argumentClean);
