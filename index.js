@@ -412,7 +412,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${tags.username} zapisane ok`);
         }
 
-    }else if(["liveTop", "topkanazywo", "livetopwatchtime"].includes(command)){
+    }else if(["livetop", "topkanazywo", "livetopwatchtime"].includes(command)){
         if (cooldowns[channel].special > (Date.now() - 2 * 60 * 1000)) {
             return;
         }
