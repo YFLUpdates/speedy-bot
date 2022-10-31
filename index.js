@@ -106,7 +106,7 @@ client.on('message', async (channel, tags, message, self) => {
     const cleanChannel = channel.replaceAll("#", "");
     const argumentClean = args[0] ? (args[0].replaceAll("@", "").toLowerCase()):(null)
 
-	if(command === 'opluj') {
+	if(["opluj"].includes(command)) {
         if(channel === "#adrian1g__") return;
 
         if (cooldowns[channel].last > (Date.now() - 4000)) {
@@ -119,7 +119,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
         
-	}else if(command === 'love'){
+	}else if(["love"].includes(command)){
         if(channel === "#grubamruwa") return;
 
         if (cooldowns[channel].last > (Date.now() - 4000)) {
@@ -132,7 +132,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === 'kogut'){
+    }else if(["kogut"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -143,7 +143,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === 'ewroniarz' || command === 'ewron'){
+    }else if(["ewroniarz", "ewron"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -155,7 +155,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
 
-    }else if(command === 'yflwatchtime' || command === 'yfl'){
+    }else if(["yflwatchtime", "yfl"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -166,7 +166,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === 'kto'){
+    }else if(["kto"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -177,7 +177,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === 'kiss' || command === "calus"){
+    }else if(["kiss", "calus"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -188,7 +188,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === "ksiezniczki" || command === "topdupeczki" || command === "topsemp"){
+    }else if(["ksiezniczki", "topdupeczki", "topsemp"].includes(command)){
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
@@ -204,7 +204,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, semps);
         }
 
-    }else if(command === "ileogladalkobiet" || command === "semp"){
+    }else if(["semp", "ileogladalkobiet"].includes(command)){
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
@@ -220,7 +220,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, semps);
         }
 
-    }else if(command === "watchtimeall"){
+    }else if(["watchtimeall"].includes(command)){
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
@@ -236,8 +236,8 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, watchtime);
         }
 
-    }else if(command === "watchtime" || command === "xayopl"){
-        if(channel === "#xspeedyq" && command === "watchtime" || channel === "#grubamruwa" && command === "watchtime" || channel === "#dobrypt" && command === "watchtime") return;
+    }else if(["watchtime", "xayopl"].includes(command)){
+        if(["#xspeedyq", "#grubamruwa", "#dobrypt"].includes(channel) && command === "watchtime") return;
 
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
@@ -271,7 +271,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, watchtimeFunc);
         }
 
-    }else if(command === 'gdzie' || command === 'przesladowanie' || command === "where"){
+    }else if(["gdzie", "przesladowanie", "where"].includes(command)){
         if (cooldowns[channel].longer > (Date.now() - 15000)) {
             return;
         }
@@ -291,7 +291,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, where);
         }
 
-    }else if(command === 'hug' || command === "przytul"){
+    }else if(["przytul", "hug"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -301,7 +301,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === 'slub' || command === "marry"){
+    }else if(["marry", "slub"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -312,7 +312,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === 'ilejeszcze' || command === "wruc"){
+    }else if(["wruc", "ilejeszcze"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -333,7 +333,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, whenEnds);
         }
 
-    }else if(command === 'missingall' || command === "ostatnioall"){
+    }else if(["missingall", "ostatnioall", "kiedyall"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -347,7 +347,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, whereMissing);
         }
 
-    }else if(command === 'missing' || command === "ostatnio" || command === "lastseen" || command === "kiedy"){
+    }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -361,7 +361,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, whereMissing);
         }
 
-    }else if(command === 'ileyfl'){
+    }else if(["ileyfl"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -372,7 +372,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === 'wiek' || command === "ilemamlat"){
+    }else if(["ilemamlat", "wiek"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -383,7 +383,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
 
-    }else if(command === 'top3' || command === 'top3watchtime'){
+    }else if(["top3", "top3watchtime"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
@@ -393,7 +393,7 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await Top3watchtimeCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
-    }else if(command === 'dodajznany'){
+    }else if(["dodajznany"].includes(command)){
         if (cooldowns[channel].longer > (Date.now() - 7000)) {
             return;
         }
@@ -407,13 +407,13 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${tags.username} zapisane ok`);
         }
 
-    }else if(command === "help"){
+    }else if(["help", "commands", "komendy", "pomoc"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - 4000)) {
             return;
         }
         cooldowns[channel].last = Date.now();
 
-        client.say(channel, `!hug, !opluj, !love, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kiss, !kto, !gdzie, !ilejeszcze, !missing, !missingall... więcej na https://yfl.es/bot ok`);
+        client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
     }
 
 });
