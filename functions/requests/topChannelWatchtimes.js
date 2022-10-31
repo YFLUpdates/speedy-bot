@@ -20,15 +20,24 @@ function topN(arr, n){
 
 async function getWatchtime(user, channelName){
 
+    if(botAccounts.includes(user) || user.includes("bot")) return {name: user,count: 0};
+
     return await axios.get(`https://xayo.pl/api/mostWatched/${user}`, {headers: {'Content-type': 'application/json'}})
     .then(async (data) => {
         const channels = data.data;
 
-        const res = channels.find(x => x.streamer === channelName).count;
+        const res = channels.find(x => x.streamer === channelName);
 
-        return {
-            name: user,
-            count: res
+        if(res){
+            return {
+                name: user,
+                count: res.count
+            }
+        }else{
+            return {
+                name: user,
+                count: 0
+            }
         }
     })
     .catch(err => {
@@ -47,7 +56,6 @@ export default async function topChannelWatchtimes(channelName) {
 
     await Promise.all(
         chatters.map(async (i) => {
-            if(botAccounts.includes(i.name) || i.name.includes("bot")) return;
 
             await waitforme(randomNumber(1000, 2000));
 
@@ -57,7 +65,6 @@ export default async function topChannelWatchtimes(channelName) {
 
         })
     )
-    // console.log(users)
     return topN(users, 5);
 
 }

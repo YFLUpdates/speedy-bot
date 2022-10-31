@@ -417,6 +417,7 @@ client.on('message', async (channel, tags, message, self) => {
             return;
         }
         cooldowns[channel].special = Date.now();
+
         client.say(channel, `${tags.username} to chwile zajmie hehe`);
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */

@@ -11,6 +11,7 @@ const znaniHex = [
     "steam:1100001034b75af" /* - b4ndura */,
     "steam:1100001118a7907" /* - minesekk  */,
     "steam:11000010f085a81" /* - mork  */,
+    "steam:1100001039e60a0" /* - neex  */,
 ]
 
 export default async function getSzwalnia(user) {
