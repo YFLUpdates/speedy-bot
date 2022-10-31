@@ -12,5 +12,8 @@ import Top3watchtimeCom from "./top3watchtime.js";
 import WiekCom from "./wiek.js";
 import TopchannelwatchtimesCom from "./topchannelwatchtimes.js";
 import FivecityCom from "./5city.js"
+import ZjebCom from "./zjeb.js";
+import MogemodaCom from "./modemoda.js";
 
-export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, FivecityCom };
+export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, 
+    Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, FivecityCom, ZjebCom, MogemodaCom };
