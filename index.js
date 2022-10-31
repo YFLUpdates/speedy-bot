@@ -424,7 +424,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["fivecity", "5city"].includes(command)){
-        if (cooldowns[channel].special > (Date.now() - 30000)) {
+        if (cooldowns[channel].special > (Date.now() - 2 * 60 * 1000)) {
             return;
         }
         cooldowns[channel].special = Date.now();

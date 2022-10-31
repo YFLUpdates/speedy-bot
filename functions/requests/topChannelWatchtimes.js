@@ -49,7 +49,7 @@ export default async function topChannelWatchtimes(channelName) {
         chatters.map(async (i) => {
             if(botAccounts.includes(i.name) || i.name.includes("bot")) return;
 
-            await waitforme(randomNumber(500, 1000));
+            await waitforme(randomNumber(1000, 2000));
 
             const watchtime = await getWatchtime(i.name, channelName);
 
