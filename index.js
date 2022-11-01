@@ -35,38 +35,48 @@ const cooldowns = {
         last: 0,
         longer: 0,
         special: 0,
-        duels: 0
+        duels: 0,
+        mod: 0
     },
     "#grubamruwa": {
         last: 0,
         longer: 0,
         special: 0,
-        duels: 0
+        duels: 0,
+        mod: 0
     },
     "#xspeedyq": {
         last: 0,
         longer: 0,
         special: 0,
-        duels: 0
+        duels: 0,
+        mod: 0
     },
     "#3xanax": {
         last: 0,
         longer: 0,
         special: 0,
-        duels: 0
+        duels: 0,
+        mod: 0
     },
     "#mrdzinold": {
         last: 0,
         longer: 0,
         special: 0,
-        duels: 0
+        duels: 0,
+        mod: 0
     },
     "#dobrypt": {
         last: 0,
         longer: 0,
         special: 0,
-        duels: 0
+        duels: 0,
+        mod: 0
     }
+}
+
+const modules = {
+    "duels": true
 }
 
 app.set('json spaces', 2);
@@ -521,6 +531,8 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["duel"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
 
+        if(modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
+
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
 
@@ -562,7 +574,7 @@ client.on('message', async (channel, tags, message, self) => {
             }
 
         }else{
-            if (cooldowns[channel].duels > (Date.now() - getMeCooldowns(channel).classic)) {
+            if (cooldowns[channel].duels > (Date.now() - getMeCooldowns(channel).longer)) {
                 return;
             }
             cooldowns[channel].duels = Date.now();
@@ -589,8 +601,10 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${argumentClean}, jeśli akceptujesz pojedynek na kwotę ${Number(args[1])} punktów, wpisz !duel accept ${cleanSender}`)
         }
 
-    }else if(["yflpoints", "punkty"].includes(command)){
+    }else if(["yflpoints", "punkty", "points"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
+
+        if(["#xspeedyq", "#grubamruwa", "#dobrypt"].includes(channel) && command === "points") return;
         
         if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -601,6 +615,33 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await pointsCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
+    }else if(["module", "modules"].includes(command)){
+        if (cooldowns[channel].mod > (Date.now() - 2000)) {
+            return;
+        }
+        const badges = tags.badges || {};
+        const isBroadcaster = badges.broadcaster;
+        const isMod = badges.moderator;
+        const isModUp = isBroadcaster || isMod;
+
+        if(!isModUp || tags.username !== "3xanax") return;
+
+        if(!args[0]) return client.say(channel, `${tags.username}, enable/disable `);
+
+        if(args[0] === "enable"){
+            if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
+
+            modules[`${args[1]}`] = true;
+
+            client.say(channel, `${tags.username}, włączyłeś moduł ${args[1]}`)
+        }else if(args[0] === "disable"){
+            if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
+
+            modules[`${args[1]}`] = false;
+
+            client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
+        }
+
     }else if(["help", "commands", "komendy", "pomoc"].includes(command)){
         if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
