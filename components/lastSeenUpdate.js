@@ -26,6 +26,7 @@ async function isLive(){
         }
     })
     .then(async (res) => {
+        //console.log(res.data)
         return res.data;
     })
     .catch(err => {
@@ -35,6 +36,7 @@ async function isLive(){
 }
 
 async function updateUser(channelName, streamer, wt){
+    //console.log(channelName, streamer, wt)
     return await axios({
         url: `https://api.yfl.es/api/lastseen/update/${channelName}`,
         method: "put",
@@ -59,10 +61,11 @@ async function updateUser(channelName, streamer, wt){
 }
 
 export default async function updateLastSeen(streamers) {
-    if(streamers.includes("#mrdzinold")) return;
 
     await Promise.all(
         streamers.map(async (i) => {
+            if(i === "#mrdzinold") return;
+
             await waitforme(randomNumber(60000, 240000))
             const cleanStreamer = i.replaceAll("#", "");
 
@@ -81,9 +84,10 @@ export default async function updateLastSeen(streamers) {
             }
 
             for (var x = 0; x < chatters.length; ++x) {
-                await waitforme(250)
+                await waitforme(100)
                 
-                await updateUser(chatters[x].name, cleanStreamer, liveChannels.includes(cleanStreamer) ? true:null)
+                //console.log("aha")
+                await updateUser(chatters[x].name, cleanStreamer, liveChannels.includes(cleanStreamer) ? true : null)
             }
         })
     )
