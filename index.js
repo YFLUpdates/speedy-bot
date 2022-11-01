@@ -16,8 +16,8 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold' ];
-//const joinThem = [ '3xanax' ];
+//const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold' ];
+const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
 		username: process.env.TWITCH_USERNAME,
@@ -76,7 +76,7 @@ const cooldowns = {
 }
 
 const modules = {
-    "duels": true
+    "duels": false
 }
 
 app.set('json spaces', 2);
@@ -579,7 +579,7 @@ client.on('message', async (channel, tags, message, self) => {
             }
             cooldowns[channel].duels = Date.now();
 
-            /* Checking if the argument is clean. If it is not clean, it will return the client.say function. */
+            /* Checking if the argument is clean. If it is not clean, it will return the client.say functione. */
             if(!argumentClean) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
             /* Checking if the user has provided a number as the second argument. */
@@ -624,22 +624,22 @@ client.on('message', async (channel, tags, message, self) => {
         const isMod = badges.moderator;
         const isModUp = isBroadcaster || isMod;
 
-        if(!isModUp || tags.username !== "3xanax") return;
+        if(isModUp || tags.username === "3xanax"){
+            if(!args[0]) return client.say(channel, `${tags.username}, enable/disable `);
 
-        if(!args[0]) return client.say(channel, `${tags.username}, enable/disable `);
-
-        if(args[0] === "enable"){
-            if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
-
-            modules[`${args[1]}`] = true;
-
-            client.say(channel, `${tags.username}, włączyłeś moduł ${args[1]}`)
-        }else if(args[0] === "disable"){
-            if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
-
-            modules[`${args[1]}`] = false;
-
-            client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
+            if(args[0] === "enable"){
+                if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
+    
+                modules[`${args[1]}`] = true;
+    
+                client.say(channel, `${tags.username}, włączyłeś moduł ${args[1]}`)
+            }else if(args[0] === "disable"){
+                if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
+    
+                modules[`${args[1]}`] = false;
+    
+                client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
+            }
         }
 
     }else if(["help", "commands", "komendy", "pomoc"].includes(command)){
