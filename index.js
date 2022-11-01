@@ -668,7 +668,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
     }else if(["fame", "famemma", "ppv"].includes(command)){
-        if(["#mrdzinold", "#dobrypt"].includes(channel)) return;
+        if(["#mrdzinold"].includes(channel)) return;
 
         if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
