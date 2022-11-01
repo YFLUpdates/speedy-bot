@@ -32,7 +32,7 @@ export default async function duelsWorking(channel, player1, player2, points){
             loser: player2
         });
 
-        return `${player1}, wygrałeś pojedynek z ${player2}, zakład wynosił ${points * 2} punktów okurwa`
+        return `${player1}, wygrałeś pojedynek z ${player2}, zakład wynosił ${points * 2} punktów jasperczekoladka`
     }else{
         const req = await request(channel, {
             points: points,
@@ -40,6 +40,6 @@ export default async function duelsWorking(channel, player1, player2, points){
             loser: player1
         });
 
-        return `${player2}, wygrałeś pojedynek z ${player1}, zakład wynosił ${points * 2} punktów okurwa`
+        return `${player2}, wygrałeś pojedynek z ${player1}, zakład wynosił ${points * 2} punktów jasperczekoladka`
     }
 }
