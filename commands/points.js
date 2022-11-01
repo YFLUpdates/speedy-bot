@@ -7,10 +7,10 @@ export default async function hugC(channel, username, argument){
     if(argument && argument !== " "){
         const points = await getPoints(argument, channel);
 
-        return `${Censor(argument)} ma ${points} punktów ok`;
+        return `${Censor(argument)}, ma ${points} punktów ok`;
     }else{
         const points = await getPoints(usernameSmall, channel);
 
-        return `${usernameSmall} ma ${points} punktów ok`;
+        return `${usernameSmall}, masz ${points} punktów ok`;
     }
 }
