@@ -76,9 +76,9 @@ app.listen(PORT, () =>
 
 lastSeenUpdate(joinThem);
 
-setTimeout(() => {
+setInterval(() => {
     lastSeenUpdate(joinThem)
-}, 15 * 60 * 1000);
+}, 10 * 60 * 1000);
 
 client.connect();
 

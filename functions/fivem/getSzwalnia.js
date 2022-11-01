@@ -28,5 +28,5 @@ export default async function getSzwalnia(user) {
 
     if(streamrsArray.length === 0) return `jasperLaskotanie ${user} nikt z ekipy aktualnie nie gra na 5City `;
 
-    return `jasperUsmiech ${user} na 5City ze szwalni aktualnie są ${streamrsArray.join(", ")} `
+    return `jasperUsmiech ${user} na 5City aktualnie grają ${streamrsArray.join(", ")} `
 }
