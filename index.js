@@ -111,7 +111,7 @@ app.listen(PORT, () =>
   console.log(`API Server listening on port ${PORT}`)
 );
 
-lastSeenUpdate(joinThem);
+//lastSeenUpdate(joinThem);
 
 setInterval(() => {
     lastSeenUpdate(joinThem)
@@ -644,7 +644,9 @@ client.on('message', async (channel, tags, message, self) => {
             if(args[0] === "enable"){
                 if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
     
-                if(args[1] === "duels") return duels = [];
+                if(args[1] === "duels") {
+                    duels = [];
+                }
                 
                 cooldowns[channel].modules[`${args[1]}`] = true;
     
@@ -652,7 +654,9 @@ client.on('message', async (channel, tags, message, self) => {
             }else if(args[0] === "disable"){
                 if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
     
-                if(args[1] === "duels") return duels = [];
+                if(args[1] === "duels") {
+                    duels = [];
+                }
 
                 cooldowns[channel].modules[`${args[1]}`] = false;
     
