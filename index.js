@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
 import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, 
-    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, SzwalniaCom, OfflinetimeCom } from "./commands/index.js";
-import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing } from "./functions/requests/index.js";
+    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, SzwalniaCom, OfflinetimeCom, pointsCom } from "./commands/index.js";
+import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, duelsWorking, getPoints } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
@@ -28,6 +28,7 @@ const client = new tmi.Client({
 // " 󠀀"
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
 const bad_words = JSON.parse(await fs.readFile('./bad_words.json', 'UTF-8'));
+let duels = [];
 
 const cooldowns = {
     "#adrian1g__": {
@@ -509,6 +510,81 @@ client.on('message', async (channel, tags, message, self) => {
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await OfflinetimeCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
+    }else if(["duel"].includes(command)){
+        if(["#mrdzinold"].includes(channel)) return;
+        
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+        const cleanSender = tags.username.toLowerCase();
+        const points = await getPoints(cleanSender, cleanChannel);
+
+        console.log(duels)
+        if(["accept", "akceptuje"].includes(argumentClean)){
+            if(!args[1]) return client.say(channel, `${cleanSender} może podasz osobe aha`);
+
+            const cleanAgainst = args[1].toLowerCase();
+
+            const FindDuel = duels.find(x => x.id === `${cleanAgainst}-${cleanSender}`)
+
+            if(!FindDuel) return client.say(channel, `${cleanSender} duel nie istnieje PogO`);
+
+            const indexOfObject = duels.findIndex(object => {
+                return object.id === FindDuel.id;
+            });
+
+            const pointsSender = await getPoints(FindDuel.user, cleanChannel);
+
+            if(FindDuel.points > points && FindDuel.points > pointsSender) {
+                duels.splice(indexOfObject, 1);
+                
+                return client.say(channel, `${cleanSender} nie masz tylu punktów aha`);
+            }
+
+            if(FindDuel.expires < new Date()){
+
+                duels.splice(indexOfObject, 1);
+
+                return client.say(channel, `${cleanSender} duel wygasł Hmm`);
+            }else{
+                duels.splice(indexOfObject, 1);
+
+                const command = await duelsWorking(cleanChannel, FindDuel.user, FindDuel.invited, FindDuel.points);
+
+                return client.say(channel, command)
+            }
+
+        }else{
+            if(!argumentClean) return client.say(channel, `${cleanSender} może podasz osobe aha`);
+
+            if(!args[1] || !Number.isInteger(Number(args[1]))) return client.say(channel, `${cleanSender} zapomniałeś podać kwote aha`);
+
+            if(Number(args[1]) > points) return client.say(channel, `${cleanSender} nie masz tylu punktów aha`);
+
+            duels.push({
+                id: `${cleanSender}-${argumentClean}`,
+                user: cleanSender,
+                invited: argumentClean,
+                points: Number(args[1]),
+                expires: new Date(+new Date() + 60000*2)
+            })
+
+            client.say(channel, `${argumentClean} jeśli akceptujesz duel na ${Number(args[1])}, wpisz !duel accept ${cleanSender}`)
+        }
+
+    }else if(["yflpoints", "punkty"].includes(command)){
+        if(["#mrdzinold"].includes(channel)) return;
+        
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        /* Taking the argumentClean variable and passing it to the EwronCom function. */
+        const commands = await pointsCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["help", "commands", "komendy", "pomoc"].includes(command)){
