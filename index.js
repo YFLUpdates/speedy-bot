@@ -618,7 +618,7 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["yflpoints", "punkty", "points"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
 
-        if(["#xspeedyq", "#grubamruwa", "#dobrypt"].includes(channel) && command === "points") return;
+        if(["#xspeedyq", "#grubamruwa"].includes(channel) && command === "points") return;
         
         if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
