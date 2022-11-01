@@ -17,7 +17,8 @@ import MogemodaCom from "./modemoda.js";
 import KamerkiCom from "./kamerki.js";
 import ZapraszaCom from "./zaprasza.js";
 import SzwalniaCom from "./szwalnia.js";
+import OfflinetimeCom from "./offlinetime.js";
 
 export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, 
     Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, 
-    ZapraszaCom, SzwalniaCom };
+    ZapraszaCom, SzwalniaCom, OfflinetimeCom };
