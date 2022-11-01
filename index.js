@@ -571,7 +571,7 @@ client.on('message', async (channel, tags, message, self) => {
             if(!argumentClean) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
             /* Checking if the user has provided a number as the second argument. */
-            if(!args[1] || !Number.isInteger(Number(args[1]))) return client.say(channel, `${cleanSender}, zapomniałeś podać kwote :| `);
+            if(!args[1] || !Number.isInteger(Number(args[1])) || Number(args[1]) === 0) return client.say(channel, `${cleanSender}, zapomniałeś podać kwote :| `);
 
             /* Checking if the user has enough points to bet. */
             if(Number(args[1]) > points) return client.say(channel, `${cleanSender} nie masz tylu punktów aha`);
