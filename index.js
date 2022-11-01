@@ -32,6 +32,9 @@ let duels = [];
 
 const cooldowns = {
     "#adrian1g__": {
+        modules: {
+            "duels": false
+        },
         last: 0,
         longer: 0,
         special: 0,
@@ -39,6 +42,9 @@ const cooldowns = {
         mod: 0
     },
     "#grubamruwa": {
+        modules: {
+            "duels": false
+        },
         last: 0,
         longer: 0,
         special: 0,
@@ -46,6 +52,9 @@ const cooldowns = {
         mod: 0
     },
     "#xspeedyq": {
+        modules: {
+            "duels": false
+        },
         last: 0,
         longer: 0,
         special: 0,
@@ -53,6 +62,9 @@ const cooldowns = {
         mod: 0
     },
     "#3xanax": {
+        modules: {
+            "duels": false
+        },
         last: 0,
         longer: 0,
         special: 0,
@@ -60,6 +72,9 @@ const cooldowns = {
         mod: 0
     },
     "#mrdzinold": {
+        modules: {
+            "duels": false
+        },
         last: 0,
         longer: 0,
         special: 0,
@@ -67,16 +82,15 @@ const cooldowns = {
         mod: 0
     },
     "#dobrypt": {
+        modules: {
+            "duels": false
+        },
         last: 0,
         longer: 0,
         special: 0,
         duels: 0,
         mod: 0
     }
-}
-
-const modules = {
-    "duels": false
 }
 
 app.set('json spaces', 2);
@@ -531,7 +545,7 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["duel"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
 
-        if(modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
+        if(cooldowns[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
 
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
@@ -630,13 +644,13 @@ client.on('message', async (channel, tags, message, self) => {
             if(args[0] === "enable"){
                 if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
     
-                modules[`${args[1]}`] = true;
+                cooldowns[channel].modules[`${args[1]}`] = true;
     
                 client.say(channel, `${tags.username}, włączyłeś moduł ${args[1]}`)
             }else if(args[0] === "disable"){
                 if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
     
-                modules[`${args[1]}`] = false;
+                cooldowns[channel].modules[`${args[1]}`] = false;
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
             }
