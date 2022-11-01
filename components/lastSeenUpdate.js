@@ -59,6 +59,8 @@ async function updateUser(channelName, streamer, wt){
 }
 
 export default async function updateLastSeen(streamers) {
+    if(streamers === "#mrdzinold") return;
+
     await Promise.all(
         streamers.map(async (i) => {
             await waitforme(randomNumber(60000, 240000))

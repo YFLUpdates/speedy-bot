@@ -9,14 +9,15 @@ import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, miss
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
+import getMeCooldowns from "./components/getMeCooldowns.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 
 dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt' ];
-//const joinThem = [ '3xanax' ];
+//const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold' ];
+const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
 		username: process.env.TWITCH_USERNAME,
@@ -45,6 +46,11 @@ const cooldowns = {
         special: 0
     },
     "#3xanax": {
+        last: 0,
+        longer: 0,
+        special: 0
+    },
+    "#mrdzinold": {
         last: 0,
         longer: 0,
         special: 0
@@ -118,7 +124,7 @@ client.on('message', async (channel, tags, message, self) => {
 	if(["opluj"].includes(command)) {
         if(channel === "#adrian1g__") return;
 
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -131,7 +137,7 @@ client.on('message', async (channel, tags, message, self) => {
 	}else if(["love"].includes(command)){
         if(channel === "#grubamruwa") return;
 
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -142,7 +148,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kogut"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -153,7 +159,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["ewroniarz", "ewron"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].longer = Date.now();
@@ -165,7 +171,7 @@ client.on('message', async (channel, tags, message, self) => {
 
 
     }else if(["yflwatchtime", "yfl"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].longer = Date.now();
@@ -176,7 +182,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kto"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -187,7 +193,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kiss", "calus"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -198,7 +204,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["ksiezniczki", "topdupeczki", "topsemp"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].longer = Date.now();
@@ -214,7 +220,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["semp", "ileogladalkobiet"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].longer = Date.now();
@@ -230,7 +236,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtimeall"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].longer = Date.now();
@@ -246,9 +252,9 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtime", "xayopl"].includes(command)){
-        if(["#xspeedyq", "#grubamruwa", "#dobrypt"].includes(channel) && command === "watchtime") return;
+        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold"].includes(channel) && command === "watchtime") return;
 
-        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].longer = Date.now();
@@ -281,7 +287,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["gdzie", "przesladowanie", "where"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - 15000)) {
+        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].longer = Date.now();
@@ -301,7 +307,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["przytul", "hug"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -311,7 +317,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["marry", "slub"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -322,7 +328,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["wruc", "ilejeszcze"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -343,7 +349,9 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missingall", "ostatnioall", "kiedyall"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if(["#mrdzinold"].includes(channel)) return;
+        
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -357,7 +365,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -371,7 +380,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["ileyfl"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -382,7 +391,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["ilemamlat", "wiek"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -393,7 +402,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["top3", "top3watchtime"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -403,7 +412,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["dodajznany"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - 7000)) {
+        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         cooldowns[channel].longer = Date.now();
@@ -417,6 +426,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["livetop", "topkanazywo", "livetopwatchtime"].includes(command)){
+        if(["#mrdzinold"].includes(channel)) return;
+
         if (cooldowns[channel].special > (Date.now() - 2 * 60 * 1000)) {
             return;
         }
@@ -429,7 +440,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["fivecity", "5city"].includes(command)){
-        if (cooldowns[channel].special > (Date.now() - 30000)) {
+        if (cooldowns[channel].special > (Date.now() - getMeCooldowns(channel).special)) {
             return;
         }
         cooldowns[channel].special = Date.now();
@@ -439,7 +450,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["szwalnia", "ekipa5city"].includes(command)){
-        if (cooldowns[channel].special > (Date.now() - 30000)) {
+        if (cooldowns[channel].special > (Date.now() - getMeCooldowns(channel).special)) {
             return;
         }
         cooldowns[channel].special = Date.now();
@@ -449,7 +460,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["czyjestemzjebem"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -459,7 +470,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["mogemoda", "szansanamoda"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -469,7 +480,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["kamerki"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -479,7 +490,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["zaprasza"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
@@ -489,7 +500,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["help", "commands", "komendy", "pomoc"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - 4000)) {
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         cooldowns[channel].last = Date.now();
