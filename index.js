@@ -515,14 +515,13 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["duel"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
         
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (cooldowns[channel].last > (Date.now() - 2000)) {
             return;
         }
         cooldowns[channel].last = Date.now();
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
 
-        console.log(duels)
         if(["accept", "akceptuje"].includes(argumentClean)){
             if(!args[1]) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
