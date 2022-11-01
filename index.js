@@ -644,12 +644,16 @@ client.on('message', async (channel, tags, message, self) => {
             if(args[0] === "enable"){
                 if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
     
+                if(args[1] === "duels") return duels = [];
+                
                 cooldowns[channel].modules[`${args[1]}`] = true;
     
                 client.say(channel, `${tags.username}, włączyłeś moduł ${args[1]}`)
             }else if(args[0] === "disable"){
                 if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
     
+                if(args[1] === "duels") return duels = [];
+
                 cooldowns[channel].modules[`${args[1]}`] = false;
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
@@ -663,6 +667,13 @@ client.on('message', async (channel, tags, message, self) => {
         cooldowns[channel].last = Date.now();
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
+    }else if(["fame", "famemma", "ppv"].includes(command)){
+        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        cooldowns[channel].last = Date.now();
+
+        client.say(channel, `FameMMA? tylko z refa bungee - https://famemma.tv/#/ref/bungee okok`);
     }
 
 });
