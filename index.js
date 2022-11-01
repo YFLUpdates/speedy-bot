@@ -518,69 +518,69 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await OfflinetimeCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
-    }else if(["duel"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
+    // }else if(["duel"].includes(command)){
+    //     if(["#mrdzinold"].includes(channel)) return;
 
-        const cleanSender = tags.username.toLowerCase();
-        const points = await getPoints(cleanSender, cleanChannel);
+    //     const cleanSender = tags.username.toLowerCase();
+    //     const points = await getPoints(cleanSender, cleanChannel);
 
-        if(["accept", "akceptuje"].includes(argumentClean)){
+    //     if(["accept", "akceptuje"].includes(argumentClean)){
 
-            if(!args[1]) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
+    //         if(!args[1]) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
-            const cleanAgainst = args[1].toLowerCase();
+    //         const cleanAgainst = args[1].toLowerCase();
 
-            const FindDuel = duels.find(x => x.id === `${cleanAgainst}-${cleanSender}`)
+    //         const FindDuel = duels.find(x => x.id === `${cleanAgainst}-${cleanSender}`)
 
-            if(!FindDuel) return client.say(channel, `${cleanSender}, taki pojedynek nie istnieje :/ `);
+    //         if(!FindDuel) return client.say(channel, `${cleanSender}, taki pojedynek nie istnieje :/ `);
 
-            const indexOfObject = duels.findIndex(object => {
-                return object.id === FindDuel.id;
-            });
+    //         const indexOfObject = duels.findIndex(object => {
+    //             return object.id === FindDuel.id;
+    //         });
 
-            const pointsSender = await getPoints(FindDuel.user, cleanChannel);
+    //         const pointsSender = await getPoints(FindDuel.user, cleanChannel);
 
-            if(FindDuel.points > points && FindDuel.points > pointsSender) {
-                duels.splice(indexOfObject, 1);
+    //         if(FindDuel.points > points && FindDuel.points > pointsSender) {
+    //             duels.splice(indexOfObject, 1);
                 
-                return client.say(channel, `${cleanSender}, brakuje ci punktów VoHiYo `);
-            }
+    //             return client.say(channel, `${cleanSender}, brakuje ci punktów VoHiYo `);
+    //         }
 
-            if(FindDuel.expires < new Date()){
+    //         if(FindDuel.expires < new Date()){
 
-                duels.splice(indexOfObject, 1);
+    //             duels.splice(indexOfObject, 1);
 
-                return client.say(channel, `${cleanSender}, pojedynek wygasł :( `);
-            }else{
-                duels.splice(indexOfObject, 1);
+    //             return client.say(channel, `${cleanSender}, pojedynek wygasł :( `);
+    //         }else{
+    //             duels.splice(indexOfObject, 1);
 
-                const command = await duelsWorking(cleanChannel, FindDuel.user, FindDuel.invited, FindDuel.points);
+    //             const command = await duelsWorking(cleanChannel, FindDuel.user, FindDuel.invited, FindDuel.points);
 
-                return client.say(channel, command)
-            }
+    //             return client.say(channel, command)
+    //         }
 
-        }else{
-            if (cooldowns[channel].duels > (Date.now() - getMeCooldowns(channel).classic)) {
-                return;
-            }
-            cooldowns[channel].duels = Date.now();
+    //     }else{
+    //         if (cooldowns[channel].duels > (Date.now() - getMeCooldowns(channel).classic)) {
+    //             return;
+    //         }
+    //         cooldowns[channel].duels = Date.now();
 
-            if(!argumentClean) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
+    //         if(!argumentClean) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
-            if(!args[1] || !Number.isInteger(Number(args[1]))) return client.say(channel, `${cleanSender}, zapomniałeś podać kwote :| `);
+    //         if(!args[1] || !Number.isInteger(Number(args[1]))) return client.say(channel, `${cleanSender}, zapomniałeś podać kwote :| `);
 
-            if(Number(args[1]) > points) return client.say(channel, `${cleanSender} nie masz tylu punktów aha`);
+    //         if(Number(args[1]) > points) return client.say(channel, `${cleanSender} nie masz tylu punktów aha`);
 
-            duels.push({
-                id: `${cleanSender}-${argumentClean}`,
-                user: cleanSender,
-                invited: argumentClean,
-                points: Number(args[1]),
-                expires: new Date(+new Date() + 60000*2)
-            })
+    //         duels.push({
+    //             id: `${cleanSender}-${argumentClean}`,
+    //             user: cleanSender,
+    //             invited: argumentClean,
+    //             points: Number(args[1]),
+    //             expires: new Date(+new Date() + 60000*2)
+    //         })
 
-            client.say(channel, `${argumentClean}, jeśli akceptujesz pojedynek na kwotę ${Number(args[1])} punktów, wpisz !duel accept ${cleanSender}`)
-        }
+    //         client.say(channel, `${argumentClean}, jeśli akceptujesz pojedynek na kwotę ${Number(args[1])} punktów, wpisz !duel accept ${cleanSender}`)
+    //     }
 
     }else if(["yflpoints", "punkty"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
