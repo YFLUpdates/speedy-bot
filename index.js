@@ -524,13 +524,13 @@ client.on('message', async (channel, tags, message, self) => {
 
         console.log(duels)
         if(["accept", "akceptuje"].includes(argumentClean)){
-            if(!args[1]) return client.say(channel, `${cleanSender} może podasz osobe aha`);
+            if(!args[1]) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
             const cleanAgainst = args[1].toLowerCase();
 
             const FindDuel = duels.find(x => x.id === `${cleanAgainst}-${cleanSender}`)
 
-            if(!FindDuel) return client.say(channel, `${cleanSender} duel nie istnieje PogO`);
+            if(!FindDuel) return client.say(channel, `${cleanSender}, taki pojedynek nie istnieje :/ `);
 
             const indexOfObject = duels.findIndex(object => {
                 return object.id === FindDuel.id;
@@ -541,14 +541,14 @@ client.on('message', async (channel, tags, message, self) => {
             if(FindDuel.points > points && FindDuel.points > pointsSender) {
                 duels.splice(indexOfObject, 1);
                 
-                return client.say(channel, `${cleanSender} nie masz tylu punktów aha`);
+                return client.say(channel, `${cleanSender}, brakuje ci punktów VoHiYo `);
             }
 
             if(FindDuel.expires < new Date()){
 
                 duels.splice(indexOfObject, 1);
 
-                return client.say(channel, `${cleanSender} duel wygasł Hmm`);
+                return client.say(channel, `${cleanSender}, pojedynek wygasł :( `);
             }else{
                 duels.splice(indexOfObject, 1);
 
@@ -558,9 +558,9 @@ client.on('message', async (channel, tags, message, self) => {
             }
 
         }else{
-            if(!argumentClean) return client.say(channel, `${cleanSender} może podasz osobe aha`);
+            if(!argumentClean) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
-            if(!args[1] || !Number.isInteger(Number(args[1]))) return client.say(channel, `${cleanSender} zapomniałeś podać kwote aha`);
+            if(!args[1] || !Number.isInteger(Number(args[1]))) return client.say(channel, `${cleanSender}, zapomniałeś podać kwote :| `);
 
             if(Number(args[1]) > points) return client.say(channel, `${cleanSender} nie masz tylu punktów aha`);
 
@@ -572,7 +572,7 @@ client.on('message', async (channel, tags, message, self) => {
                 expires: new Date(+new Date() + 60000*2)
             })
 
-            client.say(channel, `${argumentClean} jeśli akceptujesz duel na ${Number(args[1])}, wpisz !duel accept ${cleanSender}`)
+            client.say(channel, `${argumentClean}, jeśli akceptujesz pojedynek na kwotę ${Number(args[1])} punktów, wpisz !duel accept ${cleanSender}`)
         }
 
     }else if(["yflpoints", "punkty"].includes(command)){
