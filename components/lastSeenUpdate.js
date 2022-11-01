@@ -84,7 +84,7 @@ export default async function updateLastSeen(streamers) {
             }
 
             for (var x = 0; x < chatters.length; ++x) {
-                await waitforme(100)
+                await waitforme(300)
                 
                 //console.log("aha")
                 await updateUser(chatters[x].name, cleanStreamer, liveChannels.includes(cleanStreamer) ? true : null)
