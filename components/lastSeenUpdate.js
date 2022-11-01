@@ -59,7 +59,7 @@ async function updateUser(channelName, streamer, wt){
 }
 
 export default async function updateLastSeen(streamers) {
-    if(streamers === "#mrdzinold") return;
+    if(streamers.includes("#mrdzinold")) return;
 
     await Promise.all(
         streamers.map(async (i) => {
