@@ -34,32 +34,38 @@ const cooldowns = {
     "#adrian1g__": {
         last: 0,
         longer: 0,
-        special: 0
+        special: 0,
+        duels: 0
     },
     "#grubamruwa": {
         last: 0,
         longer: 0,
-        special: 0
+        special: 0,
+        duels: 0
     },
     "#xspeedyq": {
         last: 0,
         longer: 0,
-        special: 0
+        special: 0,
+        duels: 0
     },
     "#3xanax": {
         last: 0,
         longer: 0,
-        special: 0
+        special: 0,
+        duels: 0
     },
     "#mrdzinold": {
         last: 0,
         longer: 0,
-        special: 0
+        special: 0,
+        duels: 0
     },
     "#dobrypt": {
         last: 0,
         longer: 0,
-        special: 0
+        special: 0,
+        duels: 0
     }
 }
 
@@ -514,15 +520,12 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
     }else if(["duel"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
-        
-        if (cooldowns[channel].last > (Date.now() - 2000)) {
-            return;
-        }
-        cooldowns[channel].last = Date.now();
+
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
 
         if(["accept", "akceptuje"].includes(argumentClean)){
+
             if(!args[1]) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
             const cleanAgainst = args[1].toLowerCase();
@@ -557,6 +560,11 @@ client.on('message', async (channel, tags, message, self) => {
             }
 
         }else{
+            if (cooldowns[channel].duels > (Date.now() - getMeCooldowns(channel).classic)) {
+                return;
+            }
+            cooldowns[channel].duels = Date.now();
+
             if(!argumentClean) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
             if(!args[1] || !Number.isInteger(Number(args[1]))) return client.say(channel, `${cleanSender}, zapomniałeś podać kwote :| `);
