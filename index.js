@@ -3,8 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, 
-    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, SzwalniaCom, OfflinetimeCom, pointsCom } from "./commands/index.js";
+import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
+    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom } from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, duelsWorking, getPoints } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
@@ -17,7 +17,7 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold' ];
+const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani" ];
 //const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
@@ -221,7 +221,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtime", "xayopl"].includes(command)){
-        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold"].includes(channel) && command === "watchtime") return;
+        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani"].includes(channel) && command === "watchtime") return;
 
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
@@ -333,7 +333,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
@@ -404,7 +404,17 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await FivecityCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
-    }else if(["szwalnia", "ekipa5city"].includes(command)){
+    }else if(["aod"].includes(command)){
+        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
+            return;
+        }
+        channels_data[channel].cooldowns.special = Date.now();
+
+        /* Taking the argumentClean variable and passing it to the EwronCom function. */
+        const commands = await AODCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
+    }else if(["szwalnia", "gangmoderacji"].includes(command)){
         if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
             return;
         }
@@ -455,7 +465,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["timeoffline", "offlinetime"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -467,7 +477,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["duel"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
 
         if(channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
 
@@ -551,7 +561,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["yflpoints", "punkty", "points"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
 
         if(["#xspeedyq", "#grubamruwa"].includes(channel) && command === "points") return;
         
@@ -604,7 +614,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
     }else if(["fame", "famemma", "ppv"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -613,7 +623,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, `FameMMA? tylko z refa bungee - https://famemma.tv/#/ref/bungee okok`);
     }else if(["emotki", "emotes"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;

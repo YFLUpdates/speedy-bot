@@ -88,5 +88,20 @@
             "duels": 0,
             "mod": 0
         }
+    },
+    "#xmerghani": {
+        "modules": {
+            "duels": false
+        },
+        "duels_list": [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
     }
 }

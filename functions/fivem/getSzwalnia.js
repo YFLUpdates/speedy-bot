@@ -1,17 +1,12 @@
 import cfx from "cfx-api";
 
 const znaniHex = [
-    "steam:11000013bcde738" /* - MRG */,
-    "steam:110000112458d4d" /* - Speedy */,
-    "steam:11000010395cc1b" /* - dobrypt */,
-    "steam:1100001486c2726" /* - adrian1g */,
-    "steam:11000010f56efe4" /* - grubamruwa */,
-    "steam:11000010cce9caa" /* - MrDzinold */,
-    "steam:11000010263929b" /* - multi */,
-    "steam:1100001034b75af" /* - b4ndura */,
+    "steam:1100001362e9070" /* - resqu */,
+    "steam:11000010b50a4cd" /* - shavskyyy */,
+    "steam:11000013b60db39" /* - desssno */,
+    "steam:110000115cd2d12" /* - mevron */,
     "steam:1100001118a7907" /* - minesekk  */,
-    "steam:11000010f085a81" /* - mork  */,
-    "steam:1100001039e60a0" /* - neex  */,
+    "steam:11000010f56efe4" /* - grubamruwa */
 ]
 
 export default async function getSzwalnia(user) {
@@ -26,7 +21,7 @@ export default async function getSzwalnia(user) {
         })
     )
 
-    if(streamrsArray.length === 0) return `jasperLaskotanie ${user} nikt z ekipy aktualnie nie gra na 5City `;
+    if(streamrsArray.length === 0) return `jasperLaskotanie ${user} nikt ze szwalni aktualnie nie gra na 5City `;
 
     return `jasperUsmiech ${user} na 5City aktualnie grają ${streamrsArray.join(", ")} `
 }

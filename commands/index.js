@@ -16,10 +16,11 @@ import ZjebCom from "./zjeb.js";
 import MogemodaCom from "./modemoda.js";
 import KamerkiCom from "./kamerki.js";
 import ZapraszaCom from "./zaprasza.js";
+import AODCom from "./aod.js";
 import SzwalniaCom from "./szwalnia.js";
 import OfflinetimeCom from "./offlinetime.js";
 import pointsCom from "./points.js";
 
 export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, 
     Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, 
-    ZapraszaCom, SzwalniaCom, OfflinetimeCom, pointsCom };
+    ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom };

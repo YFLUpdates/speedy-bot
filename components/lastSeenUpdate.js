@@ -64,7 +64,7 @@ export default async function updateLastSeen(streamers) {
 
     await Promise.all(
         streamers.map(async (i) => {
-            if(i === "#mrdzinold") return;
+            if(["#xmerghani", "#mrdzinold"].includes(i)) return;
 
             await waitforme(randomNumber(60000, 240000))
             const cleanStreamer = i.replaceAll("#", "");
