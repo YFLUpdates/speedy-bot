@@ -19,6 +19,9 @@ export default async function getSzwalnia(user) {
     await Promise.all(
         fivecity.players.map(async (i) => {
             if(znaniHex.includes(i.identifiers[0])){
+                if(i.name.toLowerCase() === "10x50"){
+                    return streamrsArray.push("neex");
+                }
                 streamrsArray.push(i.name.toLowerCase())
             }
         })
