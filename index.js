@@ -11,13 +11,14 @@ import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
 import getMeCooldowns from "./components/getMeCooldowns.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
+import {Truncate} from "./functions/index.js";
 
 dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold' ];
-//const joinThem = [ '3xanax' ];
+//const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold' ];
+const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
 		username: process.env.TWITCH_USERNAME,
@@ -28,70 +29,7 @@ const client = new tmi.Client({
 // " 󠀀"
 const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
 const bad_words = JSON.parse(await fs.readFile('./bad_words.json', 'UTF-8'));
-let duels = [];
-
-const cooldowns = {
-    "#adrian1g__": {
-        modules: {
-            "duels": false
-        },
-        last: 0,
-        longer: 0,
-        special: 0,
-        duels: 0,
-        mod: 0
-    },
-    "#grubamruwa": {
-        modules: {
-            "duels": false
-        },
-        last: 0,
-        longer: 0,
-        special: 0,
-        duels: 0,
-        mod: 0
-    },
-    "#xspeedyq": {
-        modules: {
-            "duels": false
-        },
-        last: 0,
-        longer: 0,
-        special: 0,
-        duels: 0,
-        mod: 0
-    },
-    "#3xanax": {
-        modules: {
-            "duels": false
-        },
-        last: 0,
-        longer: 0,
-        special: 0,
-        duels: 0,
-        mod: 0
-    },
-    "#mrdzinold": {
-        modules: {
-            "duels": false
-        },
-        last: 0,
-        longer: 0,
-        special: 0,
-        duels: 0,
-        mod: 0
-    },
-    "#dobrypt": {
-        modules: {
-            "duels": false
-        },
-        last: 0,
-        longer: 0,
-        special: 0,
-        duels: 0,
-        mod: 0
-    }
-}
+const channels_data = JSON.parse(await fs.readFile('./channels_data.json', 'UTF-8'));
 
 app.set('json spaces', 2);
 app.use(express.json());
@@ -155,10 +93,10 @@ client.on('message', async (channel, tags, message, self) => {
 	if(["opluj"].includes(command)) {
         if(channel === "#adrian1g__") return;
 
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the SpitCom function. */
         const commands = await SpitCom(cleanChannel, tags.username, argumentClean);
@@ -168,10 +106,10 @@ client.on('message', async (channel, tags, message, self) => {
 	}else if(["love"].includes(command)){
         if(channel === "#grubamruwa") return;
 
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the LoveCom function. */
         const commands = await LoveCom(cleanChannel, tags.username, argumentClean);
@@ -179,10 +117,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kogut"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the KogutCom function. */
         const commands = await KogutCom(cleanChannel, tags.username, argumentClean);
@@ -190,10 +128,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["ewroniarz", "ewron"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await EwronCom(cleanChannel, tags.username, argumentClean);
@@ -202,10 +140,10 @@ client.on('message', async (channel, tags, message, self) => {
 
 
     }else if(["yflwatchtime", "yfl"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         /* Taking the argumentClean variable and passing it to the YFLCom function. */
         const commands = await YFLCom(cleanChannel, tags.username, argumentClean);
@@ -213,10 +151,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kto"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the message from the user and sending it to the ktoCom function. */
         const commands = await KtoCom(cleanChannel, tags.username, argumentClean, znaniUsers);
@@ -224,10 +162,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kiss", "calus"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the message from the user and sending it to the kissCom function. */
         const commands = await KissCom(cleanChannel, tags.username, argumentClean);
@@ -235,10 +173,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["ksiezniczki", "topdupeczki", "topsemp"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(args[0] && args[0] !== " "){
             const semps = await checkSemps(args[0].replaceAll("@", "").toLowerCase());
@@ -251,10 +189,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["semp", "ileogladalkobiet"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(args[0]  && args[0] !== " "){
             const semps = await sempTime(args[0].replaceAll("@", "").toLowerCase());
@@ -267,10 +205,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtimeall"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(args[0] && args[0] !== " "){
             const watchtime = await watchtimeAll(args[0].replaceAll("@", "").toLowerCase());
@@ -285,10 +223,10 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["watchtime", "xayopl"].includes(command)){
         if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold"].includes(channel) && command === "watchtime") return;
 
-        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(args[0] === " "){
             //User requests his: Current channel on watchtime
@@ -318,10 +256,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["gdzie", "przesladowanie", "where"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(args[0] === " "){
             const where = await check_if_user_in_channel(tags.username.toLowerCase());
@@ -338,20 +276,20 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["przytul", "hug"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         const commands = await HugCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
 
     }else if(["marry", "slub"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the LoveCom function. */
         const commands = await MarryCom(cleanChannel, tags.username, argumentClean);
@@ -359,10 +297,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["wruc", "ilejeszcze"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
 
         if(args[0] === " "){
@@ -380,12 +318,11 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missingall", "ostatnioall", "kiedyall"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
         
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         if(args[0] === " ") return;
 
@@ -396,11 +333,12 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
+        if(["#mrdzinold"].includes(channel)) return;
 
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         if(args[0] === " ") return;
 
@@ -411,10 +349,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["ileyfl"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the message from the user and sending it to the ktoCom function. */
         const commands = await IleYFLCom(cleanChannel, tags.username, argumentClean);
@@ -422,10 +360,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["ilemamlat", "wiek"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the message from the user and sending it to the ktoCom function. */
         const commands = await WiekCom(cleanChannel, tags.username, argumentClean);
@@ -433,20 +371,20 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["top3", "top3watchtime"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await Top3watchtimeCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["dodajznany"].includes(command)){
-        if (cooldowns[channel].longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        cooldowns[channel].longer = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(args[0] === " ") return;
         
@@ -456,75 +394,61 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${tags.username} zapisane ok`);
         }
 
-    }else if(["livetop", "topkanazywo", "livetopwatchtime"].includes(command)){
-        if(["#mrdzinold"].includes(channel)) return;
-
-        if (cooldowns[channel].special > (Date.now() - 2 * 60 * 1000)) {
-            return;
-        }
-        cooldowns[channel].special = Date.now();
-
-        client.say(channel, `${tags.username} to chwile zajmie hehe`);
-
-        /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await TopchannelwatchtimesCom(cleanChannel, tags.username, argumentClean);
-
-        client.say(channel, commands);
     }else if(["fivecity", "5city"].includes(command)){
-        if (cooldowns[channel].special > (Date.now() - getMeCooldowns(channel).special)) {
+        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
             return;
         }
-        cooldowns[channel].special = Date.now();
+        channels_data[channel].cooldowns.special = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await FivecityCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["szwalnia", "ekipa5city"].includes(command)){
-        if (cooldowns[channel].special > (Date.now() - getMeCooldowns(channel).special)) {
+        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
             return;
         }
-        cooldowns[channel].special = Date.now();
+        channels_data[channel].cooldowns.special = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await SzwalniaCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["czyjestemzjebem"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await ZjebCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["mogemoda", "szansanamoda"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldownslast = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await MogemodaCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["kamerki"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await KamerkiCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["zaprasza"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await ZapraszaCom(cleanChannel, tags.username, argumentClean);
@@ -533,10 +457,10 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["timeoffline", "offlinetime"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
         
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await OfflinetimeCom(cleanChannel, tags.username, argumentClean);
@@ -545,17 +469,18 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["duel"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
 
-        if(cooldowns[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
+        if(channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
 
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
+        const duels = channels_data[channel].duels_list;
 
         if(["accept", "akceptuje"].includes(argumentClean)){
 
             /* Checking if the user has provided a second argument. */
             if(!args[1]) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
-            const cleanAgainst = args[1].toLowerCase();
+            const cleanAgainst = args[1].replaceAll("@", "").toLowerCase();
             const duel_info = duels.find(x => x.id === `${cleanAgainst}-${cleanSender}`);
 
             /* Checking if the duel exists. */
@@ -587,14 +512,24 @@ client.on('message', async (channel, tags, message, self) => {
                 return client.say(channel, command)
             }
 
-        }else{
-            if (cooldowns[channel].duels > (Date.now() - getMeCooldowns(channel).longer)) {
+        }else if(["list", "lista"].includes(argumentClean)){
+            if (channels_data[channel].cooldowns.classic > (Date.now() - getMeCooldowns(channel).longer)) {
                 return;
             }
-            cooldowns[channel].duels = Date.now();
+            channels_data[channel].cooldowns.classic = Date.now();
+
+            const makeText = Truncate(duels.map((i) => i.id).join(", "), 200);
+
+            client.say(channel, `Aktualne pojedynki: ${makeText.length === 0 ? ("Brak"):makeText}`);
+
+        }else{
+            if (channels_data[channel].cooldowns.duels > (Date.now() - getMeCooldowns(channel).longer)) {
+                return;
+            }
+            channels_data[channel].cooldowns.duels = Date.now();
 
             /* Checking if the argument is clean. If it is not clean, it will return the client.say functione. */
-            if(!argumentClean) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
+            if(!argumentClean || argumentClean === cleanSender) return client.say(channel, `${cleanSender}, zapomniałeś podać osobe TPFufun `);
 
             /* Checking if the user has provided a number as the second argument. */
             if(!args[1] || !Number.isInteger(Number(args[1])) || Number(args[1]) === 0) return client.say(channel, `${cleanSender}, zapomniałeś podać kwote :| `);
@@ -620,19 +555,16 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(["#xspeedyq", "#grubamruwa"].includes(channel) && command === "points") return;
         
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await pointsCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["module", "modules"].includes(command)){
-        if (cooldowns[channel].mod > (Date.now() - 2000)) {
-            return;
-        }
         const badges = tags.badges || {};
         const isBroadcaster = badges.broadcaster;
         const isMod = badges.moderator;
@@ -645,41 +577,68 @@ client.on('message', async (channel, tags, message, self) => {
                 if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
     
                 if(args[1] === "duels") {
-                    duels = [];
+                    channels_data[channel].duels_list = [];
                 }
                 
-                cooldowns[channel].modules[`${args[1]}`] = true;
+                channels_data[channel].modules[`${args[1]}`] = true;
     
                 client.say(channel, `${tags.username}, włączyłeś moduł ${args[1]}`)
             }else if(args[0] === "disable"){
                 if(!args[1]) return client.say(channel, `${tags.username}, zapomniałeś podać nazwę modułu `);
     
                 if(args[1] === "duels") {
-                    duels = [];
+                    channels_data[channel].duels_list = [];
                 }
 
-                cooldowns[channel].modules[`${args[1]}`] = false;
+                channels_data[channel].modules[`${args[1]}`] = false;
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
             }
         }
 
     }else if(["help", "commands", "komendy", "pomoc"].includes(command)){
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
     }else if(["fame", "famemma", "ppv"].includes(command)){
         if(["#mrdzinold"].includes(channel)) return;
 
-        if (cooldowns[channel].last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        cooldowns[channel].last = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         client.say(channel, `FameMMA? tylko z refa bungee - https://famemma.tv/#/ref/bungee okok`);
+    }else if(["emotki", "emotes"].includes(command)){
+        if(["#mrdzinold"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.last = Date.now();
+
+        client.say(channel, `Nie widzisz tej emotki? -> jasperVixa Zainstaluj wtyczkę: https://7tv.app/ `);
     }
 
 });
+
+
+
+// else if(["livetop", "topkanazywo", "livetopwatchtime"].includes(command)){
+//     if(["#mrdzinold"].includes(channel)) return;
+
+//     if (channels_data[channel].cooldowns.special > (Date.now() - 2 * 60 * 1000)) {
+//         return;
+//     }
+//     channels_data[channel].cooldowns.special = Date.now();
+
+//     client.say(channel, `${tags.username} to chwile zajmie hehe`);
+
+//     /* Taking the argumentClean variable and passing it to the EwronCom function. */
+//     const commands = await TopchannelwatchtimesCom(cleanChannel, tags.username, argumentClean);
+
+//     client.say(channel, commands);
+// }

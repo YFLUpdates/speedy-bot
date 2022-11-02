@@ -1,0 +1,92 @@
+{
+    "#adrian1g__": {
+        "modules": {
+            "duels": false
+        },
+        "duels_list": [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
+    },
+    "#grubamruwa": {
+        "modules": {
+            "duels": false
+        },
+        "duels_list": [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
+    },
+    "#xspeedyq": {
+        "modules": {
+            "duels": false
+        },
+        "duels_list": [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
+    },
+    "#3xanax": {
+        "modules": {
+            "duels": true
+        },
+        "duels_list": [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
+    },
+    "#mrdzinold": {
+        "modules": {
+            "duels": false
+        },
+        "duels_list": [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
+    },
+    "#dobrypt": {
+        "modules": {
+            "duels": false
+        },
+        "duels_list": [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
+    }
+}

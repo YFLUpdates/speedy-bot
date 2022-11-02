@@ -3,5 +3,6 @@ import getRandomChatter from "./getRandomChatter.js";
 import randomNumber from "./randomNumber.js";
 import whosFamous from "./whosFamous.js";
 import ratioSwitch from "./ratioSwitch.js";
+import Truncate from "./Truncate.js";
 
-export { Censor, getRandomChatter, randomNumber, whosFamous, ratioSwitch};
+export { Censor, getRandomChatter, randomNumber, whosFamous, ratioSwitch, Truncate};

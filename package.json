@@ -1,6 +1,6 @@
 {
   "name": "xspeedyq-bot",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Twitch bot with functions similar to LewusBot",
   "main": "index.js",
   "repository": {
@@ -24,7 +24,8 @@
     "adrian1g__",
     "yfl",
     "yflupdates",
-    "grubamruwa"
+    "grubamruwa",
+    "mrdzinold"
   ],
   "author": "3xanax",
   "license": "MIT",
