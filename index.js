@@ -105,7 +105,6 @@ client.on('message', async (channel, tags, message, self) => {
         
 	}else if(["love"].includes(command)){
         if(channel === "#grubamruwa") return;
-
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
@@ -133,6 +132,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
+        if(channels_data[channel].modules["ewron"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await EwronCom(cleanChannel, tags.username, argumentClean);
 
@@ -144,6 +145,8 @@ client.on('message', async (channel, tags, message, self) => {
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules["yfl"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
         /* Taking the argumentClean variable and passing it to the YFLCom function. */
         const commands = await YFLCom(cleanChannel, tags.username, argumentClean);
@@ -178,6 +181,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
+        if(channels_data[channel].modules["ksiezniczki"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
         if(args[0] && args[0] !== " "){
             const semps = await checkSemps(args[0].replaceAll("@", "").toLowerCase());
 
@@ -193,6 +198,8 @@ client.on('message', async (channel, tags, message, self) => {
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules["ileogladalkobiet"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
         if(args[0]  && args[0] !== " "){
             const semps = await sempTime(args[0].replaceAll("@", "").toLowerCase());
@@ -210,6 +217,9 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
+        if(channels_data[channel].modules["watchtimeall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+    
         if(args[0] && args[0] !== " "){
             const watchtime = await watchtimeAll(args[0].replaceAll("@", "").toLowerCase());
 
@@ -227,6 +237,9 @@ client.on('message', async (channel, tags, message, self) => {
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules["watchtime"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
 
         if(args[0] === " "){
             //User requests his: Current channel on watchtime
@@ -302,7 +315,6 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.last = Date.now();
 
-
         if(args[0] === " "){
             const whenEnds = await checkTimeout(tags.username.toLowerCase(), cleanChannel);
 
@@ -318,6 +330,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missingall", "ostatnioall", "kiedyall"].includes(command)){
+        if(channels_data[channel].modules["missingall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
@@ -365,6 +378,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.last = Date.now();
 
+        if(channels_data[channel].modules["wiek"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
         /* Taking the message from the user and sending it to the ktoCom function. */
         const commands = await WiekCom(cleanChannel, tags.username, argumentClean);
 
@@ -375,6 +390,8 @@ client.on('message', async (channel, tags, message, self) => {
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
+
+        if(channels_data[channel].modules["top3"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await Top3watchtimeCom(cleanChannel, tags.username, argumentClean);
@@ -430,6 +447,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.last = Date.now();
 
+        if(channels_data[channel].modules["czyjestemzjebem"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await ZjebCom(cleanChannel, tags.username, argumentClean);
 
@@ -439,6 +458,8 @@ client.on('message', async (channel, tags, message, self) => {
             return;
         }
         channels_data[channel].cooldownslast = Date.now();
+
+        if(channels_data[channel].modules["mogemoda"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await MogemodaCom(cleanChannel, tags.username, argumentClean);
