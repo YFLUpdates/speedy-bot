@@ -624,6 +624,8 @@ client.on('message', async (channel, tags, message, self) => {
                 channels_data[channel].modules[`${args[1]}`] = false;
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
+            }else if(args[0] === "list"){
+                client.say(channel, `${tags.username}, wszystkie dostępne moduły: duels, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron `)
             }
         }
 
