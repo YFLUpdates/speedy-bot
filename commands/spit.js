@@ -5,9 +5,9 @@ export default async function hugC(channel, username, argument){
     const usernameSmall = username.toLowerCase();
 
     if(argument === " "){
-        return `${usernameSmall} opluł(a) samego(ą) siebie Spit `;
+        return `${usernameSmall} pluje na samego(ą) siebie Spit `;
     }else if(argument){
-        return `${usernameSmall} opluł(a) ${Censor(argument)} Spit `;
+        return `${usernameSmall} pluje na ${Censor(argument)} Spit `;
     }else{
         return await getRandomChatter(channel, { skipList: [ usernameSmall ] })
         .then(user => {
@@ -16,7 +16,7 @@ export default async function hugC(channel, username, argument){
             }
             else {
                 let { name } = user;
-                return `${usernameSmall} opluł(a) ${name} Spit `;
+                return `${usernameSmall} pluje na ${name} Spit `;
             }
         })
         // .catch(err => console.log(err));

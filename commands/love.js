@@ -6,10 +6,10 @@ export default async function hugC(channel, username, argument){
 
     if(argument === " "){
 
-        return `${usernameSmall} kochasz ${usernameSmall} na ${randomNumber(0, 100)}% <3  `;
+        return `${usernameSmall} jest zakochany(a) na ${randomNumber(0, 100)}% w ${usernameSmall} <3  `;
     }else if(argument){
-        return `${usernameSmall} kochasz ${Censor(argument)} na ${randomNumber(0, 100)}% <3  `;
+        return `${usernameSmall} jest zakochany(a) na ${randomNumber(0, 100)}% w ${Censor(argument)}<3  `;
     }else{
-        return `${usernameSmall} kochasz ${usernameSmall} na ${randomNumber(0, 100)}% <3  `;
+        return `${usernameSmall} jest zakochany(a) na ${randomNumber(0, 100)}% w ${usernameSmall} <3  `;
     }
 }
