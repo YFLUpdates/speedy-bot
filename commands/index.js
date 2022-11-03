@@ -20,7 +20,8 @@ import AODCom from "./aod.js";
 import SzwalniaCom from "./szwalnia.js";
 import OfflinetimeCom from "./offlinetime.js";
 import pointsCom from "./points.js";
+import Watchtime2Com from "./watchtime2.js"
 
 export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, 
     Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, 
-    ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom };
+    ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, Watchtime2Com};

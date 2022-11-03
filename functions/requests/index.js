@@ -13,5 +13,6 @@ import topChannelWatchtimes from "./topChannelWatchtimes.js";
 import offlineTime from "./offlineTime.js";
 import duelsWorking from "./duelsWorking.js";
 import getPoints from "./getPoints.js";
+import watchtimeTime from "./watchtimeTime.js";
 
-export { getChatters, checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, top3Watchtime, howOld, topChannelWatchtimes, offlineTime, duelsWorking, getPoints};
+export { getChatters, checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, top3Watchtime, howOld, topChannelWatchtimes, offlineTime, watchtimeTime, duelsWorking, getPoints};

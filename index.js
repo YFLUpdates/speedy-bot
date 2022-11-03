@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
 import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
-    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom } from "./commands/index.js";
+    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, Watchtime2Com } from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, duelsWorking, getPoints } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
@@ -241,13 +241,7 @@ client.on('message', async (channel, tags, message, self) => {
         if(channels_data[channel].modules["watchtime"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
 
-        if(args[0] === " "){
-            //User requests his: Current channel on watchtime
-            const watchtimeFunc = await watchtimeGet(tags.username.toLowerCase(), cleanChannel);
-
-            client.say(channel, watchtimeFunc);
-
-        }else if(args[0]){
+        if(args[0] && args[0] !== " "){
 
              if(args[1]){
                 //User requests: User X a watchtime on selected channel
@@ -495,6 +489,18 @@ client.on('message', async (channel, tags, message, self) => {
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await OfflinetimeCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
+    }else if(["watchtime2"].includes(command)){
+        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
+        
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.last = Date.now();
+
+        /* Taking the argumentClean variable and passing it to the EwronCom function. */
+        const commands = await Watchtime2Com(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }else if(["duel"].includes(command)){
