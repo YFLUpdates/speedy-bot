@@ -583,7 +583,6 @@ client.on('message', async (channel, tags, message, self) => {
 
     }else if(["yflpoints", "punkty", "points"].includes(command)){
         if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
-
         if(["#xspeedyq", "#grubamruwa"].includes(channel) && command === "points") return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
@@ -592,7 +591,7 @@ client.on('message', async (channel, tags, message, self) => {
         channels_data[channel].cooldowns.last = Date.now();
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await pointsCom(cleanChannel, tags.username, argumentClean);
+        const commands = await pointsCom(cleanChannel, tags.username, argumentClean, args);
 
         client.say(channel, commands);
     }else if(["odbierz"].includes(command)){
