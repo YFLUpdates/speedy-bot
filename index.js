@@ -604,14 +604,14 @@ client.on('message', async (channel, tags, message, self) => {
         const argumentCleanSecond = args[1].toLowerCase();
 
         if(argumentClean === "mod"){
-            if(argumentCleanSecond === "ig" && ["3xanax", "shato_p"]){
+            if(argumentCleanSecond === "ig" && ["3xanax", "shato_p"].includes(tags.username.toLowerCase())){
                 client.say(channel, `${tags.username}, wow udało ci się odebrać vipa FIRE`);
             }else if(argumentCleanSecond === "ig"){
                 client.say(channel, `${tags.username}, niestety nie byłem w stanie tego sprawdzić jasperSad`);
             }
 
         }else if(argumentClean === "vip"){
-            if(argumentCleanSecond === "ig" && ["3xanax", "shato_p"]){
+            if(argumentCleanSecond === "ig" && ["3xanax", "shato_p"].includes(tags.username.toLowerCase())){
                 client.say(channel, `${tags.username}, wow udało ci się odebrać vipa FIRE`);
             }else if(argumentCleanSecond === "ig"){
                 client.say(channel, `${tags.username}, niestety nie byłem w stanie tego sprawdzić jasperSad`);
