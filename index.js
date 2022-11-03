@@ -596,7 +596,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["odbierz"].includes(command)){
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
