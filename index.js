@@ -595,6 +595,29 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await pointsCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
+    }else if(["odbierz"].includes(command)){
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.longer = Date.now();
+
+        const argumentCleanSecond = args[1].toLowerCase();
+
+        if(argumentClean === "mod"){
+            if(argumentCleanSecond === "ig" && ["3xanax", "shato_p"]){
+                client.say(channel, `${tags.username}, wow udało ci się odebrać vipa FIRE`);
+            }else if(argumentCleanSecond === "ig"){
+                client.say(channel, `${tags.username}, niestety nie byłem w stanie tego sprawdzić jasperSad`);
+            }
+
+        }else if(argumentClean === "vip"){
+            if(argumentCleanSecond === "ig" && ["3xanax", "shato_p"]){
+                client.say(channel, `${tags.username}, wow udało ci się odebrać vipa FIRE`);
+            }else if(argumentCleanSecond === "ig"){
+                client.say(channel, `${tags.username}, niestety nie byłem w stanie tego sprawdzić jasperSad`);
+            }
+        }
+
     }else if(["module", "modules"].includes(command)){
         const badges = tags.badges || {};
         const isBroadcaster = badges.broadcaster;
