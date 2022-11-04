@@ -80,10 +80,6 @@ client.on("timeout", (channel, username, reason, duration, userstate) => {
     
 });
 
-setInterval(() => {
-    client.say("#xmerghani", "Dzisiaj streama nie ma ponieważ pojechał na FameMMA okok");
-}, 15 * 60 * 1000);
-
 client.on('message', async (channel, tags, message, self) => {
 	if(self || !message.startsWith('!')) return;
 
