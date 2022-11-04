@@ -7,6 +7,9 @@ import {randomNumber} from "../functions/index.js"
 
 dotenv.config()
 
+const botAccounts = ["socialstreamergrowth", "streamelements", "moobot", "discordstreamercommunity", "commanderroot", "smallstreamersdccommunity", 
+"ssgdcserver", "yflupdates", "lewusbot", "official_tubebot", "creatisbot", "robohubby"];
+
 async function isLive(){
     const channels = [
         "412834368", //speedy
@@ -84,6 +87,8 @@ export default async function updateLastSeen(streamers) {
             }
 
             for (var x = 0; x < chatters.length; ++x) {
+                if(botAccounts.includes(chatters[x].name)) return;
+                
                 await waitforme(300)
                 
                 //console.log("aha")

@@ -1,0 +1,64 @@
+{
+    "_comment": "Types: RollOrMark, roll",
+    "commands": [
+        {
+            "name": "opluj",
+            "type": "RollOrMark",
+            "aliases": [
+                "opluj",
+                "spit"
+            ],
+            "disabled": [
+                "adrian1g__"
+            ],
+            "cooldown": "classic",
+            "messages": {
+                "default": "pluje na {user} Spit",
+                "onerror": "pluje na cały czat D:"
+            }
+        },
+        {
+            "name": "kogut",
+            "type": "RollOrMark",
+            "aliases": [
+                "kogut"
+            ],
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "messages": {
+                "default": "opierdolił(a) koguta {user} jasperGaleczka",
+                "onerror": "opierdolił(a) koguta YFLUpdates Glumlenie"
+            }
+        },
+        {
+            "name": "przytul",
+            "type": "RollOrMark",
+            "aliases": [
+                "przytul",
+                "hug"
+            ],
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "messages": {
+                "default": "przytula {user} segz",
+                "onerror": "przytula YFLUpdates segz"
+            }
+        },
+        {
+            "name": "zaprasza",
+            "type": "RollOrMark",
+            "aliases": [
+                "zaprasza"
+            ],
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "messages": {
+                "default": "zaprasza {user} na kamerki jasperM",
+                "onerror": "zaprasza YFLUpdates na kamerki jasperLaskotanie"
+            }
+        }
+    ]
+}
