@@ -41,7 +41,7 @@ export default async function hugC(channel, username, argument, args){
     }else if(argument === "send"){
         //        args0  arg1   arg2
         //!points send {user} {kwota}
-        if(!args[1] || args[1] == " ") return `${usernameSmall}, zapomniałeś podać osobe TPFufun `;
+        if(!args[1] || args[1] == " " || args[1].toLowerCase() === usernameSmall) return `${usernameSmall}, zapomniałeś podać osobe TPFufun `;
         if(!args[2] || !Number.isInteger(Number(args[2])) || Number(args[12]) === 0) return `${usernameSmall}, zapomniałeś podać kwote :| `;
         const receiver = args[1].replaceAll("@", "").toLowerCase();
         const ammount = Number(args[2]);
