@@ -91,7 +91,7 @@ client.on('message', async (channel, tags, message, self) => {
     if(bad_words.includes(args[0]) || bad_words.includes(args[1])) return;
 
 	if(["opluj"].includes(command)) {
-        if(channel === "#adrian1g__") return;
+        if(["#adrian1g__", "#xmerghani"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -665,15 +665,6 @@ client.on('message', async (channel, tags, message, self) => {
         channels_data[channel].cooldowns.last = Date.now();
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
-    }else if(["fame", "famemma", "ppv"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
-
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
-            return;
-        }
-        channels_data[channel].cooldowns.last = Date.now();
-
-        client.say(channel, `FameMMA? tylko z refa bungee - https://famemma.tv/#/ref/bungee okok`);
     }else if(["emotki", "emotes"].includes(command)){
         if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
 
@@ -683,14 +674,6 @@ client.on('message', async (channel, tags, message, self) => {
         channels_data[channel].cooldowns.last = Date.now();
 
         client.say(channel, `Nie widzisz tej emotki? -> jasperVixa Zainstaluj wtyczkę: https://7tv.app/ `);
-    }else if(["czemu", "stream"].includes(command)){
-
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
-            return;
-        }
-        channels_data[channel].cooldowns.last = Date.now();
-
-        client.say(channel, `Ponieważ ${channel} jest na FameMMA okok !ppv`);
     }
 
 });
