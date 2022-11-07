@@ -5,7 +5,7 @@ import getMultipleRandom from "../../components/getMultipleRandom.js";
 const znaniHex = JSON.parse(await fs.readFile('./steam_hex.json', 'UTF-8'))
 
 export default async function getFiveCity(user) {
-    const fivecity = await cfx.fetchServer("ggoe6z");
+    const fivecity = await cfx.fetchServer("vp4rxq");
     const onServer = fivecity.players.length;
     let streamers = 0;
     let streamrsArray = [];

@@ -11,7 +11,7 @@ const znaniHex = [
 ]
 
 export default async function getSzwalnia(user) {
-    const fivecity = await cfx.fetchServer("ggoe6z");
+    const fivecity = await cfx.fetchServer("vp4rxq");
     let streamrsArray = [];
 
     await Promise.all(
