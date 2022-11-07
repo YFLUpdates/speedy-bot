@@ -6,6 +6,9 @@ const znaniHex = JSON.parse(await fs.readFile('./steam_hex.json', 'UTF-8'))
 
 export default async function getFiveCity(user) {
     const fivecity = await cfx.fetchServer("vp4rxq");
+
+    if(!fivecity) return `${user} coś się popsuło z Fivem jasperTragedia`;
+
     const onServer = fivecity.players.length;
     let streamers = 0;
     let streamrsArray = [];

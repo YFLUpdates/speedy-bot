@@ -16,6 +16,8 @@ export default async function getSzwalnia(user) {
     const fivecity = await cfx.fetchServer("vp4rxq");
     let streamrsArray = [];
 
+    if(!fivecity) return `${user} coś się popsuło z Fivem jasperTragedia`;
+
     await Promise.all(
         fivecity.players.map(async (i) => {
             if(znaniHex.includes(i.identifiers[0])){
