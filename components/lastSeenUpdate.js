@@ -88,17 +88,19 @@ export default async function updateLastSeen(streamers) {
                 );
             }
 
-            for (var x = 0; x < chatters.length; ++x) {
-                if(botAccounts.includes(chatters[x].name)) return;
+            await Promise.all(
+                chatters.map(async (i) => {
+                    if(botAccounts.includes(i.name)) return;
+
+                    await waitforme(300)
                 
-                await waitforme(300)
-                
-                updateUser(chatters[x].name,{
-                    channel: cleanStreamer,
-                    date: new Date().toJSON().slice(0, 19).replace('T', ' '),
-                    watchtime: liveChannels.includes(cleanStreamer) ? true : null
+                    updateUser(i.name,{
+                        channel: cleanStreamer,
+                        date: new Date().toJSON().slice(0, 19).replace('T', ' '),
+                        watchtime: liveChannels.includes(cleanStreamer) ? true : null
+                    })
                 })
-            }
+            );
         })
     )
 }

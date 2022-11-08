@@ -28,6 +28,8 @@ async function request(channel, json){
     })
     .catch(err => {
         console.log(err)
+
+        return null;
     })
 }
 
@@ -54,6 +56,8 @@ export default async function hugC(channel, username, argument, args){
             winner: receiver,
             loser: usernameSmall
         });
+
+        if(req === null) return `${usernameSmall}, ${receiver} jeszcze nie został zarejestrowany, nie jesteś w stanie wysłać mu punktów`;
 
         return `${usernameSmall}, wysłałeś ${ammount} punktów do ${receiver} GIGACHAD`;
 
