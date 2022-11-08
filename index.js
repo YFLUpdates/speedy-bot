@@ -17,7 +17,7 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani" ];
+const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson" ];
 //const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
@@ -91,7 +91,7 @@ client.on('message', async (channel, tags, message, self) => {
     if(bad_words.includes(args[0]) || bad_words.includes(args[1])) return;
 
 	if(["opluj"].includes(command)) {
-        if(["#adrian1g__", "#xmerghani"].includes(channel)) return;
+        if(["#adrian1g__", "#xmerghani", "#xkaleson"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -232,7 +232,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtime", "xayopl"].includes(command)){
-        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani"].includes(channel) && command === "watchtime") return;
+        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson"].includes(channel) && command === "watchtime") return;
 
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
@@ -570,22 +570,18 @@ client.on('message', async (channel, tags, message, self) => {
         
         const username = tags.username.toLowerCase();
 
-        if(argumentClean === "start"){
-            if(!isModUp || username !== "3xanax") return;
+        if(argumentClean === "start" && isModUp || argumentClean === "start" && username === "3xanax"){
 
             channels_data[channel].watchtime_top = [];
             
             channels_data[channel].modules["jwt"] = true;
 
             client.say(channel, `${username}, dołączanie do watchtimu włączone Chatters !jwt `)
-        }else if(argumentClean === "stop"){
-            if(!isModUp || username !== "3xanax") return;
-
+        }else if(argumentClean === "stop" && isModUp || argumentClean === "stop" && username === "3xanax"){
             channels_data[channel].modules["jwt"] = false;
 
             client.say(channel, `${username}, dołączanie do watchtimu wyłączone ok aby wybrać osoby z największym watchtimem !jwt count`);
-        }else if(argumentClean === "count"){
-            if(!isModUp || username !== "3xanax") return;
+        }else if(argumentClean === "count" && isModUp || argumentClean === "count" && username === "3xanax" ){
             if(channels_data[channel].modules["jwt"] === true) return client.say(channel, `${username}, najpierw musisz wyłączyć dołączanie !jwt stop `);
 
             if(channels_data[channel].watchtime_top.length < 5) return client.say(channel, `${username}, brakuje osób do losowania min. 5 `);
@@ -665,7 +661,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
     }else if(["emotki", "emotes"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#xkaleson"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
