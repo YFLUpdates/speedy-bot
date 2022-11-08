@@ -49,8 +49,6 @@ app.listen(PORT, () =>
   console.log(`API Server listening on port ${PORT}`)
 );
 
-//lastSeenUpdate(joinThem);
-
 setInterval(() => {
     lastSeenUpdate(joinThem)
 }, 10 * 60 * 1000);
