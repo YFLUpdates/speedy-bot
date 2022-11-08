@@ -27,7 +27,7 @@ async function request(channel, json){
         return res.data;
     })
     .catch(err => {
-        console.log(err)
+        //console.log(err)
 
         return null;
     })
