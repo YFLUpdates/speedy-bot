@@ -4,21 +4,21 @@ import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
 import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
-    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, Watchtime2Com } from "./commands/index.js";
-import { watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, duelsWorking, getPoints } from "./functions/requests/index.js";
+    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom } from "./commands/index.js";
+import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
 import getMeCooldowns from "./components/getMeCooldowns.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
-import {Truncate} from "./functions/index.js";
+import {Truncate, topN} from "./functions/index.js";
 
 dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani" ];
-//const joinThem = [ '3xanax' ];
+//const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani" ];
+const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
 		username: process.env.TWITCH_USERNAME,
@@ -325,12 +325,12 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missingall", "ostatnioall", "kiedyall"].includes(command)){
-        if(channels_data[channel].modules["missingall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
-        
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
+
+        if(channels_data[channel].modules["missingall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
         if(args[0] === " ") return;
 
@@ -392,20 +392,6 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await Top3watchtimeCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
-    }else if(["dodajznany"].includes(command)){
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
-            return;
-        }
-        channels_data[channel].cooldowns.longer = Date.now();
-
-        if(args[0] === " ") return;
-        
-        if(args[0]){
-            callWebhook(args[0])
-
-            client.say(channel, `${tags.username} zapisane ok`);
-        }
-
     }else if(["fivecity", "5city"].includes(command)){
         if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
             return;
@@ -480,7 +466,7 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await ZapraszaCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
-    }else if(["timeoffline", "offlinetime"].includes(command)){
+    }else if(["timeoffline", "offlinetime", "offtime"].includes(command)){
         if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
@@ -492,22 +478,8 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await OfflinetimeCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
-    }else if(["watchtime2"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
-        
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
-            return;
-        }
-        channels_data[channel].cooldowns.last = Date.now();
-
-        /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await Watchtime2Com(cleanChannel, tags.username, argumentClean);
-
-        client.say(channel, commands);
     }else if(["duel"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
-
-        if(channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
+        if(["#mrdzinold", "#xmerghani"].includes(channel) || channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
 
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
@@ -588,9 +560,59 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${argumentClean}, jeśli akceptujesz pojedynek na kwotę ${Number(args[1])} punktów, wpisz !duel accept ${cleanSender}`)
         }
 
-    }else if(["yflpoints", "punkty", "points"].includes(command)){
+    }else if(["joinwatchtime", "jwt"].includes(command)){
         if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
-        if(["#xspeedyq", "#grubamruwa"].includes(channel) && command === "points") return;
+
+        const badges = tags.badges || {};
+        const isBroadcaster = badges.broadcaster;
+        const isMod = badges.moderator;
+        const isModUp = isBroadcaster || isMod;
+        
+        const username = tags.username.toLowerCase();
+
+        if(argumentClean === "start"){
+            if(!isModUp || username !== "3xanax") return;
+
+            channels_data[channel].watchtime_top = [];
+            
+            channels_data[channel].modules["jwt"] = true;
+
+            client.say(channel, `${username}, dołączanie do watchtimu włączone Chatters !jwt `)
+        }else if(argumentClean === "stop"){
+            if(!isModUp || username !== "3xanax") return;
+
+            channels_data[channel].modules["jwt"] = false;
+
+            client.say(channel, `${username}, dołączanie do watchtimu wyłączone ok aby wybrać osoby z największym watchtimem !jwt count`);
+        }else if(argumentClean === "count"){
+            if(!isModUp || username !== "3xanax") return;
+            if(channels_data[channel].modules["jwt"] === true) return client.say(channel, `${username}, najpierw musisz wyłączyć dołączanie !jwt stop `);
+
+            if(channels_data[channel].watchtime_top.length < 5) return client.say(channel, `${username}, brakuje osób do losowania min. 5 `);
+
+            const top5 = topN(channels_data[channel].watchtime_top, 5);
+
+            client.say(channel, `${username}, najwięcej watchtimu mają: ${top5.map((list) => list.name).join(", ")}`);
+        }else{
+            if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+                return;
+            }
+            channels_data[channel].cooldowns.last = Date.now();
+
+            if(channels_data[channel].modules["jwt"] === false) return client.say(channel, `${username}, moduł wyłączony `);
+
+            const watchtime = await getWatchtime(username, cleanChannel);
+
+            channels_data[channel].watchtime_top.push({
+                name: username,
+                count: watchtime
+            })
+
+            client.say(channel, `${username}, zapisano do listy watchtime`);
+        }
+
+    }else if(["yflpoints", "punkty", "points"].includes(command)){
+        if(["#mrdzinold", "#xmerghani"].includes(channel) || ["#xspeedyq", "#grubamruwa"].includes(channel) && command === "points") return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -601,29 +623,6 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await pointsCom(cleanChannel, tags.username, argumentClean, args);
 
         client.say(channel, commands);
-    }else if(["odbierz"].includes(command)){
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
-            return;
-        }
-        channels_data[channel].cooldowns.longer = Date.now();
-
-        const argumentCleanSecond = args[1].toLowerCase();
-
-        if(argumentClean === "mod"){
-            if(argumentCleanSecond === "ig" && ["3xanax", "shato_p"].includes(tags.username.toLowerCase())){
-                client.say(channel, `${tags.username}, wow udało ci się odebrać vipa FIRE`);
-            }else if(argumentCleanSecond === "ig"){
-                client.say(channel, `${tags.username}, niestety nie byłem w stanie tego sprawdzić jasperSad`);
-            }
-
-        }else if(argumentClean === "vip"){
-            if(argumentCleanSecond === "ig" && ["3xanax", "shato_p"].includes(tags.username.toLowerCase())){
-                client.say(channel, `${tags.username}, wow udało ci się odebrać vipa FIRE`);
-            }else if(argumentCleanSecond === "ig"){
-                client.say(channel, `${tags.username}, niestety nie byłem w stanie tego sprawdzić jasperSad`);
-            }
-        }
-
     }else if(["module", "modules"].includes(command)){
         const badges = tags.badges || {};
         const isBroadcaster = badges.broadcaster;
@@ -677,21 +676,3 @@ client.on('message', async (channel, tags, message, self) => {
     }
 
 });
-
-
-
-// else if(["livetop", "topkanazywo", "livetopwatchtime"].includes(command)){
-//     if(["#mrdzinold"].includes(channel)) return;
-
-//     if (channels_data[channel].cooldowns.special > (Date.now() - 2 * 60 * 1000)) {
-//         return;
-//     }
-//     channels_data[channel].cooldowns.special = Date.now();
-
-//     client.say(channel, `${tags.username} to chwile zajmie hehe`);
-
-//     /* Taking the argumentClean variable and passing it to the EwronCom function. */
-//     const commands = await TopchannelwatchtimesCom(cleanChannel, tags.username, argumentClean);
-
-//     client.say(channel, commands);
-// }

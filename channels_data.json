@@ -1,7 +1,8 @@
 {
     "#adrian1g__": {
         "modules": {
-            "duels": false
+            "duels": false,
+            "jwt": false
         },
         "duels_list": [
 
@@ -19,7 +20,8 @@
     },
     "#grubamruwa": {
         "modules": {
-            "duels": false
+            "duels": false,
+            "jwt": false
         },
         "duels_list": [
 
@@ -37,7 +39,8 @@
     },
     "#xspeedyq": {
         "modules": {
-            "duels": false
+            "duels": false,
+            "jwt": false
         },
         "duels_list": [
 
@@ -55,7 +58,8 @@
     },
     "#3xanax": {
         "modules": {
-            "duels": true
+            "duels": true,
+            "jwt": true
         },
         "duels_list": [
 
@@ -73,7 +77,8 @@
     },
     "#mrdzinold": {
         "modules": {
-            "duels": false
+            "duels": false,
+            "jwt": false
         },
         "duels_list": [
 
@@ -91,7 +96,8 @@
     },
     "#dobrypt": {
         "modules": {
-            "duels": false
+            "duels": false,
+            "jwt": false
         },
         "duels_list": [
 
@@ -109,7 +115,8 @@
     },
     "#xmerghani": {
         "modules": {
-            "duels": false
+            "duels": false,
+            "jwt": false
         },
         "duels_list": [
 
