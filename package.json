@@ -1,6 +1,6 @@
 {
   "name": "xspeedyq-bot",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Twitch bot with functions similar to LewusBot",
   "main": "index.js",
   "repository": {

@@ -45,6 +45,23 @@ app.get("/", (req, res) => {
     );
 });
 
+app.get("/jwt/:id", (req, res) => {
+    if(!req.params && !req.params.id) return res.status(500).json({ status: 500, message: "channel is missing" });
+    if(channels_data["#"+req.params.id]){
+        res.status(200).json(channels_data["#"+req.params.id].watchtime_top);
+    }else{
+        res.status(404).json({status: 404, message: "channel not found" })
+    }
+});
+
+app.use((req, res, next) => {
+  res.status(404).json({
+    message: `Route ${req.method}:${req.url} not found`,
+    error: "Not Found",
+    statusCode: 404
+  })
+})
+
 app.listen(PORT, () =>
   console.log(`API Server listening on port ${PORT}`)
 );
