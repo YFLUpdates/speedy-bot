@@ -605,6 +605,11 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, `${username}, najwięcej watchtimu mają: ${top5.map((list) => list.name).join(", ")}`);
         }else{
+            const check_for_duplicate = channels_data[channel].watchtime_top.find(x => x.name === username);
+            
+            /* Checking if the duel exists. */
+            if(check_for_duplicate !== undefined) return;
+
             if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
                 return;
             }
