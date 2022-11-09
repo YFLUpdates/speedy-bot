@@ -670,6 +670,10 @@ client.on('message', async (channel, tags, message, self) => {
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
             }else if(args[0] === "list"){
                 client.say(channel, `${tags.username}, wszystkie dostępne moduły: duels, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron `)
+            }else if(args[0] === "clearduels"){
+                channels_data[channel].duels_list = [];
+
+                client.say(channel, `${tags.username}, wyczyściłeś wszystkie duele `)
             }
         }
 
