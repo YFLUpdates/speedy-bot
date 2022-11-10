@@ -247,7 +247,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtime", "xayopl"].includes(command)){
-        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson"].includes(channel) && command === "watchtime") return;
+        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson", "#mork"].includes(channel) && command === "watchtime") return;
 
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
@@ -494,7 +494,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["duel"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel) || channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
+        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel) || channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
 
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
@@ -696,7 +696,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
     }else if(["emotki", "emotes"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#xkaleson"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#xkaleson", "#mork"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
