@@ -530,6 +530,13 @@ client.on('message', async (channel, tags, message, self) => {
 
                 return client.say(channel, `${cleanSender}, pojedynek wygasł :( `);
             }else{
+                const pointsRequester = await getPoints(duel_info.user, cleanChannel);
+                if(duel_info.points > pointsRequester) {
+                    duels.splice(indexOfObject, 1);
+                    
+                    return client.say(channel, `${duel_info.user}, nie ma już punktów VoHiYo `);
+                }
+                
                 duels.splice(indexOfObject, 1);
 
                 const command = await duelsWorking(cleanChannel, duel_info.user, duel_info.invited, duel_info.points);
@@ -618,6 +625,10 @@ client.on('message', async (channel, tags, message, self) => {
             if(channels_data[channel].modules["jwt"] === false) return client.say(channel, `${username}, moduł wyłączony `);
 
             const watchtime = await getWatchtime(username, cleanChannel);
+
+            const check_for_duplicate2 = channels_data[channel].watchtime_top.find(x => x.name === username);
+
+            if(check_for_duplicate2 !== undefined) return;
 
             channels_data[channel].watchtime_top.push({
                 name: username,
