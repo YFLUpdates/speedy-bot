@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function getToken(){
     return await axios({
-        url: `https://api.yfl.es/api/lastseen/token`,
+        url: `https://api.yfl.es/v1/settings/twitch/token`,
         method: "get",
         headers: {
             'Content-type': 'application/json',
