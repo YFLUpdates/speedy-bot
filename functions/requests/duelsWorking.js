@@ -3,7 +3,7 @@ import {randomNumber} from "../index.js"
 
 async function request(channel, json){
     return await axios({
-        url: `https://api.yfl.es/api/lastseen/duel/${channel}`,
+        url: `https://api.yfl.es/v1/user/duel/${channel}`,
         method: "put",
         data: json,
         headers: {

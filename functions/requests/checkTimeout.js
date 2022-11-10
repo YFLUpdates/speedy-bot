@@ -3,7 +3,7 @@ import humanizeDuration from "humanize-duration";
 import { Censor } from "../index.js";
 
 export default async function checkTimeout(user, channelName) {
-    return await axios.get(`https://api.yfl.es/api/user/yflupdates/${user}?channel=${channelName}`, {headers: {'Content-type': 'application/json'}})
+    return await axios.get(`https://api.yfl.es/v1/user/actions/latest/timeout/${user}?channel=${channelName}`, {headers: {'Content-type': 'application/json'}})
     .then(async (data) => {
         const res = data.data;
 

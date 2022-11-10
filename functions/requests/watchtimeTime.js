@@ -3,7 +3,7 @@ import humanizeDuration from "humanize-duration";
 import {Censor} from "../index.js"
 
 export default async function getChatters(user, target_channel) {
-    return await axios.get(`https://api.yfl.es/api/lastseen/find/${user}?channel=${target_channel}`, {headers: {'Content-type': 'application/json'}})
+    return await axios.get(`https://api.yfl.es/v1/user/find/${user}?channel=${target_channel}`, {headers: {'Content-type': 'application/json'}})
     .then(async (data) => {
         const res = data.data;
 

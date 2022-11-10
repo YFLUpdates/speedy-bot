@@ -40,31 +40,6 @@ async function isLive(){
     })
 }
 
-// async function updateUser(channelName, streamer, wt){
-//     //console.log(channelName, streamer, wt)
-//     return await axios({
-//         url: `https://api.yfl.es/api/lastseen/update/${channelName}`,
-//         method: "put",
-//         data: {
-//             date: new Date().toJSON().slice(0, 19).replace('T', ' '),
-//             channel: streamer,
-//             watchtime: wt
-//         },
-//         headers: {
-//             'Content-type': 'application/json',
-//             'clientID': process.env.YFL_CLIENT_ID,
-//             'token': process.env.YFL_TOKEN
-//         }
-//     })
-//     .then(async (res) => {
-//         //console.log(data)
-//         return res.data;
-//     })
-//     .catch(err => {
-//         console.log(err)
-//     })
-// }
-
 export default async function updateLastSeen(streamers) {
 
     await Promise.all(

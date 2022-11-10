@@ -3,7 +3,7 @@ import {getPoints} from "../functions/requests/index.js";
 import axios from "axios";
 
 async function getTop(channelName) {
-    return await axios.get(`https://api.yfl.es/api/lastseen/ranking/points/${channelName}`, {headers: {'Content-type': 'application/json'}})
+    return await axios.get(`https://api.yfl.es/v1/rankings/channel/ranking/points/${channelName}`, {headers: {'Content-type': 'application/json'}})
     .then(async (res) => {
         return res.data.slice(0, 3).map((i) => { return (`${i.user_login}(${i.points})`) }).join(", ");
     })
@@ -13,7 +13,7 @@ async function getTop(channelName) {
 }
 async function request(channel, json){
     return await axios({
-        url: `https://api.yfl.es/api/lastseen/duel/${channel}`,
+        url: `https://api.yfl.es/v1/user/duel/${channel}`,
         method: "put",
         data: json,
         headers: {
