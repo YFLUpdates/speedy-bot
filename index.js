@@ -17,7 +17,7 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson" ];
+const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", 'mork' ];
 //const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
@@ -356,7 +356,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
@@ -482,7 +482,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["timeoffline", "offlinetime", "offtime"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel)) return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -639,7 +639,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["yflpoints", "punkty", "points"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel) || ["#xspeedyq", "#grubamruwa"].includes(channel) && command === "points") return;
+        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel) || ["#xspeedyq", "#grubamruwa"].includes(channel) && command === "points") return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
