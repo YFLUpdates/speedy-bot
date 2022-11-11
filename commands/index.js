@@ -21,8 +21,9 @@ import SzwalniaCom from "./szwalnia.js";
 import OfflinetimeCom from "./offlinetime.js";
 import pointsCom from "./points.js";
 import Watchtime2Com from "./watchtime2.js";
-import PogodaCom from "./pogoda.js"
+import PogodaCom from "./pogoda.js";
+import ChattersCom from "./chatters.js";
 
 export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, 
     Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, 
-    ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, Watchtime2Com, PogodaCom};
+    ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, Watchtime2Com, PogodaCom, ChattersCom};
