@@ -1,63 +1,574 @@
 {
     "_comment": "Types: RollOrMark, roll",
+    "cooldowns": { 
+        "classic": 7000, 
+        "longer": 15000, 
+        "special": 30000 
+    },
+    "commands_mods": [
+        {
+            "name": "jwt",
+            "aliases": [
+                "jwt",
+                "joinwatchtime"
+            ],
+            "arguments": "{start/stop/count}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": null,
+            "description": {
+                "pl": "Sprawdzanie największego watchtimu",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "modules",
+            "aliases": [
+                "modules",
+                "module"
+            ],
+            "arguments": "{enable/disable/list/clearduels} {moduł}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": null,
+            "description": {
+                "pl": "Wyłącza części bota",
+                "en": "lorem"
+            }
+        }
+    ],
     "commands": [
         {
-            "name": "opluj",
-            "type": "RollOrMark",
+            "name": "watchtime",
             "aliases": [
-                "opluj",
-                "spit"
+                "watchtime",
+                "xayopl",
+                "wt"
             ],
+            "arguments": "{user} {streamer}",
+            "usage": "",
             "disabled": [
-                "adrian1g__"
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Pokazuje ile czasu spędził widz na streamie.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "watchtimeall",
+            "aliases": [
+                "watchtimeall",
+                "wtall"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Sumuje watchtime na wszystkich polskich kanałach od 26 lipca (dane z xayo.pl).",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "ksiezniczki",
+            "aliases": [
+                "ksiezniczki",
+                "topdupeczki",
+                "topsemp"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Pokazuje top3 streamerki, które ktoś oglądał po watchtimie (min 1h).",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "ileogladalkobiet",
+            "aliases": [
+                "semp",
+                "ileogladalkobiet"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Pokazuje ile ktoś oglądał polskie streamerki od 26 lipca.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "kto",
+            "aliases": [
+                "kto"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Pokazuje kto z listy znanych osobistości twitchowych jest na kanale.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "gdzie",
+            "aliases": [
+                "gdzie",
+                "przesladowanie",
+                "where"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Pokazuje na jakich kanałach siedzi aktualnie dany streamer.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "yfl",
+            "aliases": [
+                "yfl",
+                "yflwatchtime"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Sprawdza czy ktoś jest widzem YFL.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "ewron",
+            "aliases": [
+                "ewron",
+                "ewroniarz"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Sprawdza czy ktoś jest widzem ewrona (HOPAKI).",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "opluj",
+            "aliases": [
+                "opluj"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+                "adrian1g__",
+                "xkaleson",
+                "xmerghani"
             ],
             "cooldown": "classic",
-            "messages": {
-                "default": "pluje na {user} Spit",
-                "onerror": "pluje na cały czat D:"
+            "description": {
+                "pl": "Pluje na losową osobę z chatu.",
+                "en": "lorem"
             }
         },
         {
             "name": "kogut",
-            "type": "RollOrMark",
             "aliases": [
                 "kogut"
             ],
+            "arguments": "{user}",
+            "usage": "",
             "disabled": [
             ],
             "cooldown": "classic",
-            "messages": {
-                "default": "opierdolił(a) koguta {user} jasperGaleczka",
-                "onerror": "opierdolił(a) koguta YFLUpdates Glumlenie"
+            "description": {
+                "pl": "Opierdala koguta losowej osobie na chacie.",
+                "en": "lorem"
             }
         },
         {
-            "name": "przytul",
-            "type": "RollOrMark",
+            "name": "love",
             "aliases": [
-                "przytul",
-                "hug"
+                "love"
             ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+                "grubamruwa",
+                "xmerghani"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Sprawdza, jak bardzo kochasz osobę.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "hug",
+            "aliases": [
+                "hug",
+                "przytul"
+            ],
+            "arguments": "{user}",
+            "usage": "",
             "disabled": [
             ],
             "cooldown": "classic",
-            "messages": {
-                "default": "przytula {user} segz",
-                "onerror": "przytula YFLUpdates segz"
+            "description": {
+                "pl": "Przytula podaną osobę.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "kiss",
+            "aliases": [
+                "kiss",
+                "calus"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Całuje podaną osobę.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "ilejeszcze",
+            "aliases": [
+                "ilejeszcze",
+                "wruc"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Sprawdza, kiedy kończy się wykluczenie.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "missingall",
+            "aliases": [
+                "missingall",
+                "ostatnioall"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Sprawdza gdzie ostatnio był widziany user - wszystkie kanały twitch.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "missing",
+            "aliases": [
+                "missing",
+                "ostatnio",
+                "lastseen",
+                "kiedy"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+                "xmerghani",
+                "mrdzinold",
+                "mork"
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Kiedy ostatnio był widziany user na kanale.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "marry",
+            "aliases": [
+                "slub",
+                "marry"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Kiedy będzie ślub z user.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "ileyfl",
+            "aliases": [
+                "ileyfl"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Pokazuje ile osób z YFL w nicku jest na streamie.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "top3",
+            "aliases": [
+                "top3watchtime",
+                "top3"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Pokazuje top 3 kanały według watchtimu.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "wiek",
+            "aliases": [
+                "ilemamlat",
+                "wiek"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Zgaduje wiek na podstawie daty zalozenia konta, liczb w nicku i oglądanych kanałów.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "5city",
+            "aliases": [
+                "fivecity",
+                "5city"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "special",
+            "description": {
+                "pl": "Sprawdza ile osób jest na serwerze.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "czyjestemzjebem",
+            "aliases": [
+                "czyjestemzjebem"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Prosta piłka tak / nie.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "mogemoda",
+            "aliases": [
+                "mogemoda",
+                "szansanamoda"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Jaką masz szanse na dostanie moda.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "kamerki",
+            "aliases": [
+                "kamerki"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Kto z kim siedzi na kamerkach.",
+                "en": "lorem"
             }
         },
         {
             "name": "zaprasza",
-            "type": "RollOrMark",
             "aliases": [
                 "zaprasza"
             ],
+            "arguments": "{user}",
+            "usage": "",
             "disabled": [
             ],
             "cooldown": "classic",
-            "messages": {
-                "default": "zaprasza {user} na kamerki jasperM",
-                "onerror": "zaprasza YFLUpdates na kamerki jasperLaskotanie"
+            "description": {
+                "pl": "Zaproś kogoś na kamerki.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "aod",
+            "aliases": [
+                "aod"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "special",
+            "description": {
+                "pl": "Sprawdza kto z AOD jest na 5City.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "szwalnia",
+            "aliases": [
+                "szwalnia",
+                "gangmoderacji"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "special",
+            "description": {
+                "pl": "Sprawdza kto z gangu moderacji jest na 5City.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "points",
+            "aliases": [
+                "punkty",
+                "points",
+                "yflpoints"
+            ],
+            "arguments": "{user/ranking/send}",
+            "usage": "",
+            "disabled": [
+                "xmerghani",
+                "mork",
+                "mrdzinold"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Pokazuje liczbe punktów.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "duel",
+            "aliases": [
+                "duel",
+                "pojedynek"
+            ],
+            "arguments": "{user/list} {kwota}",
+            "usage": "",
+            "disabled": [
+                "xmerghani",
+                "mork",
+                "mrdzinold"
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Zaproś na pojedynek o punkty.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "timeoffline",
+            "aliases": [
+                "timeoffline",
+                "offlinetime",
+                "offtime"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+                "xmerghani",
+                "mork",
+                "mrdzinold"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Pokazuje ile czasu spędziłeś na offstreamie.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "jwt",
+            "aliases": [
+                "jwt",
+                "joinwatchtime"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+                "xmerghani",
+                "mrdzinold"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Dołaczanie do listy osób w celu sprawdzenia największego watchtimu.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "help",
+            "aliases": [
+                "help",
+                "komendy",
+                "commands",
+                "pomoc"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Podaje kilka komend i linka do strony ze wszystkimi.",
+                "en": "lorem"
             }
         }
     ]
