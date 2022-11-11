@@ -6,7 +6,7 @@ async function getWeather(city) {
         return res.data
     })
     .catch(err => {
-        console.log(err)
+        //console.log(err)
         
         return null;
     })

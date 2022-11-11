@@ -716,6 +716,14 @@ client.on('message', async (channel, tags, message, self) => {
         channels_data[channel].cooldowns.last = Date.now();
 
         client.say(channel, `Nie widzisz tej emotki? -> jasperVixa Zainstaluj wtyczkę: https://7tv.app/ `);
+    }else if(["cpanie", "wickr"].includes(command)){
+        if(channel !== "#adrian1g__") return;
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.last = Date.now();
+
+        client.say(channel, `wickr: xadrian1giet, prices: https://yfl.es/RD2hyjxpv8DsCDyGw6M79ctc7`);
     }
 
 });
