@@ -1,5 +1,6 @@
 import {Censor} from "../functions/index.js";
 import {getPoints} from "../functions/requests/index.js";
+import {duelUpdate} from "../functions/yfles/index.js";
 import axios from "axios";
 
 async function getTop(channelName) {
@@ -9,27 +10,6 @@ async function getTop(channelName) {
     })
     .catch(err => {
         console.log(err)
-    })
-}
-async function request(channel, json){
-    return await axios({
-        url: `https://api.yfl.es/v1/user/duel/${channel}`,
-        method: "put",
-        data: json,
-        headers: {
-            'Content-type': 'application/json',
-            'clientID': process.env.YFL_CLIENT_ID,
-            'token': process.env.YFL_TOKEN
-        }
-    })
-    .then(async (res) => {
-        //console.log(data)
-        return res.data;
-    })
-    .catch(err => {
-        //console.log(err)
-
-        return null;
     })
 }
 
@@ -51,7 +31,7 @@ export default async function hugC(channel, username, argument, args){
 
         if(ammount > points) return `${usernameSmall} nie masz tylu punktów aha`;
 
-        const req = await request(channel, {
+        const req = await duelUpdate(channel, {
             points: ammount,
             winner: receiver,
             loser: usernameSmall
