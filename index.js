@@ -247,7 +247,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtime", "xayopl"].includes(command)){
-        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson", "#mork"].includes(channel) && command === "watchtime") return;
+        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson"].includes(channel) && command === "watchtime") return;
 
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
