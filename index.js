@@ -17,7 +17,7 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", 'mork', 'neexcsgo' ];
+const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", "neexcsgo" ];
 //const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
