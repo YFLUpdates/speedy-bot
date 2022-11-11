@@ -5,5 +5,6 @@ import whosFamous from "./whosFamous.js";
 import ratioSwitch from "./ratioSwitch.js";
 import Truncate from "./Truncate.js";
 import topN from "./topN.js";
+import onlySpaces from "./onlySpaces.js";
 
-export { Censor, getRandomChatter, randomNumber, whosFamous, ratioSwitch, Truncate, topN};
+export { Censor, getRandomChatter, randomNumber, whosFamous, ratioSwitch, Truncate, topN, onlySpaces};

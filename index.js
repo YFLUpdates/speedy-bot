@@ -11,7 +11,7 @@ import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
 import getMeCooldowns from "./components/getMeCooldowns.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
-import {Truncate, topN} from "./functions/index.js";
+import {Truncate, topN, onlySpaces} from "./functions/index.js";
 
 dotenv.config()
 
@@ -450,6 +450,8 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["pogoda", "weather"].includes(command)){
+        if(!argumentClean || onlySpaces(argumentClean)) return;
+
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
