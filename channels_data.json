@@ -169,5 +169,24 @@
             "duels": 0,
             "mod": 0
         }
+    },
+    "#neexcsgo": {
+        "modules": {
+            "duels": false,
+            "jwt": false
+        },
+        "duels_list": [
+
+        ],
+        "watchtime_top": [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
     }
 }
