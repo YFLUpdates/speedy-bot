@@ -508,7 +508,8 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["duel"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo"].includes(channel) || channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
+        if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo"].includes(channel)) return;
+        if(channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
 
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
