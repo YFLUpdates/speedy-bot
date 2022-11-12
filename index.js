@@ -107,11 +107,11 @@ client.on("subscription", (channel, username, method, message, userstate) => {
     subInsert(username.toLowerCase(), {
         channel: cleanChannel,
         date: new Date().toJSON().slice(0, 19).replace('T', ' '),
-        points: 1250*getSubsPoints(method)
+        points: 250*getSubsPoints(method)
     })
     // Do your stuff.
     
-    client.say(channel, `${username.toLowerCase()}, darmowe 1250 punktów dodane catJAM`);
+    client.say(channel, `${username.toLowerCase()}, darmowe 250 punktów dodane catJAM`);
 });
 
 client.on("subgift", (channel, username, streakMonths, recipient, methods, userstate) => {
@@ -126,10 +126,10 @@ client.on("subgift", (channel, username, streakMonths, recipient, methods, users
     subInsert(username.toLowerCase(), {
         channel: cleanChannel,
         date: new Date().toJSON().slice(0, 19).replace('T', ' '),
-        points: 1250
+        points: 250*getSubsPoints(methods)
     })
 
-    client.say(channel, `${username.toLowerCase()}, darmowe 1250 punktów dodane catJAM`);
+    client.say(channel, `${username.toLowerCase()}, darmowe 250 punktów dodane catJAM`);
 });
 
 client.on('message', async (channel, tags, message, self) => {
