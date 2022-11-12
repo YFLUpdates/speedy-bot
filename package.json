@@ -1,6 +1,6 @@
 {
   "name": "xspeedyq-bot",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Twitch bot with functions similar to LewusBot",
   "main": "index.js",
   "repository": {
@@ -37,6 +37,7 @@
     "humanize-duration": "^3.27.3",
     "jsdom": "^20.0.1",
     "mysql": "^2.18.1",
-    "tmi.js": "^1.8.5"
+    "tmi.js": "^1.8.5",
+    "weather-js": "^2.0.0"
   }
 }

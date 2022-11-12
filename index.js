@@ -10,6 +10,7 @@ import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
 import getMeCooldowns from "./components/getMeCooldowns.js";
+import getSubsPoints from "./components/getSubsPoints.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 import {Truncate, topN, onlySpaces} from "./functions/index.js";
 import subInsert from "./database/subInsert.js";
@@ -97,15 +98,16 @@ client.on("timeout", (channel, username, reason, duration, userstate) => {
 });
 
 client.on("subscription", (channel, username, method, message, userstate) => {
-    const cleanChannel = channel.replaceAll("#", "");
-    if(["xmerghani", "mrdzinold", "mork"].includes(cleanChannel)) return;
+    console.log(method)
+    if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
 
-    console.log(method, userstate)
+    const cleanChannel = channel.replaceAll("#", "");
+    console.log(method)
 
     subInsert(username.toLowerCase(), {
         channel: cleanChannel,
         date: new Date().toJSON().slice(0, 19).replace('T', ' '),
-        points: 1250
+        points: 1250*getSubsPoints(method)
     })
     // Do your stuff.
     
@@ -113,8 +115,10 @@ client.on("subscription", (channel, username, method, message, userstate) => {
 });
 
 client.on("subgift", (channel, username, streakMonths, recipient, methods, userstate) => {
+    console.log(methods)
+    if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
+
     const cleanChannel = channel.replaceAll("#", "");
-    if(["xmerghani", "mrdzinold", "mork"].includes(cleanChannel)) return;
     let senderCount = ~~userstate["msg-param-sender-count"];
 
     console.log(senderCount, methods, recipient)
