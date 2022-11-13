@@ -100,6 +100,8 @@ client.on("timeout", (channel, username, reason, duration, userstate) => {
 client.on("subscription", (channel, username, method, message, userstate) => {
     if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
 
+    console.log('SUB: ', channel, username, method)
+    
     const cleanChannel = channel.replaceAll("#", "");
 
     subInsert(username.toLowerCase(), {
