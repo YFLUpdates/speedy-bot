@@ -14,6 +14,8 @@ async function getWeather(city) {
 
 export default async function hugC(channel, username, argument){
     const usernameSmall = username.toLowerCase();
+    if(!argument || argument === undefined) return;
+    
     const weather = await getWeather(argument);
     const {current_condition, nearest_area} = weather;
 
