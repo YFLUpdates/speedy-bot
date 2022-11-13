@@ -5,12 +5,13 @@ import { promises as fs } from 'fs';
 
 import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
     FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom} from "./commands/index.js";
-import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime } from "./functions/requests/index.js";
+import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
 import getMeCooldowns from "./components/getMeCooldowns.js";
 import getSubsPoints from "./components/getSubsPoints.js";
+import getMultipleRandom from "./components/getMultipleRandom.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 import {Truncate, topN, onlySpaces} from "./functions/index.js";
 import subInsert from "./database/subInsert.js";
@@ -739,6 +740,60 @@ client.on('message', async (channel, tags, message, self) => {
                 channels_data[channel].duels_list = [];
 
                 client.say(channel, `${tags.username}, wyczyściłeś wszystkie duele `)
+            }
+        }
+
+    }else if(["giveaway", "gw"].includes(command)){
+        const badges = tags.badges || {};
+        const isBroadcaster = badges.broadcaster;
+        const isMod = badges.moderator;
+        const isModUp = isBroadcaster || isMod;
+
+        if(isModUp || tags.username === "3xanax"){
+            if(args[0] === "one"){
+                const chatters = await getChatters(cleanChannel);
+                const rolled = getMultipleRandom(chatters, 1);
+
+                subInsert(rolled[0].name, {
+                    channel: cleanChannel,
+                    date: new Date().toJSON().slice(0, 19).replace('T', ' '),
+                    points: 800
+                })
+
+                client.say(channel,  `jasperSkupienie LOSOWANIE WYGRYWA...`);
+
+                setTimeout(() => {
+                    client.say(channel,  `Gratulacje ${rolled[0].name} wygrałeś darmowe 800 punktów BRUHBRUH FIRE `);
+                }, 2000);
+
+
+            }else if(args[0] === "multi"){
+                const chatters = await getChatters(cleanChannel);
+                if(chatters.length < 5) return client.say(channel,  `${tags.username}, na kanale jest za mało osób aha`);
+                const rolled = getMultipleRandom(chatters, 5);
+                let winners = "";
+
+                client.say(channel,  `jasperSkupienie LOSOWANIE WYGRYWAJA...`);
+
+                await Promise.all(
+                    rolled.map(async (i) => {
+                        users += i.name + ', ';
+
+                        subInsert(i.name, {
+                            channel: cleanChannel,
+                            date: new Date().toJSON().slice(0, 19).replace('T', ' '),
+                            points: 160
+                        })
+                    })
+                );
+
+                setTimeout(() => {
+                    client.say(channel,  `Gratulacje ${winners} wygraliście darmowe 160 punktów BRUHBRUH FIRE `);
+                }, 2000);
+
+            }else{
+
+                client.say(channel, `${tags.username}, nie znany rodzaj - one/multi`);
             }
         }
 
