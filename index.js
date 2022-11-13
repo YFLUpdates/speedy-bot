@@ -207,10 +207,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kto"].includes(command)){
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        channels_data[channel].cooldowns.last = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         /* Taking the message from the user and sending it to the ktoCom function. */
         const commands = await KtoCom(cleanChannel, tags.username, argumentClean, znaniUsers);
@@ -357,10 +357,10 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["wruc", "ilejeszcze"].includes(command)){
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        channels_data[channel].cooldowns.last = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(args[0] === " "){
             const whenEnds = await checkTimeout(tags.username.toLowerCase(), cleanChannel);
@@ -377,10 +377,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missingall", "ostatnioall", "kiedyall"].includes(command)){
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        channels_data[channel].cooldowns.last = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(channels_data[channel].modules["missingall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
@@ -395,10 +395,10 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
         if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel)) return;
 
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        channels_data[channel].cooldowns.last = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         if(args[0] === " ") return;
 
@@ -502,7 +502,7 @@ client.on('message', async (channel, tags, message, self) => {
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
-        channels_data[channel].cooldownslast = Date.now();
+        channels_data[channel].cooldowns.last = Date.now();
 
         if(channels_data[channel].modules["mogemoda"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
@@ -595,10 +595,10 @@ client.on('message', async (channel, tags, message, self) => {
             }
 
         }else if(["list", "lista"].includes(argumentClean)){
-            if (channels_data[channel].cooldowns.classic > (Date.now() - getMeCooldowns(channel).longer)) {
+            if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
                 return;
             }
-            channels_data[channel].cooldowns.classic = Date.now();
+            channels_data[channel].cooldowns.longer = Date.now();
 
             const makeText = Truncate(duels.map((i) => i.id).join(", "), 200);
 
