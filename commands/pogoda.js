@@ -13,10 +13,13 @@ async function getWeather(city) {
 }
 
 export default async function hugC(channel, username, argument){
-    const usernameSmall = username.toLowerCase();
     if(!argument || argument === undefined) return;
-    
+
+    const usernameSmall = username.toLowerCase();
     const weather = await getWeather(argument);
+
+    if(weather === null || weather && current_condition.length === 0) return;
+
     const {current_condition, nearest_area} = weather;
 
     if(weather === null) return `${usernameSmall}, coś się popsuło`;
