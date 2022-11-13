@@ -98,9 +98,11 @@ client.on("timeout", (channel, username, reason, duration, userstate) => {
 });
 
 client.on("subscription", (channel, username, method, message, userstate) => {
+    console.log('SUB: ', channel, username, method)
+
     if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
 
-    console.log('SUB: ', channel, username, method)
+    console.log('SUB INSIDE: ', channel, username, method)
     
     const cleanChannel = channel.replaceAll("#", "");
 
