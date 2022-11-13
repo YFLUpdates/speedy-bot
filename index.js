@@ -744,6 +744,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["giveaway", "gw"].includes(command)){
+        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel)) return;
+
         const badges = tags.badges || {};
         const isBroadcaster = badges.broadcaster;
         const isMod = badges.moderator;
@@ -777,7 +779,7 @@ client.on('message', async (channel, tags, message, self) => {
 
                 await Promise.all(
                     rolled.map(async (i) => {
-                        users += i.name + ', ';
+                        winners += i.name + ', ';
 
                         subInsert(i.name, {
                             channel: cleanChannel,
