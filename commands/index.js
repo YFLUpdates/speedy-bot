@@ -10,7 +10,6 @@ import MarryCom from "./marry.js";
 import IleYFLCom from "./ileyfl.js";
 import Top3watchtimeCom from "./top3watchtime.js";
 import WiekCom from "./wiek.js";
-import TopchannelwatchtimesCom from "./topchannelwatchtimes.js";
 import FivecityCom from "./5city.js"
 import ZjebCom from "./zjeb.js";
 import MogemodaCom from "./modemoda.js";
@@ -25,5 +24,5 @@ import PogodaCom from "./pogoda.js";
 import ChattersCom from "./chatters.js";
 
 export { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, 
-    Top3watchtimeCom, WiekCom, TopchannelwatchtimesCom, FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, 
+    Top3watchtimeCom, WiekCom, FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, 
     ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, Watchtime2Com, PogodaCom, ChattersCom};

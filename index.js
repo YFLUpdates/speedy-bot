@@ -99,11 +99,7 @@ client.on("timeout", (channel, username, reason, duration, userstate) => {
 });
 
 client.on("subscription", (channel, username, method, message, userstate) => {
-    console.log('SUB: ', channel, username, method)
-
     if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
-
-    console.log('SUB INSIDE: ', channel, username, method)
     
     const cleanChannel = channel.replaceAll("#", "");
 
@@ -118,13 +114,10 @@ client.on("subscription", (channel, username, method, message, userstate) => {
 });
 
 client.on("subgift", (channel, username, streakMonths, recipient, methods, userstate) => {
-    console.log(methods)
     if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
 
     const cleanChannel = channel.replaceAll("#", "");
     let senderCount = ~~userstate["msg-param-sender-count"];
-
-    console.log(senderCount, methods, recipient)
 
     subInsert(username.toLowerCase(), {
         channel: cleanChannel,
@@ -241,7 +234,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["ksiezniczki"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(args[0] && args[0] !== " "){
+        if(args[0] && args[0].length > 3){
             const semps = await checkSemps(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, semps);
@@ -259,7 +252,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["ileogladalkobiet"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(args[0]  && args[0] !== " "){
+        if(args[0]  && args[0].length > 3){
             const semps = await sempTime(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, semps);
@@ -278,7 +271,7 @@ client.on('message', async (channel, tags, message, self) => {
         if(channels_data[channel].modules["watchtimeall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
     
-        if(args[0] && args[0] !== " "){
+        if(args[0] && args[0].length > 3){
             const watchtime = await watchtimeAll(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, watchtime);
@@ -299,7 +292,7 @@ client.on('message', async (channel, tags, message, self) => {
         if(channels_data[channel].modules["watchtime"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
 
-        if(args[0] && args[0] !== " "){
+        if(args[0] && args[0].length > 3){
 
              if(args[1]){
                 //User requests: User X a watchtime on selected channel
@@ -326,11 +319,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
-        if(args[0] === " "){
-            const where = await check_if_user_in_channel(tags.username.toLowerCase());
-
-            client.say(channel, where);
-        }else if(args[0]){
+        if(args[0] && args[0].length > 3){
             const where = await check_if_user_in_channel(args[0].replaceAll("@", "").toLowerCase());
 
             client.say(channel, where);
@@ -367,11 +356,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
-        if(args[0] === " "){
-            const whenEnds = await checkTimeout(tags.username.toLowerCase(), cleanChannel);
-
-            client.say(channel, whenEnds);
-        }else if(args[0]){
+        if(args[0] && args[0].length > 3){
             const whenEnds = await checkTimeout(args[0].replaceAll("@", "").toLowerCase(), cleanChannel);
 
             client.say(channel, whenEnds);
@@ -389,7 +374,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["missingall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(args[0] === " ") return;
+        if(args[0].length < 3) return;
 
         if(args[0]){
             const whereMissing = await missingAll(args[0].replaceAll("@", "").toLowerCase());
@@ -405,7 +390,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
-        if(args[0] === " ") return;
+        if(args[0].length < 3) return;
 
         if(args[0]){
             const whereMissing = await missing(args[0].replaceAll("@", "").toLowerCase(), cleanChannel);
@@ -697,7 +682,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["yflpoints", "punkty", "points"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel) || ["#xspeedyq", "#grubamruwa", "#neexcsgo"].includes(channel) && command === "points") return;
+        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel) || ["#xspeedyq", "#neexcsgo"].includes(channel) && command === "points") return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
