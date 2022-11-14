@@ -17,6 +17,7 @@ export default async function getWatchtime(user, target_channel) {
         return time_all;
     })
     .catch(err => {
+        return `Nie byłem w stanie sprawdzić kanału ${channelName} jasperSad `
         console.log(err)
     })
 }

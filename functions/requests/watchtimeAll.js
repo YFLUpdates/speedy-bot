@@ -23,6 +23,7 @@ export default async function getChatters(channelName) {
         //return `${Censor(channelName)} spedził ${time} na PL twitch od 26 lipca.`
     })
     .catch(err => {
+        return `Nie byłem w stanie sprawdzić kanału ${channelName} jasperSad `
         console.log(err)
     })
 }

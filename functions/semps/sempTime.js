@@ -31,6 +31,7 @@ export default async function getChatters(channelName) {
         }
     })
     .catch(err => {
+        return `Nie byłem w stanie sprawdzić kanału ${channelName} jasperSad `
         console.log(err)
     })
 }

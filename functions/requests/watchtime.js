@@ -23,6 +23,7 @@ export default async function getChatters(user, target_channel) {
         return `MrDestructoid ${Censor(user)} ogladał(a) kanał ${target_channel} przez ${time}.`;
     })
     .catch(err => {
+        return `Nie byłem w stanie sprawdzić kanału ${user} jasperSad `
         console.log(err)
     })
 }

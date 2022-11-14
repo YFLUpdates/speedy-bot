@@ -18,6 +18,7 @@ export default async function getChatters(channelName) {
         return ewron_time / time_all;
     })
     .catch(err => {
+        return `Nie byłem w stanie sprawdzić kanału ${channelName} jasperSad `;
         console.log(err)
     })
 }
