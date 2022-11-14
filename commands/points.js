@@ -1,4 +1,4 @@
-import {Censor} from "../functions/index.js";
+import {Censor, onlySpaces} from "../functions/index.js";
 import {getPoints} from "../functions/requests/index.js";
 import {duelUpdate} from "../functions/yfles/index.js";
 import axios from "axios";
@@ -41,7 +41,7 @@ export default async function hugC(channel, username, argument, args){
 
         return `${usernameSmall}, wysłałeś ${ammount} punktów do ${receiver} GIGACHAD`;
 
-    }else if(argument && argument !== " "){
+    }else if(argument && onlySpaces(argument) === false){
         const points = await getPoints(argument, channel);
 
         return `${Censor(argument)}, ma ${points} punktów ok`;
