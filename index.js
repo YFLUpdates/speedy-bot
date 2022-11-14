@@ -493,15 +493,18 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
     }else if(["pogoda", "weather"].includes(command)){
         if(!argumentClean || onlySpaces(argumentClean)) return;
-
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
 
+        if(channels_data[channel].modules["pogoda"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await PogodaCom(cleanChannel, tags.username, argumentClean);
 
+        if(commands === null) return;
+        
         client.say(channel, commands);
     }else if(["mogemoda", "szansanamoda"].includes(command)){
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
@@ -735,7 +738,7 @@ client.on('message', async (channel, tags, message, self) => {
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
             }else if(args[0] === "list"){
-                client.say(channel, `${tags.username}, wszystkie dostępne moduły: duels, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron `)
+                client.say(channel, `${tags.username}, wszystkie dostępne moduły: duels, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda `)
             }else if(args[0] === "clearduels"){
                 channels_data[channel].duels_list = [];
 
