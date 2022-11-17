@@ -98,6 +98,12 @@ client.on("timeout", (channel, username, reason, duration, userstate) => {
     
 });
 
+setInterval(() => {
+
+    client.say("#adrian1g__", `Obejrzyj film o drugiej twarzy 1gieta https://youtu.be/AdDFcs9Ityg `);
+
+}, 15 * 60 * 1000);
+
 client.on("subscription", (channel, username, method, message, userstate) => {
     if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
     
