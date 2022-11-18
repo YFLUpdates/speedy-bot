@@ -873,7 +873,7 @@ client.on('message', async (channel, tags, message, self) => {
             /* Checking if the duel exists. */
             if(check_for_duplicate !== undefined) return;
 
-            if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            if (channels_data[channel].cooldowns.last > (Date.now() - 1500)) {
                 return;
             }
             channels_data[channel].cooldowns.last = Date.now();
