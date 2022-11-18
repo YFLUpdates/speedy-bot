@@ -396,10 +396,12 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["msgs"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(args[0].length < 3) return;
+        if(argumentClean || argumentClean && argumentClean.length > 3){
+            const whereMissing = await chatMessages(cleanChannel, argumentClean.replaceAll("@", "").toLowerCase());
 
-        if(args[0]){
-            const whereMissing = await chatMessages(cleanChannel, args[0].replaceAll("@", "").toLowerCase());
+            client.say(channel, whereMissing);
+        }else{
+            const whereMissing = await chatMessages(cleanChannel, tags.username.replaceAll("@", ""));
 
             client.say(channel, whereMissing);
         }
