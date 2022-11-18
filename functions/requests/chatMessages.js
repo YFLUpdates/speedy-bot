@@ -10,6 +10,12 @@ export default async function getChatters(channelName, user) {
         await Promise.all(
           channels.map(function(x, index) {
             if(x.name === user){
+              if(x.name === "lakakaqday"){
+                messagePodium = index+1;
+                messagesNumber = x.amount/2;
+                
+                return;
+              }
 
               messagePodium = index+1;
               messagesNumber = x.amount;
