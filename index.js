@@ -5,7 +5,7 @@ import { promises as fs } from 'fs';
 
 import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
     FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom} from "./commands/index.js";
-import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
+import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters, chatMessages } from "./functions/requests/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import insertToDatabase from "./components/insertToDatabase.js";
 import lastSeenUpdate from "./components/lastSeenUpdate.js";
@@ -388,6 +388,22 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, whereMissing);
         }
 
+    }else if(["wiadomosci", "messsages", "msgs"].includes(command)){
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
+            return;
+        }
+        channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules["msgs"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+        if(args[0].length < 3) return;
+
+        if(args[0]){
+            const whereMissing = await chatMessages(cleanChannel, args[0].replaceAll("@", "").toLowerCase());
+
+            client.say(channel, whereMissing);
+        }
+
     }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
         if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel)) return;
 
@@ -729,7 +745,7 @@ client.on('message', async (channel, tags, message, self) => {
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
             }else if(args[0] === "list"){
-                client.say(channel, `${tags.username}, wszystkie dostępne moduły: duels, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda `)
+                client.say(channel, `${tags.username}, wszystkie dostępne moduły: msgs, duels, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda `)
             }else if(args[0] === "clearduels"){
                 channels_data[channel].duels_list = [];
 
