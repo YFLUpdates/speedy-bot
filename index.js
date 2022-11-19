@@ -20,7 +20,7 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", "neexcsgo" ];
+const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", "neexcsgo", "banduracartel" ];
 //const joinThem = [ '3xanax' ];
 const client = new tmi.Client({
 	identity: {
@@ -105,7 +105,7 @@ client.on("timeout", (channel, username, reason, duration, userstate) => {
 // }, 15 * 60 * 1000);
 
 client.on("subscription", (channel, username, method, message, userstate) => {
-    if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
+    if(["#xmerghani", "#mrdzinold", "#mork","#banduracartel"].includes(channel)) return;
     
     const cleanChannel = channel.replaceAll("#", "");
 
@@ -120,7 +120,7 @@ client.on("subscription", (channel, username, method, message, userstate) => {
 });
 
 client.on("subgift", (channel, username, streakMonths, recipient, methods, userstate) => {
-    if(["#xmerghani", "#mrdzinold", "#mork"].includes(channel)) return;
+    if(["#xmerghani", "#mrdzinold", "#mork", "#banduracartel"].includes(channel)) return;
 
     const cleanChannel = channel.replaceAll("#", "");
     let senderCount = ~~userstate["msg-param-sender-count"];
@@ -145,7 +145,7 @@ client.on('message', async (channel, tags, message, self) => {
     if(bad_words.includes(args[0]) || bad_words.includes(args[1])) return;
 
 	if(["opluj"].includes(command)) {
-        if(["#adrian1g__", "#xmerghani", "#xkaleson"].includes(channel)) return;
+        if(["#adrian1g__", "#xmerghani", "#xkaleson", "#banduracartel"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -288,7 +288,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtime", "xayopl"].includes(command)){
-        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson", "#neexcsgo"].includes(channel) && command === "watchtime") return;
+        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson", "#neexcsgo", "#banduracartel"].includes(channel) && command === "watchtime") return;
 
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
@@ -407,7 +407,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
@@ -548,7 +548,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["timeoffline", "offlinetime", "offtime"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel)) return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -560,7 +560,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["duel"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo", "#banduracartel"].includes(channel)) return;
         if(channels_data[channel].modules["duels"] === false) return client.say(channel, `${tags.username}, pojedynki są wyłączone `);
 
         const cleanSender = tags.username.toLowerCase();
@@ -650,7 +650,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["joinwatchtime", "jwt"].includes(command)){
-        if(["#mrdzinold", "#xmerghani"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#banduracartel"].includes(channel)) return;
 
         const badges = tags.badges || {};
         const isBroadcaster = badges.broadcaster;
@@ -706,7 +706,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["yflpoints", "punkty", "points"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel) || ["#xspeedyq", "#neexcsgo"].includes(channel) && command === "points") return;
+        if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel) || ["#xspeedyq", "#neexcsgo"].includes(channel) && command === "points") return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -756,7 +756,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["giveaway", "gw"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel)) return;
 
         const badges = tags.badges || {};
         const isBroadcaster = badges.broadcaster;
@@ -819,7 +819,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
     }else if(["emotki", "emotes"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#xkaleson", "#mork"].includes(channel)) return;
+        if(["#mrdzinold", "#xmerghani", "#xkaleson", "#mork", "#banduracartel"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
