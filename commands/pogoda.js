@@ -22,7 +22,7 @@ export default async function hugC(channel, username, argument){
 
     const {current_condition, nearest_area} = weather;
 
-    if(weather === null) return `${usernameSmall}, coś się popsuło`;
+    if(weather === null || !nearest_area) return `${usernameSmall}, coś się popsuło`;
 
     const pogoda = `${usernameSmall} w ${nearest_area[0].areaName[0].value} aktualnie jest ${current_condition[0].FeelsLikeC} stopni, na zewnątrz jest ${current_condition[0].lang_pl[0].value} a prędkość wiatru wynosi ${current_condition[0].windspeedKmph} km/h`;
 

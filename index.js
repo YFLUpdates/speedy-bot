@@ -856,7 +856,7 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${username}, rozpoczęto głosowanie na perma dla ${args[1]} !vote`)
         }else if(argumentClean === "close" && isModUp || argumentClean === "close" && username === "3xanax"){
             const chatters = await getChatters(cleanChannel);
-            const votes = ((10 / 100) * chatters.length).toFixed(0);
+            const votes = ((5 / 100) * chatters.length).toFixed(0);
 
             channels_data[channel].modules["vote"] = false;
 
@@ -866,7 +866,7 @@ client.on('message', async (channel, tags, message, self) => {
 
             const chatters = await getChatters(cleanChannel);
 
-            client.say(channel, `${username}, aktualnie zagłosowało ${channels_data[channel].vote_ban.length}/${((10 / 100) * chatters.length).toFixed(0)} osób `);
+            client.say(channel, `${username}, aktualnie zagłosowało ${channels_data[channel].vote_ban.length}/${((5 / 100) * chatters.length).toFixed(0)} osób `);
         }else{
             const check_for_duplicate = channels_data[channel].vote_ban.find(x => x === username);
             
@@ -881,7 +881,7 @@ client.on('message', async (channel, tags, message, self) => {
             if(channels_data[channel].modules["vote"] === false) return client.say(channel, `${username}, aktualnie nie trwa żadne głosowanie. `);
 
             const chatters = await getChatters(cleanChannel);
-            const votes = ((10 / 100) * chatters.length).toFixed(0);
+            const votes = ((5 / 100) * chatters.length).toFixed(0);
 
             channels_data[channel].vote_ban.push(username);
 
