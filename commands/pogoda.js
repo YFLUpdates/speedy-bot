@@ -18,6 +18,8 @@ export default async function hugC(channel, username, argument){
     const usernameSmall = username.toLowerCase();
     const weather = await getWeather(argument);
 
+    console.log(weather)
+    
     if(weather === null || weather && weather.current_condition.length === 0 || !weather || !weather.nearest_area) return null;
 
     const {current_condition, nearest_area} = weather;
