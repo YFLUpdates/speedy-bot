@@ -3,8 +3,8 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import { HugCom, SpitCom, LoveCom, KogutCom, EwronCom, YFLCom, KtoCom, KissCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
-    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, ZapraszaCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom} from "./commands/index.js";
+import {LoveCom, EwronCom, YFLCom, KtoCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
+    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom} from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters, chatMessages } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
 import { RollOrMark } from "./commands/templates/index.js";
@@ -62,13 +62,15 @@ app.post("/orders/take", (req, res) => {
           message: "Content can not be empty!"
         });
     }
-      
-    if(req.headers.ID !== process.env.BOT_ID && req.headers.TOKEN !== process.env.TOKEN){
+    if(req.headers.id !== process.env.BOT_ID && req.headers.token !== process.env.TOKEN){
         return res.status(401).send({
             message: "Unauthorized. Invalid token!"
         });
     }
 
+    res.status(200).send({
+        message: "Success"
+    });
     if (newOrder > (Date.now() - 10 * 60 * 1000)) {
         return;
     }
