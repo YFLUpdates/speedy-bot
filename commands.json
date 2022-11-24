@@ -1,7 +1,7 @@
 {
     "_comment": "Types: RollOrMark, roll",
-    "commands": [
-        {
+    "commands": {
+        "opluj": {
             "name": "opluj",
             "type": "RollOrMark",
             "aliases": [
@@ -9,7 +9,10 @@
                 "spit"
             ],
             "disabled": [
-                "adrian1g__"
+                "adrian1g__",
+                "xmerghani",
+                "xkaleson",
+                "banduracartel"
             ],
             "cooldown": "classic",
             "messages": {
@@ -17,13 +20,14 @@
                 "onerror": "pluje na cały czat D:"
             }
         },
-        {
+        "kogut": {
             "name": "kogut",
             "type": "RollOrMark",
             "aliases": [
                 "kogut"
             ],
             "disabled": [
+                "neexcsgo"
             ],
             "cooldown": "classic",
             "messages": {
@@ -31,7 +35,7 @@
                 "onerror": "opierdolił(a) koguta YFLUpdates Glumlenie"
             }
         },
-        {
+        "przytul": {
             "name": "przytul",
             "type": "RollOrMark",
             "aliases": [
@@ -42,11 +46,11 @@
             ],
             "cooldown": "classic",
             "messages": {
-                "default": "przytula {user} segz",
-                "onerror": "przytula YFLUpdates segz"
+                "default": "przytula {user} monkeyHug",
+                "onerror": "przytula YFLUpdates monkeyHug"
             }
         },
-        {
+        "zaprasza": {
             "name": "zaprasza",
             "type": "RollOrMark",
             "aliases": [
@@ -59,6 +63,37 @@
                 "default": "zaprasza {user} na kamerki jasperM",
                 "onerror": "zaprasza YFLUpdates na kamerki jasperLaskotanie"
             }
+        },
+        "kiss": {
+            "name": "kiss",
+            "type": "RollOrMark",
+            "aliases": [
+                "kiss",
+                "calus"
+            ],
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "messages": {
+                "default": "daje całusa {user} yoooo",
+                "onerror": "daje całusa swojemu ego yoooo"
+            }
+        },
+        "love": {
+            "name": "love",
+            "type": "RollPercent",
+            "aliases": [
+                "love"
+            ],
+            "disabled": [
+                "grubamruwa",
+                "xmerghani"
+            ],
+            "cooldown": "classic",
+            "messages": {
+                "default": "jest zakochany(a) na ${randomNumber(0, 100)}% w {user} <3",
+                "onerror": "daje całusa swojemu ego yoooo"
+            }
         }
-    ]
+    }
 }
