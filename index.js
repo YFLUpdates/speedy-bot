@@ -71,7 +71,7 @@ app.post("/orders/take", (req, res) => {
     res.status(200).send({
         message: "Success"
     });
-    if (newOrder > (Date.now() - 10 * 60 * 1000)) {
+    if (newOrder > (Date.now() - 30 * 60 * 1000)) {
         return;
     }
     newOrder = Date.now();
