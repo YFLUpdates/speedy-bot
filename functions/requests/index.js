@@ -1,6 +1,4 @@
 import getChatters from "./getChatters.js";
-import checkEwron from "./checkEwron.js";
-import checkYFL from "./checkYFL.js";
 import watchtimeAll from "./watchtimeAll.js";
 import watchtimeGet from "./watchtime.js";
 import checkTimeout from "./checkTimeout.js";
@@ -17,4 +15,4 @@ import watchtimeTime from "./watchtimeTime.js";
 import getWatchtime from "./getWatchtime.js";
 import chatMessages from "./chatMessages.js";
 
-export { chatMessages, getChatters, checkEwron, checkYFL, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, top3Watchtime, howOld, topChannelWatchtimes, offlineTime, watchtimeTime, duelsWorking, getPoints, getWatchtime};
+export { chatMessages, getChatters, watchtimeAll, watchtimeGet, checkTimeout, callWebhook, missingAll, missing, top3Watchtime, howOld, topChannelWatchtimes, offlineTime, watchtimeTime, duelsWorking, getPoints, getWatchtime};

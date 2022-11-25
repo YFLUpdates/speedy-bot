@@ -3,11 +3,11 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import {LoveCom, EwronCom, YFLCom, KtoCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
+import {LoveCom, KtoCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
     FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom} from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters, chatMessages } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
-import { RollOrMark } from "./commands/templates/index.js";
+import { RollOrMark, checkFan } from "./commands/templates/index.js";
 import { Truncate, topN, onlySpaces } from "./functions/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
@@ -135,6 +135,21 @@ client.on("subscription", (channel, username, method, message, userstate) => {
     client.say(channel, `${username.toLowerCase()}, darmowe 250 punktów dodane catJAM`);
 });
 
+client.on("resub", (channel, username, months, message, userstate, methods) => {
+    if(["#xmerghani", "#mrdzinold", "#mork","#banduracartel"].includes(channel)) return;
+    
+    const cleanChannel = channel.replaceAll("#", "");
+
+    subInsert(username.toLowerCase(), {
+        channel: cleanChannel,
+        date: new Date().toJSON().slice(0, 19).replace('T', ' '),
+        points: 250*getSubsPoints(methods)
+    })
+    // Do your stuff.
+    
+    client.say(channel, `${username.toLowerCase()}, darmowe 250 punktów dodane catJAM`);
+});
+
 client.on("subgift", (channel, username, streakMonths, recipient, methods, userstate) => {
     if(["#xmerghani", "#mrdzinold", "#mork", "#banduracartel"].includes(channel)) return;
 
@@ -215,6 +230,45 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, template);
         
+	}else if(commands.yfl.aliases.includes(command)) {
+        if(commands.yfl.disabled.includes(cleanChannel)) return;
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${commands.yfl.cooldown}`])) {
+            return;
+        }
+        channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules[`${commands.yfl.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+        const template = await checkFan(cleanChannel, tags.username, argumentClean, commands.yfl.messages, commands.yfl.associated_channels);
+
+        client.say(channel, template);
+        
+	}else if(commands.ewron.aliases.includes(command)) {
+        if(commands.ewron.disabled.includes(cleanChannel)) return;
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${commands.ewron.cooldown}`])) {
+            return;
+        }
+        channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules[`${commands.ewron.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+        const template = await checkFan(cleanChannel, tags.username, argumentClean, commands.ewron.messages, commands.ewron.associated_channels);
+
+        client.say(channel, template);
+        
+	}else if(commands.grendy.aliases.includes(command)) {
+        if(commands.grendy.disabled.includes(cleanChannel)) return;
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${commands.grendy.cooldown}`])) {
+            return;
+        }
+        channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules[`${commands.grendy.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+        const template = await checkFan(cleanChannel, tags.username, argumentClean, commands.grendy.messages, commands.grendy.associated_channels);
+
+        client.say(channel, template);
+        
 	}else if(["love"].includes(command)){
         if(["#grubamruwa", "#xmerghani"].includes(channel)) return;
         
@@ -225,33 +279,6 @@ client.on('message', async (channel, tags, message, self) => {
 
         /* Taking the argumentClean variable and passing it to the LoveCom function. */
         const commands = await LoveCom(cleanChannel, tags.username, argumentClean);
-
-        client.say(channel, commands);
-
-    }else if(["ewroniarz", "ewron"].includes(command)){
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
-            return;
-        }
-        channels_data[channel].cooldowns.longer = Date.now();
-
-        if(channels_data[channel].modules["ewron"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
-
-        /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await EwronCom(cleanChannel, tags.username, argumentClean);
-
-        client.say(channel, commands);
-
-
-    }else if(["yflwatchtime", "yfl"].includes(command)){
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
-            return;
-        }
-        channels_data[channel].cooldowns.longer = Date.now();
-
-        if(channels_data[channel].modules["yfl"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
-
-        /* Taking the argumentClean variable and passing it to the YFLCom function. */
-        const commands = await YFLCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
 

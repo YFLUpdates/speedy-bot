@@ -94,6 +94,81 @@
                 "default": "jest zakochany(a) na ${randomNumber(0, 100)}% w {user} <3",
                 "onerror": "daje całusa swojemu ego yoooo"
             }
+        },
+        "yfl": {
+            "name": "yfl",
+            "type": "checkFan",
+            "aliases": [
+                "yfl",
+                "yflwatchtime"
+            ],
+            "disabled": [
+            ],
+            "associated_channels": [
+                "youngmulti", 
+                "xmerghani", 
+                "1wron3k", 
+                "mrdzinold", 
+                "mork", 
+                "banduracartel", 
+                "xspeedyq", 
+                "adrian1g__", 
+                "xkaleson"
+            ],
+            "cooldown": "longer",
+            "messages": {
+                "not": "nie jest widzem yfl",
+                "fan": "jest widzem yfl PogU",
+                "mega": "jest giga koneserem yfl PogU FIRE",
+                "onerror": "Nie byłem w stanie sprawdzić kanału {user} jasperSad"
+            }
+        },
+        "ewron": {
+            "name": "ewron",
+            "type": "checkFan",
+            "aliases": [
+                "ewron",
+                "ewroniarz"
+            ],
+            "disabled": [
+            ],
+            "associated_channels": [
+                "ewroon", 
+                "exhiie", 
+                "xn0rth", 
+                "xth0rek", 
+                "angela35", 
+                "diables"
+            ],
+            "cooldown": "longer",
+            "messages": {
+                "not": "jest czysty(a) okok",
+                "fan": "jest widzem ewrona jasperSTARE",
+                "mega": "jest ultra zaklinowany(a) papa",
+                "onerror": "Nie byłem w stanie sprawdzić kanału {user} jasperSad"
+            }
+        },
+        "grendy": {
+            "name": "grendy",
+            "type": "checkFan",
+            "aliases": [
+                "grendy"
+            ],
+            "disabled": [
+            ],
+            "associated_channels": [
+                "grendy",
+                "xghoost__", 
+                "nietoperzbyku", 
+                "sprytnyx"
+            ],
+            "cooldown": "longer",
+            "messages": {
+                "not": "nie jest widzem ekipy grendiego aok",
+                "fan": "jest widzem ekipy grendiego jasperSTARE",
+                "mega": "jest giga koneserem ekipy grendiego jasperSTARE FIRE",
+                "onerror": "Nie byłem w stanie sprawdzić kanału {user} jasperSad"
+            }
         }
     }
 }
