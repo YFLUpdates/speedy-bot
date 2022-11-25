@@ -17,10 +17,8 @@ export default async function hugC(channel, username, argument){
 
     if(message.length === 0){
         return `Nikt z YFL w nicku nie ogląda ${channel}`
-    }else if(message.join(", ").length > 400){
-        return `${counter} użytkowników mających w nicku YFL ogląda ${channel}. Nie da się wypisać za dużo ich EZ`
     }else{
-        return `${message.join(", ")} oglądają stream ${channel}`
+        return `${counter} użytkowników mających w nicku YFL ogląda ${channel}.`
     }
 
 }

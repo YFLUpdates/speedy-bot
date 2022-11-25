@@ -487,10 +487,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["ileyfl"].includes(command)){
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
         }
-        channels_data[channel].cooldowns.last = Date.now();
+        channels_data[channel].cooldowns.longer = Date.now();
 
         /* Taking the message from the user and sending it to the ktoCom function. */
         const commands = await IleYFLCom(cleanChannel, tags.username, argumentClean);
