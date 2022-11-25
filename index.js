@@ -17,7 +17,7 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", "neexcsgo", "banduracartel" ];
+const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", "neexcsgo", "banduracartel", "sl3dziv" ];
 //const joinThem = [ '3xanax' ];
 let newOrder = 0;
 const client = new tmi.Client({
@@ -747,7 +747,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["yflpoints", "punkty", "points"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel) || ["#xspeedyq", "#neexcsgo"].includes(channel) && command === "points") return;
+        if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel) || ["#xspeedyq", "#neexcsgo", "#sl3dziv"].includes(channel) && command === "points") return;
         
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -788,7 +788,7 @@ client.on('message', async (channel, tags, message, self) => {
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
             }else if(args[0] === "list"){
-                client.say(channel, `${tags.username}, wszystkie dostępne moduły: msgs, duels, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda `)
+                client.say(channel, `${tags.username}, wszystkie dostępne moduły: msgs, duel, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda `)
             }else if(args[0] === "clearduels"){
                 channels_data[channel].duels_list = [];
 

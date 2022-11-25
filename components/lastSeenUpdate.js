@@ -19,7 +19,8 @@ async function isLive(){
         "484019542", //grubamruwa
         "99854815", //3xanax,
         "720775570", //xkaleson
-        "121329766" //neexcsgo
+        "121329766", //neexcsgo
+        "191099908" //sl3dziv
     ]
 
     return await axios({
