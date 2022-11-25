@@ -8,7 +8,7 @@ import {LoveCom, KtoCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom,
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters, chatMessages } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
-import { Truncate, topN, onlySpaces } from "./functions/index.js";
+import { Truncate, topN, onlySpaces, getRandomChatter } from "./functions/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 import subInsert from "./database/subInsert.js";
@@ -56,7 +56,7 @@ app.get("/jwt/:id", (req, res) => {
     }
 });
 
-app.post("/orders/take", (req, res) => {
+app.post("/orders/take", async (req, res) => {
     if (!req.body) {
         res.status(400).send({
           message: "Content can not be empty!"
@@ -71,12 +71,25 @@ app.post("/orders/take", (req, res) => {
     res.status(200).send({
         message: "Success"
     });
+
     if (newOrder > (Date.now() - 30 * 60 * 1000)) {
         return;
     }
     newOrder = Date.now();
 
-    client.say("#adrian1g__", `Nowe zamówienie: x${req.body.amount} - ${req.body.product.replace(/\b(\w{2})\w+(\w)\b/g, '$1**$2')}`);
+    const randomUser = await getRandomChatter("adrian1g__", { skipList: [ "adrian1g__" ] })
+    .then(user => {
+        if(user === null) return null;
+        let { name } = user;
+
+        return name;
+    })
+    .catch(err => {
+        return null; 
+    });
+    if(randomUser === null) return;
+
+    client.say("#adrian1g__", `${randomUser} zamówił ${req.body.product.replace(/\b(\w{2})\w+(\w)\b/g, '$1**$2')} w liczbie x${req.body.amount} sztuk jasperVixa`);
 });
 
 app.use((req, res, next) => {
