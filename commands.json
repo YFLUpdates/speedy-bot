@@ -181,9 +181,7 @@
             ],
             "associated_channels": [
                 "grendy",
-                "xghoost__", 
-                "nietoperzbyku", 
-                "sprytnyx",
+                "nieuczesana",
                 "ewroon", 
                 "exhiie", 
                 "xn0rth", 
@@ -205,8 +203,8 @@
             ],
             "cooldown": "longer",
             "messages": {
-                "not": "nie jest z respu jasperKiss ",
-                "fan": "jest z respu jasperSad ",
+                "not": "nie jest z respa jasperKiss ",
+                "fan": "jest z respa jasperSad ",
                 "mega": "jest giga zaklinowany Spit",
                 "onerror": "Nie byłem w stanie sprawdzić kanału {user} PogO"
             }
