@@ -138,7 +138,8 @@
                 "xn0rth", 
                 "xth0rek", 
                 "angela35", 
-                "diables"
+                "diables",
+                "edenitoo"
             ],
             "cooldown": "longer",
             "messages": {
@@ -168,6 +169,46 @@
                 "fan": "jest widzem ekipy grendiego jasperSTARE",
                 "mega": "jest giga koneserem ekipy grendiego jasperSTARE FIRE",
                 "onerror": "Nie byłem w stanie sprawdzić kanału {user} jasperSad"
+            }
+        },
+        "resp": {
+            "name": "resp",
+            "type": "checkFan",
+            "aliases": [
+                "resp"
+            ],
+            "disabled": [
+            ],
+            "associated_channels": [
+                "grendy",
+                "xghoost__", 
+                "nietoperzbyku", 
+                "sprytnyx",
+                "ewroon", 
+                "exhiie", 
+                "xn0rth", 
+                "xth0rek", 
+                "angela35", 
+                "diables",
+                "czesio_invi",
+                "meduska",
+                "franio",
+                "marcindubiel",
+                "jacob4tv",
+                "kubx",
+                "mamm0n",
+                "edenitoo",
+                "demonzz1",
+                "arquel",
+                "my_zone_",
+                "rudaninja"
+            ],
+            "cooldown": "longer",
+            "messages": {
+                "not": "nie jest z respu jasperKiss ",
+                "fan": "jest z respu jasperSad ",
+                "mega": "jest giga zaklinowany Spit",
+                "onerror": "Nie byłem w stanie sprawdzić kanału {user} PogO"
             }
         }
     }

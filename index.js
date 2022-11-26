@@ -282,6 +282,19 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, template);
         
+	}else if(commands.resp.aliases.includes(command)) {
+        if(commands.resp.disabled.includes(cleanChannel)) return;
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${commands.resp.cooldown}`])) {
+            return;
+        }
+        channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules[`${commands.resp.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+        const template = await checkFan(cleanChannel, tags.username, argumentClean, commands.resp.messages, commands.resp.associated_channels);
+
+        client.say(channel, template);
+        
 	}else if(["love"].includes(command)){
         if(["#grubamruwa", "#xmerghani"].includes(channel)) return;
         
