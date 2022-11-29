@@ -6,7 +6,7 @@ export default async function request(user, json){
         method: "post",
         data: {
             user_login: user,
-            associated: `komenda !${json.reason}, Top1 kanał: ${json.top1} - ${json.registrator}`
+            associated: `!${json.reason}, największy watchtime: ${json.top1} - ${json.registrator}`
         },
         headers: {
             'Content-type': 'application/json',
