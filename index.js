@@ -244,54 +244,58 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, template);
         
 	}else if(commands.yfl.aliases.includes(command)) {
-        if(commands.yfl.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${commands.yfl.cooldown}`])) {
+        const COMMAND = commands.yfl;
+        if(COMMAND.disabled.includes(cleanChannel)) return;
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${COMMAND.cooldown}`])) {
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
-        if(channels_data[channel].modules[`${commands.yfl.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+        if(channels_data[channel].modules[`${COMMAND.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        const template = await checkFan(cleanChannel, tags.username, argumentClean, commands.yfl.messages, commands.yfl.associated_channels);
+        const template = await checkFan(cleanChannel, tags.username, argumentClean, COMMAND.messages, COMMAND.associated_channels, COMMAND.name);
 
         client.say(channel, template);
         
 	}else if(commands.ewron.aliases.includes(command)) {
-        if(commands.ewron.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${commands.ewron.cooldown}`])) {
+        const COMMAND = commands.ewron;
+        if(COMMAND.disabled.includes(cleanChannel)) return;
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${COMMAND.cooldown}`])) {
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
-        if(channels_data[channel].modules[`${commands.ewron.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+        if(channels_data[channel].modules[`${COMMAND.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        const template = await checkFan(cleanChannel, tags.username, argumentClean, commands.ewron.messages, commands.ewron.associated_channels);
+        const template = await checkFan(cleanChannel, tags.username, argumentClean, COMMAND.messages, COMMAND.associated_channels, COMMAND.name);
 
         client.say(channel, template);
         
 	}else if(commands.grendy.aliases.includes(command)) {
-        if(commands.grendy.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${commands.grendy.cooldown}`])) {
+        const COMMAND = commands.grendy;
+        if(COMMAND.disabled.includes(cleanChannel)) return;
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${COMMAND.cooldown}`])) {
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
-        if(channels_data[channel].modules[`${commands.grendy.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+        if(channels_data[channel].modules[`${COMMAND.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        const template = await checkFan(cleanChannel, tags.username, argumentClean, commands.grendy.messages, commands.grendy.associated_channels);
+        const template = await checkFan(cleanChannel, tags.username, argumentClean, COMMAND.messages, COMMAND.associated_channels, COMMAND.name);
 
         client.say(channel, template);
         
 	}else if(commands.resp.aliases.includes(command)) {
-        if(commands.resp.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${commands.resp.cooldown}`])) {
+        const COMMAND = commands.resp;
+        if(COMMAND.disabled.includes(cleanChannel)) return;
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${COMMAND.cooldown}`])) {
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
-        if(channels_data[channel].modules[`${commands.resp.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+        if(channels_data[channel].modules[`${COMMAND.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        const template = await checkFan(cleanChannel, tags.username, argumentClean, commands.resp.messages, commands.resp.associated_channels);
+        const template = await checkFan(cleanChannel, tags.username, argumentClean, COMMAND.messages, COMMAND.associated_channels, COMMAND.name);
 
         client.say(channel, template);
         
