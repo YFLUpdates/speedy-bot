@@ -4,13 +4,14 @@ import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
 import {LoveCom, KtoCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
-    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom} from "./commands/index.js";
+    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom} from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters, chatMessages } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
 import { Truncate, topN, onlySpaces, getRandomChatter } from "./functions/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
+import {registerToBL} from "./functions/yfles/index.js";
 import subInsert from "./database/subInsert.js";
 
 dotenv.config()
@@ -889,15 +890,6 @@ client.on('message', async (channel, tags, message, self) => {
         channels_data[channel].cooldowns.last = Date.now();
 
         client.say(channel, `!hug, !opluj, !ewron, !yfl, !kogut, !watchtimeall, !watchtime, !ileogladalkobiet, !ksiezniczki, !kto, !gdzie, !ilejeszcze, !missing i wiele więcej na https://yfl.es/bot ok`);
-    }else if(["emotki", "emotes"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#xkaleson", "#mork", "#banduracartel"].includes(channel)) return;
-
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
-            return;
-        }
-        channels_data[channel].cooldowns.last = Date.now();
-
-        client.say(channel, `Nie widzisz tej emotki? -> jasperVixa Zainstaluj wtyczkę: https://7tv.app/ `);
     }else if(["chatters"].includes(command)){
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -967,16 +959,43 @@ client.on('message', async (channel, tags, message, self) => {
             client.say(channel, `${username}, oddałeś głos ${channels_data[channel].vote_ban.length}/${votes}`);
         }
 
+    }else if(["zjeb", "blacklist"].includes(command)){
+        const badges = tags.badges || {};
+        const isBroadcaster = badges.broadcaster;
+        const isMod = badges.moderator;
+        const isVip = badges.vip;
+        const isModUp = isBroadcaster || isMod || isVip;
+
+        if(argumentClean === "mark" && (isModUp || tags.username === "3xanax")){
+            const argumentClean2 = args[1].replaceAll("@", "").toLowerCase();
+
+            if(argumentClean2 && argumentClean2.length > 3){
+                const register = await registerToBL(argumentClean2, {reason: "zjeb mark", top1: "", registrator: "rejestrujący "+tags.username});
+                if(register === null) return client.say(channel, `${tags.username}, nie udało się zarejestrować zjeba jasperSad  `);;
+
+                client.say(channel, `${tags.username}, zarejestrowałeś ${argumentClean2}, jako zjeba aok`);
+                return;
+            }
+
+            client.say(channel, `${tags.username}, zapomniałeś podać osobe aok`);
+
+        }else if(argumentClean && argumentClean.length > 3){
+            if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {return;}
+            channels_data[channel].cooldowns.last = Date.now();
+            if(channels_data[channel].modules["zjeb"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+            const command = await checkBlacklistCom(argumentClean);
+
+            client.say(channel, command);
+        }else{
+            if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {return;}
+            channels_data[channel].cooldowns.last = Date.now();
+            if(channels_data[channel].modules["zjeb"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+            const command = await checkBlacklistCom(tags.username.toLowerCase());
+
+            client.say(channel, command);
+        }
     }
 
 });
-
-// else if(["cpanie", "wickr"].includes(command)){
-//     if(channel !== "#adrian1g__") return;
-//     if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
-//         return;
-//     }
-//     channels_data[channel].cooldowns.last = Date.now();
-
-//     client.say(channel, `wickr: xadrian1giet, prices: https://yfl.es/RD2hyjxpv8DsCDyGw6M79ctc7`);
-// }
