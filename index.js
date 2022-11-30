@@ -970,7 +970,7 @@ client.on('message', async (channel, tags, message, self) => {
             const argumentClean2 = args[1].replaceAll("@", "").toLowerCase();
 
             if(argumentClean2 && argumentClean2.length > 3){
-                const register = await registerToBL(argumentClean2, {reason: "zjeb mark", top1: "", registrator: "rejestrujący "+tags.username});
+                const register = await registerToBL(argumentClean2, {mark: true, registrator: tags.username});
                 if(register === null) return client.say(channel, `${tags.username}, nie udało się zarejestrować zjeba jasperSad  `);;
 
                 client.say(channel, `${tags.username}, zarejestrowałeś ${argumentClean2}, jako zjeba aok`);

@@ -6,7 +6,11 @@ export default async function request(user, json){
         method: "post",
         data: {
             user_login: user,
-            associated: `!${json.reason}, największy watchtime: ${json.top1} - ${json.registrator}`
+            associated: json.mark == null ? (
+                `!${json.reason}, największy watchtime: ${json.top1} - ${json.registrator}`
+            ):(
+                `zarejestrowany przez ${json.registrator}`
+            )
         },
         headers: {
             'Content-type': 'application/json',

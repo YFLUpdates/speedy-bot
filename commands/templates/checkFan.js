@@ -27,12 +27,12 @@ function messagesChannels(msgs, ratio, command_name, user){
         return msgs.not;
     }else if(ratio.watchtime < 0.5){
         if(command_name != "yfl"){
-            registerToBL(user, {reason: command_name, top1: ratio.top1, registrator: "SYSTEM"})
+            registerToBL(user, {mark: null, reason: command_name, top1: ratio.top1, registrator: "SYSTEM"})
         }
         return msgs.fan;
     }else if(ratio.watchtime > 0.5){
         if(command_name != "yfl"){
-            registerToBL(user, {reason: command_name, top1: ratio.top1, registrator: "SYSTEM"})
+            registerToBL(user, {mark: null, reason: command_name, top1: ratio.top1, registrator: "SYSTEM"})
         }
         return msgs.mega;
     }else{
