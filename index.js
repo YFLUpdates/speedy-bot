@@ -18,7 +18,7 @@ dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xkaleson", "neexcsgo", "banduracartel", "sl3dziv" ];
+const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", "neexcsgo", "banduracartel", "sl3dziv" ];
 //const joinThem = [ '3xanax' ];
 let newOrder = 0;
 const client = new tmi.Client({
@@ -901,6 +901,8 @@ client.on('message', async (channel, tags, message, self) => {
 
         client.say(channel, commands);
     }else if(["vb", "vote"].includes(command)){
+        if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel)) return;
+
         const badges = tags.badges || {};
         const isBroadcaster = badges.broadcaster;
         const isMod = badges.moderator;
