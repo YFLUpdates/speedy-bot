@@ -462,7 +462,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["missingall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(args[0].length < 3) return;
+        if(!args[0] || args[0] && args[0].length < 3) return;
 
         if(args[0]){
             const whereMissing = await missingAll(args[0].replaceAll("@", "").toLowerCase());
