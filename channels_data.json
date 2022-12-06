@@ -286,5 +286,29 @@
             "duels": 0,
             "mod": 0
         }
+    },
+    "#xmevron": {
+        "modules": {
+            "duels": false,
+            "jwt": false,
+            "vote": false
+        },
+        "duels_list": [
+
+        ],
+        "vote_who": "None",
+        "watchtime_top": [
+
+        ],
+        "vote_ban" : [
+
+        ],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        }
     }
 }
