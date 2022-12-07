@@ -3,9 +3,9 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import {LoveCom, KtoCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
+import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
     FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom} from "./commands/index.js";
-import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters, chatMessages } from "./functions/requests/index.js";
+import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
 import { Truncate, topN, onlySpaces, getRandomChatter } from "./functions/index.js";
@@ -478,15 +478,21 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["msgs"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(argumentClean || argumentClean && argumentClean.length > 3){
-            const whereMissing = await chatMessages(cleanChannel, argumentClean.replaceAll("@", "").toLowerCase());
+        const tempalte = await msgsCom(cleanChannel, tags.username, argumentClean);
 
-            client.say(channel, whereMissing);
-        }else{
-            const whereMissing = await chatMessages(cleanChannel, tags.username.replaceAll("@", ""));
+        client.say(channel, tempalte);
 
-            client.say(channel, whereMissing);
+    }else if(["topmsgs", "top5msgs"].includes(command)){
+        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
+            return;
         }
+        channels_data[channel].cooldowns.longer = Date.now();
+
+        if(channels_data[channel].modules["topmsgs"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+        const tempalte = await top5msgs(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, tempalte);
 
     }else if(["missing", "ostatnio", "lastseen", "kiedy"].includes(command)){
         if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel)) return;
@@ -819,7 +825,7 @@ client.on('message', async (channel, tags, message, self) => {
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
             }else if(args[0] === "list"){
-                client.say(channel, `${tags.username}, wszystkie dostępne moduły: msgs, duel, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda `)
+                client.say(channel, `${tags.username}, wszystkie dostępne moduły: topmsgs, msgs, duel, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda `)
             }else if(args[0] === "clearduels"){
                 channels_data[channel].duels_list = [];
 

@@ -4,7 +4,7 @@ export default async function hugC(channel, username, argument){
     const usernameSmall = username.toLowerCase();
 
     if(argument && argument.length > 3){
-        const channels = await offlineTime(argument);
+        const channels = await offlineTime(argument, channel);
 
         return channels;
     }else{
