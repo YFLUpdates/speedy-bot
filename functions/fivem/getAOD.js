@@ -1,4 +1,4 @@
-import cfx from "cfx-api";
+import serverInfo from "./modules/severInfo.js";
 
 const znaniHex = [
     "steam:11000013bcde738" /* - MRG */,
@@ -13,7 +13,7 @@ const znaniHex = [
 ]
 
 export default async function getSzwalnia(user) {
-    const fivecity = await cfx.fetchServer("vp4rxq");
+    const fivecity = await serverInfo("vp4rxq");
     let streamrsArray = [];
 
     if(!fivecity) return `${user} coś się popsuło z Fivem jasperTragedia`;

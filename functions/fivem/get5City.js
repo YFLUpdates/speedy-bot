@@ -1,11 +1,11 @@
-import cfx from "cfx-api";
+import serverInfo from "./modules/severInfo.js";
 import { promises as fs } from 'fs';
 import getMultipleRandom from "../../components/getMultipleRandom.js";
 
 const znaniHex = JSON.parse(await fs.readFile('./steam_hex.json', 'UTF-8'))
 
 export default async function getFiveCity(user) {
-    const fivecity = await cfx.fetchServer("vp4rxq");
+    const fivecity = await serverInfo("vp4rxq");
 
     if(!fivecity) return `${user} coś się popsuło z Fivem jasperTragedia`;
 
