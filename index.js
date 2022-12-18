@@ -1004,6 +1004,12 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, command);
         }
+    }else if([`${process.env.EVENT_COMMAND}`].includes(command)){
+        if(channel !== "#adrian1g__") return;
+
+        if(tags.username === "3xanax" || tags.username === "adrian1g__"){
+            client.say(channel, process.env.EVENT_COMMAND_TEXT); 
+        }
     }
 
 });
