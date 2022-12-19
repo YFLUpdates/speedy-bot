@@ -502,24 +502,13 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
-        if(args[0].length < 3) return;
+        if(args[0].length < 3) return client.say(channel, `${tags.username}, zapomniałeś/aś podać nick aok`);
 
         if(args[0]){
             const whereMissing = await missing(args[0].replaceAll("@", "").toLowerCase(), cleanChannel);
 
             client.say(channel, whereMissing);
         }
-
-    }else if(["ileyfl"].includes(command)){
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
-            return;
-        }
-        channels_data[channel].cooldowns.longer = Date.now();
-
-        /* Taking the message from the user and sending it to the ktoCom function. */
-        const commands = await IleYFLCom(cleanChannel, tags.username, argumentClean);
-
-        client.say(channel, commands);
 
     }else if(["ilemamlat", "wiek"].includes(command)){
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
@@ -906,67 +895,6 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await ChattersCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
-    }else if(["vb", "vote"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork", "#banduracartel"].includes(channel)) return;
-
-        const badges = tags.badges || {};
-        const isBroadcaster = badges.broadcaster;
-        const isMod = badges.moderator;
-        const isModUp = isBroadcaster || isMod;
-        
-        const username = tags.username.toLowerCase();
-
-        if(argumentClean === "start" && isModUp || argumentClean === "start" && username === "3xanax"){
-
-            if(!args[1] || args[1] && args[1].length < 3) return client.say(channel, `${username}, zapomniałeś podać osobe aha`);
-
-            channels_data[channel].vote_ban = [];
-            channels_data[channel].vote_who = args[1];
-            channels_data[channel].modules["vote"] = true;
-
-            client.say(channel, `${username}, rozpoczęto głosowanie na perma dla ${args[1]} !vote`)
-        }else if(argumentClean === "close" && isModUp || argumentClean === "close" && username === "3xanax"){
-            const chatters = await getChatters(cleanChannel);
-            const votes = ((5 / 100) * chatters.length).toFixed(0);
-
-            channels_data[channel].modules["vote"] = false;
-
-            client.say(channel, `${username}, głosowanie zamknięte ${channels_data[channel].vote_ban.length}/${votes}`);
-        }else if(argumentClean === "count"){
-            if(channels_data[channel].modules["vote"] === false) return;
-
-            const chatters = await getChatters(cleanChannel);
-
-            client.say(channel, `${username}, aktualnie zagłosowało ${channels_data[channel].vote_ban.length}/${((5 / 100) * chatters.length).toFixed(0)} osób `);
-        }else{
-            const check_for_duplicate = channels_data[channel].vote_ban.find(x => x === username);
-            
-            /* Checking if the duel exists. */
-            if(check_for_duplicate !== undefined) return;
-
-            if (channels_data[channel].cooldowns.last > (Date.now() - 1500)) {
-                return;
-            }
-            channels_data[channel].cooldowns.last = Date.now();
-
-            if(channels_data[channel].modules["vote"] === false) return client.say(channel, `${username}, aktualnie nie trwa żadne głosowanie. `);
-
-            const chatters = await getChatters(cleanChannel);
-            const votes = ((5 / 100) * chatters.length).toFixed(0);
-
-            channels_data[channel].vote_ban.push(username);
-
-            if(channels_data[channel].vote_ban.length+1 >= Number(votes)) {
-                channels_data[channel].modules["vote"] = false;
-                
-                client.say(channel, `Przegłosowane ${channels_data[channel].vote_who} powinnien dostać perma jasperL`);
-
-                return;
-            } 
-
-            client.say(channel, `${username}, oddałeś głos ${channels_data[channel].vote_ban.length}/${votes}`);
-        }
-
     }else if(["zjeb", "blacklist"].includes(command)){
         const badges = tags.badges || {};
         const isBroadcaster = badges.broadcaster;
