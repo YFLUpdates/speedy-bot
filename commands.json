@@ -171,6 +171,36 @@
             }
         },
         {
+            "name": "grendy",
+            "aliases": [
+                "grendy"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Sprawdza czy ktoś jest widzem grendiego.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "resp",
+            "aliases": [
+                "resp"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Sprawdza czy ktoś jest z respa.",
+                "en": "lorem"
+            }
+        },
+        {
             "name": "opluj",
             "aliases": [
                 "opluj"
@@ -322,21 +352,6 @@
             }
         },
         {
-            "name": "ileyfl",
-            "aliases": [
-                "ileyfl"
-            ],
-            "arguments": null,
-            "usage": "",
-            "disabled": [
-            ],
-            "cooldown": "classic",
-            "description": {
-                "pl": "Pokazuje ile osób z YFL w nicku jest na streamie.",
-                "en": "lorem"
-            }
-        },
-        {
             "name": "top3",
             "aliases": [
                 "top3watchtime",
@@ -349,6 +364,39 @@
             "cooldown": "classic",
             "description": {
                 "pl": "Pokazuje top 3 kanały według watchtimu.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "msgs",
+            "aliases": [
+                "msgs",
+                "messsages",
+                "wiadomosci"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Ilość wiadomości i miejsce w topce.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "topmsgs",
+            "aliases": [
+                "top5msgs",
+                "topmsgs"
+            ],
+            "arguments": "{user}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Pokazuje top 5 osób.",
                 "en": "lorem"
             }
         },
