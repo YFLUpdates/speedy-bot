@@ -1,7 +1,6 @@
 import LoveCom from "./love.js";
 import KtoCom from "./kto.js";
 import MarryCom from "./marry.js";
-import IleYFLCom from "./ileyfl.js";
 import Top3watchtimeCom from "./top3watchtime.js";
 import WiekCom from "./wiek.js";
 import FivecityCom from "./5city.js"
@@ -18,6 +17,7 @@ import ChattersCom from "./chatters.js";
 import checkBlacklistCom from "./checkBlacklist.js";
 import msgsCom from "./msgs.js";
 import top5msgs from "./top5msgs.js";
+import notRPCom from "./notRPCom.js"
 
-export { top5msgs, msgsCom, checkBlacklistCom, LoveCom, KtoCom, MarryCom, IleYFLCom, 
-    Top3watchtimeCom, WiekCom, FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, Watchtime2Com, PogodaCom, ChattersCom};
+export { top5msgs, msgsCom, checkBlacklistCom, LoveCom, KtoCom, MarryCom, 
+    Top3watchtimeCom, WiekCom, FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, Watchtime2Com, PogodaCom, ChattersCom, notRPCom};

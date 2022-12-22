@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, IleYFLCom, Top3watchtimeCom, WiekCom, 
+import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, notRPCom, Top3watchtimeCom, WiekCom, 
     FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom} from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
@@ -932,6 +932,16 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, command);
         }
+    }else if(["notrp", "nrp"].includes(command)){
+        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
+            return;
+        }
+        channels_data[channel].cooldowns.special = Date.now();
+
+        /* Taking the argumentClean variable and passing it to the EwronCom function. */
+        const commands = await notRPCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
     }
 
 });
