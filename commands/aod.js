@@ -29,7 +29,7 @@ export default async function hugC(channel, username, argument){
           break;
         case "coco":
         case "cocorp":
-          server = await serverInfo("jqbq8m");
+          server = await serverInfo("6d6rk8");
           break;
         case "77rp":
           server = await serverInfo("63blz4");
