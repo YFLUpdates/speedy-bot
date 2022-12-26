@@ -3,12 +3,11 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, notRPCom, Top3watchtimeCom, WiekCom, 
-    FivecityCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom} from "./commands/index.js";
+import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, Top3watchtimeCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
-import { Truncate, topN, onlySpaces, getRandomChatter } from "./functions/index.js";
+import { Truncate, topN, onlySpaces } from "./functions/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 import {registerToBL} from "./functions/yfles/index.js";
@@ -55,42 +54,6 @@ app.get("/jwt/:id", (req, res) => {
     }else{
         res.status(404).json({status: 404, message: "channel not found" })
     }
-});
-
-app.post("/orders/take", async (req, res) => {
-    if (!req.body) {
-        res.status(400).send({
-          message: "Content can not be empty!"
-        });
-    }
-    if(req.headers.id !== process.env.BOT_ID && req.headers.token !== process.env.TOKEN){
-        return res.status(401).send({
-            message: "Unauthorized. Invalid token!"
-        });
-    }
-
-    res.status(200).send({
-        message: "Success"
-    });
-
-    if (newOrder > (Date.now() - 30 * 60 * 1000)) {
-        return;
-    }
-    newOrder = Date.now();
-
-    const randomUser = await getRandomChatter("adrian1g__", { skipList: [ "adrian1g__" ] })
-    .then(user => {
-        if(user === null) return null;
-        let { name } = user;
-
-        return name;
-    })
-    .catch(err => {
-        return null; 
-    });
-    if(randomUser === null) return;
-
-    client.say("#adrian1g__", `${randomUser} zamówił ${req.body.product.replace(/\b(\w{2})\w+(\w)\b/g, '$1**$2')} w liczbie x${req.body.amount} sztuk jasperVixa`);
 });
 
 app.use((req, res, next) => {
@@ -535,26 +498,6 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await Top3watchtimeCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
-    }else if(["fivecity", "5city"].includes(command)){
-        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
-            return;
-        }
-        channels_data[channel].cooldowns.special = Date.now();
-
-        /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await FivecityCom(cleanChannel, tags.username, argumentClean);
-
-        client.say(channel, commands);
-    }else if(["aod"].includes(command)){
-        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
-            return;
-        }
-        channels_data[channel].cooldowns.special = Date.now();
-
-        /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await AODCom(cleanChannel, tags.username, argumentClean);
-
-        client.say(channel, commands);
     }else if(["szwalnia", "gangmoderacji"].includes(command)){
         if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
             return;
@@ -814,7 +757,7 @@ client.on('message', async (channel, tags, message, self) => {
     
                 client.say(channel, `${tags.username}, wyłączyłeś moduł ${args[1]}`)
             }else if(args[0] === "list"){
-                client.say(channel, `${tags.username}, wszystkie dostępne moduły: topmsgs, msgs, duel, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda `)
+                client.say(channel, `${tags.username}, wszystkie dostępne moduły: topmsgs, msgs, duel, mogemoda, czyjestemzjebem, top3, wiek, missingall, watchtime, watchtimeall, ileogladalkobiet, ksiezniczki, yfl, ewron, pogoda, aod, fivem `)
             }else if(args[0] === "clearduels"){
                 channels_data[channel].duels_list = [];
 
@@ -932,14 +875,28 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, command);
         }
-    }else if(["notrp", "nrp"].includes(command)){
+    }else if(["fivem", "5city", "nrp", "notrp", "cocorp", "coco"].includes(command)) {
         if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
             return;
         }
         channels_data[channel].cooldowns.special = Date.now();
 
+        if(channels_data[channel].modules[`fivem`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
+        const template = await fiveM(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, template);
+        
+	}else if(["aod"].includes(command)){
+        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
+            return;
+        }
+        channels_data[channel].cooldowns.special = Date.now();
+
+        if(channels_data[channel].modules[`aod`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
+
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await notRPCom(cleanChannel, tags.username, argumentClean);
+        const commands = await AODCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
     }

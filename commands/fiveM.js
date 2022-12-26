@@ -1,21 +1,12 @@
 import serverInfo from "../functions/fivem/modules/severInfo.js";
+import { promises as fs } from 'fs';
+import getMultipleRandom from "../components/getMultipleRandom.js";
 
-const znaniHex = [
-    "steam:11000013bcde738" /* - MRG */,
-    "steam:110000112458d4d" /* - Speedy */,
-    "steam:11000010395cc1b" /* - dobrypt */,
-    "steam:1100001486c2726" /* - adrian1g */,
-    "steam:11000010cce9caa" /* - MrDzinold */,
-    "steam:11000010263929b" /* - multi */,
-    "steam:1100001034b75af" /* - b4ndura */,
-    "steam:11000010f085a81" /* - mork  */,
-    "steam:1100001039e60a0" /* - neex  */
-]
+const znaniHex = JSON.parse(await fs.readFile('./steam_hex.json', 'UTF-8'))
 
 export default async function hugC(channel, username, argument){
     const usernameSmall = username.toLowerCase();
     let server = null;
-    let streamrsArray = [];
 
     if(!argument || argument && argument.length < 3) return `${usernameSmall} zapomniałeś podać serwer (5city, notrp, cocorp, 77rp)`;
 
@@ -40,18 +31,19 @@ export default async function hugC(channel, username, argument){
 
     if(server === null) return `${usernameSmall} coś się popsuło z Fivem jasperTragedia`;
 
+    const onServer = server.players.length;
+    let streamers = 0;
+    let streamrsArray = [];
+
     await Promise.all(
-        server.players.map(async (i) => {
+        server.players.map(async (i, index) => {
             if(znaniHex.includes(i.identifiers[0])){
-                if(i.name.toLowerCase() === "10x50"){
-                    return streamrsArray.push("neex");
-                }
                 streamrsArray.push(i.name.toLowerCase())
+                streamers += 1;
             }
         })
     )
-
-    if(streamrsArray.length === 0) return `jasperLaskotanie ${usernameSmall} nikt z AOD aktualnie nie gra na ${argument} `;
-
-    return `jasperUsmiech ${usernameSmall} na ${argument} aktualnie grają ${streamrsArray.join(", ")} `
+    const random = getMultipleRandom(streamrsArray, 3);
+    
+    return `GIGACHAD ${usernameSmall} na ${argument} aktualnie jest ${onServer} osób ${streamers ? (", z czego to znane osoby np. "+random.join(", ")):("")}`
 }
