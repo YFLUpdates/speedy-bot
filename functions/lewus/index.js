@@ -3,8 +3,7 @@ import dotenv from "dotenv";
 import {getChatters} from "../requests/index.js";
 import chunks from "./chunks.js";
 import {Censor} from "../index.js";
-// import jobToken from "../../components/jobToken.js";
-// import update_token from "./update_token.js";
+import {getToken} from "../../components/index.js";
 
 dotenv.config()
 
@@ -14,7 +13,7 @@ dotenv.config()
 // ~ xanax
 // const ACCESS_TOKEN = jobToken.get();
 const BASE_URL = "https://api.twitch.tv/helix/";
-const HEADERS = {'Client-ID': process.env.CLIENT_ID, 'Authorization': "Bearer " + process.env.ACCESS_TOKEN, 'Content-type': 'application/json'};
+const HEADERS = {'Client-ID': process.env.CLIENT_ID, 'Authorization': "Bearer " + await getToken(), 'Content-type': 'application/json'};
 
 function waitforme(ms) {
     return new Promise(resolve => {
@@ -31,17 +30,6 @@ async function get_response(query, _attemptCount = 0){
     .catch(async (err) => {
 
         // console.log(err)
-
-        // if(err.response.data.status === 401 && err.response.data.error === "Unauthorized"){
-        //     const token = await update_token();
-
-        //     if(token.error) return;
-
-        //     console.log(token.access_token)
-
-        //     jobToken.update(token.access_token)
-
-        // }
 
         if(_attemptCount < 3) {
             waitforme(500);

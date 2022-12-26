@@ -45,5 +45,5 @@ export default async function hugC(channel, username, argument){
     )
     const random = getMultipleRandom(streamrsArray, 3);
     
-    return `GIGACHAD ${usernameSmall} na ${argument} aktualnie jest ${onServer} osób ${streamers ? (", z czego to znane osoby np. "+random.join(", ")):("")}`
+    return `GIGACHAD ${usernameSmall} na ${argument} aktualnie jest ${onServer} osób ${streamers ? (`, z czego ${streamers} to znane osoby np. ${random.join(", ")}`):("")}`
 }
