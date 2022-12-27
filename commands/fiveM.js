@@ -7,6 +7,8 @@ const znaniHex = JSON.parse(await fs.readFile('./steam_hex.json', 'UTF-8'))
 export default async function hugC(channel, username, argument){
     const usernameSmall = username.toLowerCase();
     let server = null;
+    let streamers = 0;
+    let streamrsArray = [];
 
     if(!argument || argument && argument.length < 3) return `${usernameSmall} zapomniałeś podać serwer (5city, notrp, cocorp, 77rp)`;
 
@@ -31,10 +33,6 @@ export default async function hugC(channel, username, argument){
 
     if(server === null) return `${usernameSmall} coś się popsuło z Fivem jasperTragedia`;
 
-    const onServer = server.players.length;
-    let streamers = 0;
-    let streamrsArray = [];
-
     await Promise.all(
         server.players.map(async (i, index) => {
             if(znaniHex.includes(i.identifiers[0])){
@@ -45,5 +43,5 @@ export default async function hugC(channel, username, argument){
     )
     const random = getMultipleRandom(streamrsArray, 3);
     
-    return `GIGACHAD ${usernameSmall} na ${argument} aktualnie jest ${onServer} osób${streamers ? (`, z czego ${streamers} to znane osoby np. ${random.join(", ")}`):("")}`
+    return `ok ${usernameSmall} na ${argument} aktualnie jest ${server.players.length} osób${streamers ? (`, z czego ${streamers} to znane osoby np. ${random.join(", ")}`):("")}`
 }
