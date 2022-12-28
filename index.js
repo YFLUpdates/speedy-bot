@@ -223,6 +223,7 @@ client.on('message', async (channel, tags, message, self) => {
 	}else if(commands.ewron.aliases.includes(command)) {
         const COMMAND = commands.ewron;
         if(COMMAND.disabled.includes(cleanChannel)) return;
+        const oddvar = channels_data[channel].odd.ewron;
 
         /* Checking if the cooldown is greater than the current time minus the cooldown time. If it is, it
         returns. */
@@ -232,10 +233,14 @@ client.on('message', async (channel, tags, message, self) => {
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
+        if(oddvar > 0){
+            --channels_data[channel].odd.ewron;
+        }
+
         if(channels_data[channel].modules[`${COMMAND.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(channels_data[channel].odd.ewron > 3){
-            if(channels_data[channel].odd.ewron >= 10){
+        if(oddvar > 3){
+            if(oddvar >= 10){
                 channels_data[channel].odd.ewron = 0;
             }
 
@@ -334,16 +339,22 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["watchtimeall"].includes(command)){
+        const oddvar = channels_data[channel].odd.watchtimeall;
+
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             ++channels_data[channel].odd.watchtimeall;
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
 
+        if(oddvar > 0){
+            --channels_data[channel].odd.watchtimeall;
+        }
+
         if(channels_data[channel].modules["watchtimeall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(channels_data[channel].odd.watchtimeall > 3){
-            if(channels_data[channel].odd.watchtimeall >= 10){
+        if(oddvar > 3){
+            if(oddvar >= 10){
                 channels_data[channel].odd.watchtimeall = 0;
             }
 
@@ -492,16 +503,22 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["ilemamlat", "wiek"].includes(command)){
+        const oddvar = channels_data[channel].odd.wiek;
+
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             ++channels_data[channel].odd.wiek;
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
 
+        if(oddvar > 0){
+            --channels_data[channel].odd.wiek;
+        }
+
         if(channels_data[channel].modules["wiek"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(channels_data[channel].odd.wiek > 3){
-            if(channels_data[channel].odd.wiek >= 10){
+        if(oddvar > 3){
+            if(oddvar >= 10){
                 channels_data[channel].odd.wiek = 0;
             }
 
@@ -514,16 +531,22 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["top3", "top3watchtime"].includes(command)){
+        const oddvar = channels_data[channel].odd.top3;
+
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             ++channels_data[channel].odd.top3;
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
 
+        if(oddvar > 0){
+            --channels_data[channel].odd.top3;
+        }
+
         if(channels_data[channel].modules["top3"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(channels_data[channel].odd.top3 > 3){
-            if(channels_data[channel].odd.top3 >= 10){
+        if(oddvar > 3){
+            if(oddvar >= 10){
                 channels_data[channel].odd.top3 = 0;
             }
 
@@ -532,7 +555,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
         const commands = await Top3watchtimeCom(cleanChannel, tags.username, argumentClean);
-        
+
         client.say(channel, commands);
     }else if(["czyjestemzjebem"].includes(command)){
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
