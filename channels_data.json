@@ -5,22 +5,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
-        "watchtime_top": [
-
-        ],
+        "duels_list": [],
+        "watchtime_top": [],
         "vote_who": "None",
-        "vote_ban" : [
-
-        ],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#grubamruwa": {
@@ -29,22 +29,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
-        "watchtime_top": [
-
-        ],
+        "duels_list": [],
+        "watchtime_top": [],
         "vote_who": "None",
-        "vote_ban" : [
-
-        ],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#xspeedyq": {
@@ -53,22 +53,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
-        "watchtime_top": [
-
-        ],
+        "duels_list": [],
+        "watchtime_top": [],
         "vote_who": "None",
-        "vote_ban" : [
-
-        ],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#3xanax": {
@@ -77,22 +77,22 @@
             "jwt": true,
             "vote": false
         },
-        "duels_list": [
-
-        ],
-        "watchtime_top": [
-
-        ],
+        "duels_list": [],
+        "watchtime_top": [],
         "vote_who": "None",
-        "vote_ban" : [
-
-        ],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#mrdzinold": {
@@ -101,22 +101,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
-        "watchtime_top": [
-
-        ],
+        "duels_list": [],
+        "watchtime_top": [],
         "vote_who": "None",
-        "vote_ban" : [
-
-        ],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#dobrypt": {
@@ -125,22 +125,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
-        "watchtime_top": [
-
-        ],
+        "duels_list": [],
+        "watchtime_top": [],
         "vote_who": "None",
-        "vote_ban" : [
-
-        ],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#xmerghani": {
@@ -149,22 +149,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
-        "watchtime_top": [
-
-        ],
+        "duels_list": [],
+        "watchtime_top": [],
         "vote_who": "None",
-        "vote_ban" : [
-
-        ],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#xkaleson": {
@@ -173,22 +173,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
-        "watchtime_top": [
-
-        ],
+        "duels_list": [],
+        "watchtime_top": [],
         "vote_who": "None",
-        "vote_ban" : [
-
-        ],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#mork": {
@@ -197,22 +197,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
+        "duels_list": [],
         "vote_who": "None",
-        "watchtime_top": [
-
-        ],
-        "vote_ban" : [
-
-        ],
+        "watchtime_top": [],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#neexcsgo": {
@@ -221,22 +221,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
+        "duels_list": [],
         "vote_who": "None",
-        "watchtime_top": [
-
-        ],
-        "vote_ban" : [
-
-        ],
+        "watchtime_top": [],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#banduracartel": {
@@ -245,22 +245,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
+        "duels_list": [],
         "vote_who": "None",
-        "watchtime_top": [
-
-        ],
-        "vote_ban" : [
-
-        ],
+        "watchtime_top": [],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#sl3dziv": {
@@ -269,22 +269,22 @@
             "jwt": false,
             "vote": false
         },
-        "duels_list": [
-
-        ],
+        "duels_list": [],
         "vote_who": "None",
-        "watchtime_top": [
-
-        ],
-        "vote_ban" : [
-
-        ],
+        "watchtime_top": [],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     },
     "#xmevron": {
@@ -297,18 +297,20 @@
 
         ],
         "vote_who": "None",
-        "watchtime_top": [
-
-        ],
-        "vote_ban" : [
-
-        ],
+        "watchtime_top": [],
+        "vote_ban" : [],
         "cooldowns": {
             "last": 0,
             "longer": 0,
             "special": 0,
             "duels": 0,
             "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
         }
     }
 }
