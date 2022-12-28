@@ -20,6 +20,9 @@ const PORT = process.env.PORT || 3000;
 const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold', "xmerghani", "xkaleson", "neexcsgo", "banduracartel", "sl3dziv", "xmevron" ];
 //const joinThem = [ '3xanax' ];
 let newOrder = 0;
+const message_number_to_trigger_odd = 3;
+const message_number_to_clear_odd = 6;
+
 const client = new tmi.Client({
 	identity: {
 		username: process.env.TWITCH_USERNAME,
@@ -141,6 +144,10 @@ client.on("subgift", (channel, username, streakMonths, recipient, methods, users
     client.say(channel, `${username.toLowerCase()}, darmowe 250 punktów dodane catJAM`);
 });
 
+function oddMessage(user){
+    return `${user}, sklej pizde dziwaku aok`;
+}
+
 client.on('message', async (channel, tags, message, self) => {
 	if(self || !message.startsWith('!')) return;
 
@@ -239,12 +246,12 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules[`${COMMAND.name}`] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(oddvar > 3){
-            if(oddvar >= 10){
+        if(oddvar > message_number_to_trigger_odd){
+            if(oddvar >= message_number_to_clear_odd){
                 channels_data[channel].odd.ewron = 0;
             }
 
-            return client.say(channel, `${tags.username}, sklej pizde dziwaku`);
+            return client.say(channel, oddMessage(tags.username));
         }
         const template = await checkFan(cleanChannel, tags.username, argumentClean, COMMAND.messages, COMMAND.associated_channels, COMMAND.name);
 
@@ -353,12 +360,12 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["watchtimeall"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(oddvar > 3){
-            if(oddvar >= 10){
+        if(oddvar > message_number_to_trigger_odd){
+            if(oddvar >= message_number_to_clear_odd){
                 channels_data[channel].odd.watchtimeall = 0;
             }
 
-            return client.say(channel, `${tags.username}, sklej pizde dziwaku`);
+            return client.say(channel, oddMessage(tags.username));
         }
     
         if(args[0] && args[0].length > 3){
@@ -517,12 +524,12 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["wiek"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(oddvar > 3){
-            if(oddvar >= 10){
+        if(oddvar > message_number_to_trigger_odd){
+            if(oddvar >= message_number_to_clear_odd){
                 channels_data[channel].odd.wiek = 0;
             }
 
-            return client.say(channel, `${tags.username}, sklej pizde dziwaku`);
+            return client.say(channel, oddMessage(tags.username));
         }
 
         /* Taking the message from the user and sending it to the ktoCom function. */
@@ -545,12 +552,12 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["top3"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(oddvar > 3){
-            if(oddvar >= 10){
+        if(oddvar > message_number_to_trigger_odd){
+            if(oddvar >= message_number_to_clear_odd){
                 channels_data[channel].odd.top3 = 0;
             }
 
-            return client.say(channel, `${tags.username}, sklej pizde dziwaku`);
+            return client.say(channel, oddMessage(tags.username));
         }
 
         /* Taking the argumentClean variable and passing it to the EwronCom function. */
