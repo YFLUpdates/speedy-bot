@@ -509,6 +509,8 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
     }else if(["ilemamlat", "wiek"].includes(command)){
+        if(["#mrdzinold"].includes(channel)) return;
+
         const oddvar = channels_data[channel].odd.wiek;
 
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
