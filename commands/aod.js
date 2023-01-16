@@ -9,7 +9,9 @@ const znaniHex = [
     "steam:11000010263929b" /* - multi */,
     "steam:1100001034b75af" /* - b4ndura */,
     "steam:11000010f085a81" /* - mork  */,
-    "steam:1100001039e60a0" /* - neex  */
+    "steam:1100001039e60a0" /* - neex  */,
+    "steam:11000010c71021d" /* - wronek  */,
+    "steam:11000010461422b" /* - tuszol  */
 ]
 
 export default async function hugC(channel, username, argument){
