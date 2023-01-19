@@ -956,6 +956,27 @@ client.on('message', async (channel, tags, message, self) => {
         const commands = await AODCom(cleanChannel, tags.username, argumentClean);
 
         client.say(channel, commands);
+    }else if(["settings", "ustawienia"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.last = Date.now();
+
+        if(argumentClean === "gta"){
+            client.say(channel,  `${tags.username}, USTAWIENIA GTA FIRE https://clips.twitch.tv/LongEnjoyableTubersOMGScoots-0gEQyEMXY690Pv0m`);
+
+        }else if(argumentClean === "fortnite"){
+            client.say(channel,  `${tags.username}, USTAWIENIA FORTNITE FIRE https://clips.twitch.tv/InventiveCrypticOilBIRB-yWwnEcUiOAHBB0W3`);
+
+        }else if(argumentClean === "citizen"){
+            client.say(channel,  `${tags.username}, Citizen od fatka aok`);
+
+        }else{
+
+            client.say(channel, `${tags.username}, zapomniałeś podać gre (gta, fortnite, citizen)`);
+        }
     }
 
 });
