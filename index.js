@@ -3,14 +3,14 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, Top3watchtimeCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
+import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, Top3watchtimeCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, OrgCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
 import { Truncate, topN, onlySpaces } from "./functions/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
-import {registerToBL} from "./functions/yfles/index.js";
+import {registerToBL, removeFromBL} from "./functions/yfles/index.js";
 import subInsert from "./database/subInsert.js";
 
 dotenv.config()
@@ -907,9 +907,22 @@ client.on('message', async (channel, tags, message, self) => {
 
             if(argumentClean2 && argumentClean2.length > 3){
                 const register = await registerToBL(argumentClean2, {mark: true, registrator: tags.username});
-                if(register === null) return client.say(channel, `${tags.username}, nie udało się zarejestrować zjeba jasperSad  `);;
+                if(register === null) return client.say(channel, `${tags.username}, nie udało się zarejestrować zjeba jasperSad `);;
 
                 client.say(channel, `${tags.username}, zarejestrowałeś ${argumentClean2}, jako zjeba aok`);
+                return;
+            }
+
+            client.say(channel, `${tags.username}, zapomniałeś podać osobe aok`);
+
+        }else if(argumentClean === "unmark" && (isModUp || tags.username === "3xanax")){
+            const argumentClean2 = args[1].replaceAll("@", "").toLowerCase();
+
+            if(argumentClean2 && argumentClean2.length > 3){
+                const register = await removeFromBL(argumentClean2);
+                if(register === null) return client.say(channel, `${tags.username}, nie udało się usunąć tytułu zjeba jasperSad `);;
+
+                client.say(channel, `${tags.username}, usunąłeś ${argumentClean2}, tytuł zjeba aok`);
                 return;
             }
 
@@ -977,6 +990,18 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, `${tags.username}, zapomniałeś podać gre (gta, fortnite, citizen)`);
         }
+    }else if(["org", "kłow", "topg"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
+            return;
+        }
+        channels_data[channel].cooldowns.special = Date.now();
+
+        /* Taking the argumentClean variable and passing it to the EwronCom function. */
+        const commands = await OrgCom(cleanChannel, tags.username, argumentClean);
+
+        client.say(channel, commands);
     }
 
 });
