@@ -58,7 +58,7 @@ export default async function hugC(channel, username, argument){
         })
     )
 
-    if(streamrsArray.length === 0) return `jasperLaskotanie ${usernameSmall} nikt z Organizacji aktualnie nie gra na notrp `;
+    if(streamrsArray.length === 0) return `PogO ${usernameSmall} nikt z Organizacji aktualnie nie gra na NotRP `;
 
-    return `jasperUsmiech ${usernameSmall} na notrp aktualnie grają ${streamrsArray.join(", ")} `
+    return `monkaStandoff ${usernameSmall} na NotRP aktualnie grają: ${streamrsArray.join(", ")} `
 }

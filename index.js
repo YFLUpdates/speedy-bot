@@ -990,7 +990,7 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, `${tags.username}, zapomniałeś podać gre (gta, fortnite, citizen)`);
         }
-    }else if(["org", "kłow", "topg"].includes(command)){
+    }else if(["org", "topg"].includes(command)){
         if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
 
         if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
