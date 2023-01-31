@@ -8,6 +8,30 @@ const znaniHex = [
     "steam:1100001118a7907" /* - minesekk */
 ]
 
+const nicknames = function(steamid) {
+    let day;
+    switch (steamid) {
+      case 'steam:110000117245651':
+        day = "Igoreq";
+        break;
+      case 'steam:110000114731078':
+        day = "Toster";
+        break;
+      case 'steam:11000013a1c7342':
+        day = "ig kłowty";
+        break;
+      case 'steam:11000013eaf80d2':
+        day = "Hyper";
+        break;
+      case 'steam:1100001118a7907':
+        day = "minesekk";
+        break;
+      default:
+        day = "Nieznany członek";
+    }
+    return day;
+}
+
 export default async function hugC(channel, username, argument){
     const usernameSmall = username.toLowerCase();
     let server = await serverInfo("jqbq8m");
@@ -29,7 +53,7 @@ export default async function hugC(channel, username, argument){
     await Promise.all(
         server.players.map(async (i) => {
             if(znaniHex.includes(i.identifiers[0])){
-                streamrsArray.push(i.name.toLowerCase())
+                streamrsArray.push(nicknames(i.identifiers[0]))
             }
         })
     )
