@@ -18,7 +18,7 @@ const nicknames = function(steamid) {
         day = "Toster";
         break;
       case 'steam:11000013a1c7342':
-        day = "ig kłowty";
+        day = "kłow";
         break;
       case 'steam:11000013eaf80d2':
         day = "Hyper";
