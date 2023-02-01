@@ -6,7 +6,8 @@ const znaniHex = [
     "steam:11000013a1c7342" /* - big kłowty on top */,
     "steam:11000013eaf80d2" /* - Hyper */,
     "steam:1100001118a7907" /* - minesekk */,
-    "steam:1100001486c2726" /* - adrian1g */
+    "steam:1100001486c2726" /* - adrian1g */,
+    "steam:110000136677732" /* - xafek */
 ]
 
 const nicknames = function(steamid) {
@@ -29,6 +30,9 @@ const nicknames = function(steamid) {
         break;
       case 'steam:1100001486c2726':
         day = "adrian1g";
+        break;
+      case 'steam:110000136677732':
+        day = "xafek";
         break;
       default:
         day = "Nieznany członek";
