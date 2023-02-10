@@ -22,7 +22,7 @@ const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold
 //const joinThem = [ '3xanax' ];
 const message_number_to_trigger_odd = 3;
 const message_number_to_clear_odd = 6;
-let adrian1g_stream = null;
+let adrian1g_stream = "0";
 
 const client = new tmi.Client({
 	identity: {
@@ -148,7 +148,9 @@ client.on("subgift", (channel, username, streakMonths, recipient, methods, users
 function oddMessage(user){
     return `${user}, 3Heading wpiszę sobie komende`;
 }
-
+function dateIsValid(date) {
+    return date instanceof Date && !isNaN(date);
+}
 client.on('message', async (channel, tags, message, self) => {
 	if(self || !message.startsWith('!')) return;
 
@@ -1014,9 +1016,15 @@ client.on('message', async (channel, tags, message, self) => {
         const isModUp = isBroadcaster || isMod || isVip;
 
         if(argumentClean === "set" && (isModUp || tags.username === "3xanax")){
+            if(args[1] === "0"){
+                adrian1g_stream = "0";
+
+                client.say(channel, `${tags.username}, wyzerowałeś godzine streama`);
+                return;
+            }
             const date = new Date(args[1].replaceAll("#", " "));
 
-            if(date){
+            if(date && dateIsValid(date)){
                 adrian1g_stream = date;
 
                 client.say(channel, `${tags.username}, ustawiłeś godzine streama na ${date.toLocaleString("pl")}`);
@@ -1026,16 +1034,10 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${tags.username}, podałeś złą date, format (2023-01-22#15:00)`);
 
         }else{
-            if(adrian1g_stream === null){
+            if(adrian1g_stream === "0"){
                 return client.say(channel, `Nie ustawiono godziny streama mhm`);
             }
-
-            const currentDate = new Date();
-            // const timeDiff = currentDate - adrian1g_stream.getTime();
             const timeDiffSeconds = intlFormatDistance(adrian1g_stream, new Date(), { style: 'short', numeric: 'always', locale: 'pl' })
-
-            // console.log(Math.abs(timeDiffSeconds.toFixed(0)))
-            
 
             return client.say(channel, `oho adrian1g miał odpalić streama: ${timeDiffSeconds}`);
         }
