@@ -1034,6 +1034,11 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${tags.username}, podałeś złą date, format (2023-01-22#15:00)`);
 
         }else{
+            if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+                return;
+            }
+            channels_data[channel].cooldowns.last = Date.now();
+
             if(adrian1g_stream === "0"){
                 return client.say(channel, `Nie ustawiono godziny streama mhm`);
             }
@@ -1041,6 +1046,15 @@ client.on('message', async (channel, tags, message, self) => {
 
             return client.say(channel, `oho adrian1g miał odpalić streama: ${timeDiffSeconds}`);
         }
+    }else if(["cam2"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.last = Date.now();
+
+        return client.say(channel, `${tags.username}, kamerka z pokoju gieta: https://cam2.1giet.cf/ `);
     }
 
 });
