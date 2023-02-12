@@ -906,9 +906,9 @@ client.on('message', async (channel, tags, message, self) => {
         const isVip = badges.vip;
         const isModUp = isBroadcaster || isMod || isVip;
 
-        if(argumentClean === "mark" && (isModUp || tags.username === "3xanax")){
+        if(argumentClean === "mark" && (isModUp || tags.username === "3xanax" || tags.username === "youngkarthez")){
             const argumentClean2 = args[1].replaceAll("@", "").toLowerCase();
-
+	
             if(argumentClean2 && argumentClean2.length > 3){
                 const register = await registerToBL(argumentClean2, {mark: true, registrator: tags.username});
                 if(register === null) return client.say(channel, `${tags.username}, nie udało się zarejestrować zjeba jasperSad `);;
@@ -919,7 +919,7 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, `${tags.username}, zapomniałeś podać osobe aok`);
 
-        }else if(argumentClean === "unmark" && (isModUp || tags.username === "3xanax")){
+        }else if(argumentClean === "unmark" && (isModUp || tags.username === "3xanax" || tags.username === "youngkarthez")){
             const argumentClean2 = args[1].replaceAll("@", "").toLowerCase();
 
             if(argumentClean2 && argumentClean2.length > 3){
