@@ -7,22 +7,6 @@
     },
     "commands_mods": [
         {
-            "name": "jwt",
-            "aliases": [
-                "jwt",
-                "joinwatchtime"
-            ],
-            "arguments": "{start/stop/count}",
-            "usage": "",
-            "disabled": [
-            ],
-            "cooldown": null,
-            "description": {
-                "pl": "Sprawdzanie największego watchtimu",
-                "en": "lorem"
-            }
-        },
-        {
             "name": "modules",
             "aliases": [
                 "modules",
@@ -417,12 +401,15 @@
             }
         },
         {
-            "name": "5city",
+            "name": "fivem",
             "aliases": [
-                "fivecity",
-                "5city"
+                "5city",
+                "nrp",
+                "notrp",
+                "cocorp",
+                "coco"
             ],
-            "arguments": null,
+            "arguments": "{5city/coco/nrp}",
             "usage": "",
             "disabled": [
             ],
@@ -509,18 +496,23 @@
             }
         },
         {
-            "name": "szwalnia",
+            "name": "org",
             "aliases": [
-                "szwalnia",
-                "gangmoderacji"
+                "organizacja",
+                "topg"
             ],
             "arguments": null,
             "usage": "",
             "disabled": [
+                "xmerghani",
+                "mork",
+                "mrdzinold",
+                "grubamruwa",
+                "xkaleson"
             ],
             "cooldown": "special",
             "description": {
-                "pl": "Sprawdza kto z gangu moderacji jest na 5City.",
+                "pl": "Sprawdza kto z organizacji 1gieta jest na notrp.",
                 "en": "lorem"
             }
         },
@@ -584,24 +576,6 @@
             }
         },
         {
-            "name": "jwt",
-            "aliases": [
-                "jwt",
-                "joinwatchtime"
-            ],
-            "arguments": null,
-            "usage": "",
-            "disabled": [
-                "xmerghani",
-                "mrdzinold"
-            ],
-            "cooldown": "classic",
-            "description": {
-                "pl": "Dołaczanie do listy osób w celu sprawdzenia największego watchtimu.",
-                "en": "lorem"
-            }
-        },
-        {
             "name": "help",
             "aliases": [
                 "help",
@@ -616,6 +590,21 @@
             "cooldown": "classic",
             "description": {
                 "pl": "Podaje kilka komend i linka do strony ze wszystkimi.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "zjeb",
+            "aliases": [
+                "blacklist"
+            ],
+            "arguments": "{nick/mark/unmark} {nick}",
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Sprawdź czy ktoś został zarejestrowany jako zjeb lub zarejestruj go.",
                 "en": "lorem"
             }
         }
