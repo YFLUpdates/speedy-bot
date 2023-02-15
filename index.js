@@ -1055,6 +1055,20 @@ client.on('message', async (channel, tags, message, self) => {
         channels_data[channel].cooldowns.last = Date.now();
 
         return client.say(channel, `${tags.username}, kamerka z pokoju gieta: https://cam2.1giet.cf/ `);
+    }else if(["med"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+        
+        const badges = tags.badges || {};
+        const isBroadcaster = badges.broadcaster;
+        const isMod = badges.moderator;
+        const isVip = badges.vip;
+        const isModUp = isBroadcaster || isMod || isVip;
+
+        if(!isModUp || tags.username !== "3xanax"){
+            return;
+        }
+
+        return client.say(channel, `MED: ${args.join(" ")}`);
     }
 
 });
