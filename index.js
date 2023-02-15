@@ -1064,11 +1064,16 @@ client.on('message', async (channel, tags, message, self) => {
         const isVip = badges.vip;
         const isModUp = isBroadcaster || isMod || isVip;
 
-        if(!isModUp || tags.username !== "3xanax"){
-            return;
+        if(isModUp || tags.username === "3xanax"){
+            if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+                return;
+            }
+            channels_data[channel].cooldowns.last = Date.now();
+    
+            return client.say(channel, `MED: ${args.join(" ")}`);
         }
 
-        return client.say(channel, `MED: ${args.join(" ")}`);
+        return;
     }
 
 });
