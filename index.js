@@ -1122,6 +1122,14 @@ client.on('message', async (channel, tags, message, self) => {
         }
         adrian1g_giveaywa_timer = Date.now();
 
+        const indexOfObject = adrian1g_giveaway_list.findIndex(object => {
+            return object.nick === tags.username;
+        });
+
+        if(indexOfObject !== -1){
+            return;
+        }
+
         adrian1g_giveaway_list.push({
             nick: tags.username,
             avatar: "https://static-cdn.jtvnw.net/jtv_user_pictures/3a65304c-c83e-4f60-8155-973eb4362b52-profile_image-150x150.png"
