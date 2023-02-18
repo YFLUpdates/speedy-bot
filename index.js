@@ -1132,7 +1132,7 @@ client.on('message', async (channel, tags, message, self) => {
 
         adrian1g_giveaway_list.push({
             nick: tags.username,
-            avatar: "https://static-cdn.jtvnw.net/jtv_user_pictures/3a65304c-c83e-4f60-8155-973eb4362b52-profile_image-150x150.png"
+            id: tags["user-id"]
         })
     }
 
