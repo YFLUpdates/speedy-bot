@@ -22,7 +22,11 @@ const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrypt', 'mrdzinold
 //const joinThem = [ '3xanax' ];
 const message_number_to_trigger_odd = 3;
 const message_number_to_clear_odd = 6;
+
 let adrian1g_stream = "0";
+let adrian1g_keyword = null;
+let adrian1g_giveaway_list = [];
+let adrian1g_giveaywa_timer = 0;
 
 const client = new tmi.Client({
 	identity: {
@@ -58,6 +62,13 @@ app.get("/jwt/:id", (req, res) => {
     }else{
         res.status(404).json({status: 404, message: "channel not found" })
     }
+});
+
+app.get("/giveaway", (req, res) => {
+    res.json({
+        keyword: `!${adrian1g_keyword}`,
+        data: adrian1g_giveaway_list
+    });
 });
 
 app.use((req, res, next) => {
@@ -1073,6 +1084,48 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
         return;
+    }else if(["losowanie"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+        
+        const badges = tags.badges || {};
+        const isBroadcaster = badges.broadcaster;
+        const isMod = badges.moderator;
+        const isVip = badges.vip;
+        const isModUp = isBroadcaster || isMod || isVip;
+
+        if(isModUp || tags.username === "3xanax"){
+            if(argumentClean === "keyword"){
+
+                if(!args[1]){
+                    return client.say(channel, `zapomniałeś o słowie`);
+                }
+
+                adrian1g_keyword = args[1] || "nieustawiono";
+    
+                return client.say(channel, `ustawiono słowo do dołączenia na !${args[1] || "nieustawiono"}`);
+    
+            }else if(argumentClean === "usun"){
+
+                adrian1g_giveaway_list = [];
+                adrian1g_keyword = null;
+
+                return client.say(channel, `usunieto komende i wyczyszczono liste`);
+            }
+
+            return client.say(channel, `nieznana komenda {keyword/usun}`);
+        }
+    }else if(adrian1g_keyword !== null && adrian1g_keyword.includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+
+        if (adrian1g_giveaywa_timer > (Date.now() - 1000)) {
+            return;
+        }
+        adrian1g_giveaywa_timer = Date.now();
+
+        adrian1g_giveaway_list.push({
+            nick: tags.username,
+            avatar: "https://static-cdn.jtvnw.net/jtv_user_pictures/3a65304c-c83e-4f60-8155-973eb4362b52-profile_image-150x150.png"
+        })
     }
 
 });
