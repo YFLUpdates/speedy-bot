@@ -338,5 +338,29 @@
             "ewron": 0,
             "watchtimeall": 0
         }
+    },
+    "#grabyyolo": {
+        "modules": {
+            "duels": false,
+            "jwt": false,
+            "vote": false
+        },
+        "duels_list": [],
+        "watchtime_top": [],
+        "vote_who": "None",
+        "vote_ban" : [],
+        "cooldowns": {
+            "last": 0,
+            "longer": 0,
+            "special": 0,
+            "duels": 0,
+            "mod": 0
+        },
+        "odd": {
+            "wiek": 0,
+            "top3": 0,
+            "ewron": 0,
+            "watchtimeall": 0
+        }
     }
 }
