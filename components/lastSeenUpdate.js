@@ -24,7 +24,8 @@ async function isLive(){
         "253229807", //xmevron
         "86177006", //shavskyyy
         "49405731", //grabyyolo
-        "727460432" //tuszol
+        "727460432", //tuszol
+        "668805300" //1wron3k
     ]
 
     return await axios({
