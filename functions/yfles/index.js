@@ -2,5 +2,6 @@ import duelUpdate from "./duelUpdate.js";
 import registerToBL from "./registerToBL.js";
 import removeFromBL from "./removeFromBL.js";
 import checkBL from "./checkBL.js";
+import banduraBans from "./banduraBans.js";
 
-export { duelUpdate, registerToBL, checkBL, removeFromBL };
+export { duelUpdate, registerToBL, checkBL, removeFromBL, banduraBans };
