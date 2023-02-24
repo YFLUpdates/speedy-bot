@@ -1134,6 +1134,15 @@ client.on('message', async (channel, tags, message, self) => {
             nick: tags.username,
             id: tags["user-id"]
         })
+    }else if(["paszport"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.last = Date.now();
+
+        return client.say(channel, `${tags.username}, paszport możesz odebrać pod URL https://passport.1giet.cf/${tags.username.toLowerCase()} chciwy `);
     }
 
 });
