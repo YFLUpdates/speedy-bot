@@ -1143,7 +1143,9 @@ client.on('message', async (channel, tags, message, self) => {
         channels_data[channel].cooldowns.last = Date.now();
 
         return client.say(channel, `${tags.username}, paszport możesz odebrać pod URL https://passport.1giet.cf/${tags.username.toLowerCase()} chciwy `);
-    }else if(["permy"].includes(command)){
+    }else if(["permy", "perm"].includes(command)){
+        if(!["#banduracartel", "#adrian1g__", "#3xanax", "#xmerghani"].includes(channel)) return;
+
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
