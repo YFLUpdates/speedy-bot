@@ -10,7 +10,7 @@ import { RollOrMark, checkFan } from "./commands/templates/index.js";
 import { Truncate, topN, onlySpaces } from "./functions/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
-import {registerToBL, removeFromBL, banduraBans} from "./functions/yfles/index.js";
+import {registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js";
 import subInsert from "./database/subInsert.js";
 import { intlFormatDistance } from "date-fns";
 
@@ -1144,19 +1144,22 @@ client.on('message', async (channel, tags, message, self) => {
 
         return client.say(channel, `${tags.username}, paszport możesz odebrać pod URL https://passport.1giet.cf/${tags.username.toLowerCase()} chciwy `);
     }else if(["permy", "perm"].includes(command)){
-        if(!["#banduracartel", "#adrian1g__", "#3xanax", "#xmerghani"].includes(channel)) return;
-
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
-        const bansToday = await banduraBans();
+        const cleanChannel = channel.replaceAll("#", "");
+        const bansToday = await todayBans(argumentClean ? argumentClean : cleanChannel);
 
         if(bansToday === null){
             return client.say(channel, `${tags.username}, coś poszło nie tak mhm`); 
         }
 
-        return client.say(channel, `${tags.username}, bandura rozdał dzisiaj: ${bansToday.bans} permów jasperRADOSC `);
+        if(bansToday === true){
+            return client.say(channel, `${tags.username}, ${argumentClean ? argumentClean : cleanChannel} nie dał dzisiaj ani jednego perma jasperSad `); 
+        }
+
+        return client.say(channel, `${tags.username}, ${argumentClean ? argumentClean : cleanChannel} rozdał dzisiaj: ${bansToday.bans} permów jasperRADOSC `);
     }
 
 });
