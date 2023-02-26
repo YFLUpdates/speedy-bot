@@ -1156,10 +1156,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
         if(bansToday === true){
-            return client.say(channel, `${tags.username}, ${argumentClean ? argumentClean : cleanChannel} nie dał dzisiaj ani jednego perma jasperSad `); 
+            return client.say(channel, `${tags.username}, nikt nie dostał dzisiaj perma na kanale ${argumentClean ? argumentClean : cleanChannel} jasperSad `); 
         }
 
-        return client.say(channel, `${tags.username}, ${argumentClean ? argumentClean : cleanChannel} rozdał dzisiaj: ${bansToday.bans} permów jasperRADOSC `);
+        return client.say(channel, `${tags.username}, na kanale ${argumentClean ? argumentClean : cleanChannel} zostało dzisiaj rozdane: ${bansToday.bans} permów jasperRADOSC `);
     }
 
 });
