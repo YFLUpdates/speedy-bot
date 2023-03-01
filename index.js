@@ -116,7 +116,10 @@ setInterval(async () => {
           array.includes("[YFL SMP]") ||
           array.includes("[SMP]") ||
           array.includes("[YFL") ||
-          array.includes("SMP]")
+          array.includes("SMP]" ||
+          array.includes("GILDIA") ||
+          array.includes("WALKA") ||
+          array.includes("WOJNA"))
         ) {
           streams.streams.push({
             nickname: e.user_name,
