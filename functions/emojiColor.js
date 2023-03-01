@@ -10,6 +10,12 @@ const emojiColor = function(data) {
       case "green":
         color = "🟩";
         break;
+      case "blue":
+        color = "🟦";
+        break;
+      case "orange":
+        color = "🟧";
+        break;
       default:
         color = "⬜";
     }

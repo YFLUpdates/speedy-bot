@@ -17,6 +17,7 @@ import SelectStreams from "./components/SelectStreams.js";
 import rollWinColor from "./components/rollWinColor.js";
 import gambleUpdate from "./functions/yfles/gambleUpdate.js";
 import emojiColor from "./functions/emojiColor.js";
+import multiplyColor from "./functions/multiplyColor.js";
 
 dotenv.config()
 
@@ -1205,8 +1206,8 @@ client.on('message', async (channel, tags, message, self) => {
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
 
-        if(!argumentClean || !["red", "black", "green"].includes(argumentClean)){
-           return client.say(channel, `${cleanSender}, zapomniałeś/aś o kolorze (red - (x2), black - (x2), green - (x14)) `); 
+        if(!argumentClean || !["red", "black", "green", "blue", "orange"].includes(argumentClean)){
+           return client.say(channel, `${cleanSender}, zapomniałeś/aś o kolorze (red - (x2), black - (x2), blue - (x3), orange - (x5), green - (x14)) `); 
         } 
 
         if(!args[1]){
@@ -1231,7 +1232,7 @@ client.on('message', async (channel, tags, message, self) => {
 
             return client.say(channel, `${cleanSender} przegrałeś/aś wszystko beka - ${emojiColor(winnerColor)}`);
         }
-        const winAmount = (betPoints * (winnerColor === "green" ? 14 : 2));
+        const winAmount = (betPoints * multiplyColor(winnerColor));
         const updatePoints = await gambleUpdate(cleanChannel, `+${winAmount}`, cleanSender)
 
         if(updatePoints === null){
