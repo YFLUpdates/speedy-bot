@@ -16,6 +16,7 @@ import { intlFormatDistance } from "date-fns";
 import SelectStreams from "./components/SelectStreams.js";
 import rollWinColor from "./components/rollWinColor.js";
 import gambleUpdate from "./functions/yfles/gambleUpdate.js";
+import emojiColor from "./functions/emojiColor.js";
 
 dotenv.config()
 
@@ -1228,7 +1229,7 @@ client.on('message', async (channel, tags, message, self) => {
                 return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
             }
 
-            return client.say(channel, `${cleanSender} przegrałeś/aś wszystko beka wygrany kolor - ${winnerColor} `);
+            return client.say(channel, `${cleanSender} przegrałeś/aś wszystko beka - ${emojiColor(winnerColor)}`);
         }
         const winAmount = (betPoints * (winnerColor === "green" ? 14 : 2));
         const updatePoints = await gambleUpdate(cleanChannel, `+${winAmount}`)
