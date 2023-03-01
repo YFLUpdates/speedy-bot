@@ -13,6 +13,7 @@ import check_if_user_in_channel from "./functions/lewus/index.js";
 import {registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js";
 import subInsert from "./database/subInsert.js";
 import { intlFormatDistance } from "date-fns";
+import getYFLSMP from "./functions/getYFLSMP.js";
 
 dotenv.config()
 
@@ -27,6 +28,10 @@ let adrian1g_stream = "0";
 let adrian1g_keyword = null;
 let adrian1g_giveaway_list = [];
 let adrian1g_giveaywa_timer = 0;
+const streams = {
+  last_update: new Date(),
+  streams: []
+};
 
 const client = new tmi.Client({
 	identity: {
@@ -64,6 +69,10 @@ app.get("/jwt/:id", (req, res) => {
     }
 });
 
+app.get("/streams", (req, res) => {
+  res.json(streams);
+});
+
 app.get("/giveaway", (req, res) => {
     res.json({
         keyword: `!${adrian1g_keyword}`,
@@ -85,6 +94,82 @@ app.listen(PORT, () =>
 setInterval(() => {
     lastSeenUpdate(joinThem)
 }, 10 * 60 * 1000);
+
+setInterval(async () => {
+  const request = await getYFLSMP();
+
+  if (request.status === 200) {
+    streams.streams = [];
+    
+    await Promise.all(
+      request.data.map((e) => {
+        if (e.game_name !== "Minecraft") {
+          return;
+        }
+        const array = e.title.toUpperCase().split(" ");
+        if (
+          array.includes("YFL") ||
+          array.includes("YFLSMP") ||
+          array.includes("[YFL]") ||
+          array.includes("[YFLSMP]") ||
+          array.includes("SMP") ||
+          array.includes("[YFL SMP]") ||
+          array.includes("[SMP]") ||
+          array.includes("[YFL") ||
+          array.includes("SMP]")
+        ) {
+          streams.streams.push({
+            nickname: e.user_name,
+            login: e.user_login,
+            viewers: e.viewer_count
+          })
+        }
+
+        return;
+      })
+    );
+
+    streams.last_update = new Date();
+  }
+}, 3.5 * 60 * 1000);
+
+setTimeout(async () => {
+    const request = await getYFLSMP();
+
+    if (request.status === 200) {
+      streams.streams = [];
+      
+      await Promise.all(
+        request.data.map((e) => {
+          if (e.game_name !== "Minecraft") {
+            return;
+          }
+          const array = e.title.toUpperCase().split(" ");
+          if (
+            array.includes("YFL") ||
+            array.includes("YFLSMP") ||
+            array.includes("[YFL]") ||
+            array.includes("[YFLSMP]") ||
+            array.includes("SMP") ||
+            array.includes("[YFL SMP]") ||
+            array.includes("[SMP]") ||
+            array.includes("[YFL") ||
+            array.includes("SMP]")
+          ) {
+            streams.streams.push({
+              nickname: e.user_name,
+              login: e.user_login,
+              viewers: e.viewer_count
+            })
+          }
+  
+          return;
+        })
+      );
+  
+      streams.last_update = new Date();
+    }
+}, 1000);
 
 client.connect();
 
