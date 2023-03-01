@@ -1213,7 +1213,7 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${cleanSender}, zapomniałeś/aś o kwocie `); 
         }
 
-        if(Number(args[1]) > 5000 || Number(args[1]) <= 0){
+        if(Number(args[1]) > 5000 || Number(args[1]) <= 0 || isNaN(args[1])){
             return client.say(channel, `${cleanSender}, maksymalnie można obstawić 5000 punktów `); 
         }
 
