@@ -1223,7 +1223,7 @@ client.on('message', async (channel, tags, message, self) => {
         const winnerColor = await rollWinColor();
         const betPoints = Number(args[1]);
         if(winnerColor !== argumentClean){
-            const updatePoints = await gambleUpdate(cleanChannel, `-${betPoints}`)
+            const updatePoints = await gambleUpdate(cleanChannel, `-${betPoints}`, cleanSender)
 
             if(updatePoints === null){
                 return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
@@ -1232,7 +1232,7 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${cleanSender} przegrałeś/aś wszystko beka - ${emojiColor(winnerColor)}`);
         }
         const winAmount = (betPoints * (winnerColor === "green" ? 14 : 2));
-        const updatePoints = await gambleUpdate(cleanChannel, `+${winAmount}`)
+        const updatePoints = await gambleUpdate(cleanChannel, `+${winAmount}`, cleanSender)
 
         if(updatePoints === null){
             return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);

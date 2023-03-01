@@ -1,11 +1,12 @@
 import axios from "axios";
 
-export default async function gambleUpdate(channel, points){
+export default async function gambleUpdate(channel, points, who){
     return await axios({
         url: `https://api.yfl.es/v1/user/gamble/${channel}`,
         method: "put",
         data: {
-            points: points
+            points: points,
+            who: who
         },
         headers: {
             'Content-type': 'application/json',
