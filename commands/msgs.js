@@ -7,13 +7,6 @@ async function getPodium(channels, username){
     await Promise.all(
       channels.map(function(x, index) {
         if(x.name === username){
-          if(x.name === "lakakaqday"){
-            messagePodium = index+1;
-            messagesNumber = x.amount/2;
-            
-            return;
-          }
-
           messagePodium = index+1;
           messagesNumber = x.amount;
         }
@@ -24,7 +17,7 @@ async function getPodium(channels, username){
     if(messagesNumber === 0){
         return `${username} nie znajduje się w TOP 100 jasperSad`;
     }else{
-        return `${username} napisał ${messagesNumber} wiadomości, zajmuje ${messagePodium} miejsce jasperSmile`;
+        return `${username} napisał/a ${messagesNumber} wiadomości, zajmuje ${messagePodium} miejsce jasperSmile`;
     }
 }
 export default async function hugC(channel, username, argument){

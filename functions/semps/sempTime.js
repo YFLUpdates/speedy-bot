@@ -25,9 +25,9 @@ export default async function getChatters(channelName) {
         const time = humanizeDuration(time_female* 60000, { language: "pl" });
 
         if(time_female === 0){
-            return `FIRE ${Censor(channelName)} nigdy nie oglądał żadnej polskiej streamerki GIGACHAD`
+            return `FIRE ${Censor(channelName)} nigdy nie oglądał/a żadnej polskiej streamerki GIGACHAD`
         }else{
-            return `PogO ${Censor(channelName)} oglądał streamerki przez ${time}, co sprawia, że oglądał streamerki przez ${percentage}% swojego czasu na PL Twitch.`
+            return `PogO ${Censor(channelName)} oglądał/a streamerki przez ${time}, co sprawia, że oglądał/a streamerki przez ${percentage}% swojego czasu na PL Twitch.`
         }
     })
     .catch(err => {

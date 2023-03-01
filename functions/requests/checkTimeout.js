@@ -20,7 +20,7 @@ export default async function checkTimeout(user, channelName) {
         if(kiedySieKonczy <= todaysDate) {
             return `${Censor(user)} nie ma już wykluczenia ok`;
         }else{
-            return `${Censor(user)} jest wykluczony jeszcze na ${endsIn} jasperSad`;
+            return `${Censor(user)} jest wykluczony/a jeszcze na ${endsIn} jasperSad`;
         }
     })
     .catch(err => {

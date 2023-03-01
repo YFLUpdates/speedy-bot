@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, Top3watchtimeCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, OrgCom, SzwalniaCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
+import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, Top3watchtimeCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, OrgCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
@@ -13,7 +13,9 @@ import check_if_user_in_channel from "./functions/lewus/index.js";
 import {registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js";
 import subInsert from "./database/subInsert.js";
 import { intlFormatDistance } from "date-fns";
-import getYFLSMP from "./functions/getYFLSMP.js";
+import SelectStreams from "./components/SelectStreams.js";
+import rollWinColor from "./components/rollWinColor.js";
+import gambleUpdate from "./functions/yfles/gambleUpdate.js";
 
 dotenv.config()
 
@@ -28,7 +30,7 @@ let adrian1g_stream = "0";
 let adrian1g_keyword = null;
 let adrian1g_giveaway_list = [];
 let adrian1g_giveaywa_timer = 0;
-const streams = {
+let streams = {
   last_update: new Date(),
   streams: []
 };
@@ -96,85 +98,23 @@ setInterval(() => {
 }, 10 * 60 * 1000);
 
 setInterval(async () => {
-  const request = await getYFLSMP();
+    const getSelected = await SelectStreams();
 
-  if (request.status === 200) {
-    streams.streams = [];
-    
-    await Promise.all(
-      request.data.map((e) => {
-        if (e.game_name !== "Minecraft") {
-          return;
-        }
-        const array = e.title.toUpperCase().split(" ");
-        if (
-          array.includes("YFL") ||
-          array.includes("YFLSMP") ||
-          array.includes("[YFL]") ||
-          array.includes("[YFLSMP]") ||
-          array.includes("SMP") ||
-          array.includes("[YFL SMP]") ||
-          array.includes("[SMP]") ||
-          array.includes("[YFL") ||
-          array.includes("SMP]") ||
-          array.includes("GILDIA") ||
-          array.includes("WALKA") ||
-          array.includes("WOJNA")
-        ) {
-          streams.streams.push({
-            nickname: e.user_name,
-            login: e.user_login,
-            viewers: e.viewer_count
-          })
-        }
-
+    if(getSelected === null){
         return;
-      })
-    );
+    }
 
-    streams.last_update = new Date();
-  }
+    streams = getSelected;
 }, 3.5 * 60 * 1000);
 
 setTimeout(async () => {
-    const request = await getYFLSMP();
+    const getSelected = await SelectStreams();
 
-    if (request.status === 200) {
-      streams.streams = [];
-      
-      await Promise.all(
-        request.data.map((e) => {
-          if (e.game_name !== "Minecraft") {
-            return;
-          }
-          const array = e.title.toUpperCase().split(" ");
-          if (
-            array.includes("YFL") ||
-            array.includes("YFLSMP") ||
-            array.includes("[YFL]") ||
-            array.includes("[YFLSMP]") ||
-            array.includes("SMP") ||
-            array.includes("[YFL SMP]") ||
-            array.includes("[SMP]") ||
-            array.includes("[YFL") ||
-            array.includes("SMP]") ||
-            array.includes("GILDIA") ||
-            array.includes("WALKA") ||
-            array.includes("WOJNA")
-          ) {
-            streams.streams.push({
-              nickname: e.user_name,
-              login: e.user_login,
-              viewers: e.viewer_count
-            })
-          }
-  
-          return;
-        })
-      );
-  
-      streams.last_update = new Date();
+    if(getSelected === null){
+        return;
     }
+
+    streams = getSelected;
 }, 1000);
 
 client.connect();
@@ -1251,6 +1191,54 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
         return client.say(channel, `${tags.username}, na kanale ${argumentClean ? argumentClean : cleanChannel} zostało dzisiaj rozdane: ${bansToday.bans} permów jasperRADOSC `);
+    }else if(["gamble"].includes(command)){
+        if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo", "#banduracartel"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.duels > (Date.now() - getMeCooldowns(channel).longer)) {
+            return;
+        }
+        channels_data[channel].cooldowns.duels = Date.now();
+
+        if(channels_data[channel].modules["gamble"] === false) return client.say(channel, `${tags.username}, gamblowanie jest wyłączone `);
+
+        const cleanSender = tags.username.toLowerCase();
+        const points = await getPoints(cleanSender, cleanChannel);
+
+        if(!argumentClean || argumentClean !== ("red" || "black" || "green")){
+           return client.say(channel, `${cleanSender}, zapomniałeś/aś o kolorze (red - (x2), black - (x2), green - (x14)) `); 
+        } 
+
+        if(!args[1]){
+            return client.say(channel, `${cleanSender}, zapomniałeś/aś o kwocie `); 
+        }
+
+        if(Number(args[1]) > 5000 || Number(args[1]) <= 0){
+            return client.say(channel, `${cleanSender}, maksymalnie można obstawić 5000 punktów `); 
+        }
+
+        if(Number(args[1]) > points){
+            return client.say(channel, `${cleanSender} nie masz tylu punktów aha `);
+        }
+        const winnerColor = await rollWinColor();
+        const betPoints = Number(args[1]);
+        if(winnerColor !== argumentClean){
+            const updatePoints = await gambleUpdate(cleanChannel, `-${betPoints}`)
+
+            if(updatePoints === null){
+                return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
+            }
+
+            return client.say(channel, `${cleanSender} przegrałeś/aś wszystko beka wygrany kolor - ${winnerColor} `);
+        }
+        const winAmount = (betPoints * (winnerColor === "green" ? 14 : 2));
+        const updatePoints = await gambleUpdate(cleanChannel, `+${winAmount}`)
+
+        if(updatePoints === null){
+            return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
+        }
+
+        return client.say(channel, `${cleanSender} wygrałeś/aś ${winAmount} punktów okurwa `);
+
     }
 
 });

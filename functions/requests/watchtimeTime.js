@@ -7,14 +7,14 @@ export default async function getChatters(user, target_channel) {
     .then(async (data) => {
         const res = data.data;
 
-        if(!res.watchtime) return `MrDestructoid ${Censor(user)} nie spędził ani sekundy na streamie.`;
+        if(!res.watchtime) return `MrDestructoid ${Censor(user)} nie spędził/a ani sekundy na streamie.`;
 
         const time = humanizeDuration(res.watchtime * 10 * 60000, { language: "pl" });
 
-        return `MrDestructoid ${Censor(user)} spędził ${time} na streamie.`;
+        return `MrDestructoid ${Censor(user)} spędził/a ${time} na streamie.`;
     })
     .catch(err => {
-        return `MrDestructoid ${Censor(user)} nie spędził ani sekundy na streamie.`;
+        return `MrDestructoid ${Censor(user)} nie spędził/a ani sekundy na streamie.`;
         console.log(err)
     })
 }

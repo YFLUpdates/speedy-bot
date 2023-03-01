@@ -24,7 +24,7 @@ export default async function getChatters(channelName) {
         if(num > 0){
             return `PogO Ulubione streamerki ${Censor(channelName)}: ${fav_streamer.join(', ')}`;
         }else{
-            return `FIRE ${Censor(channelName)} nigdy nie oglądał żadnej polskiej streamerki GIGACHAD`;
+            return `FIRE ${Censor(channelName)} nigdy nie oglądał/a żadnej polskiej streamerki GIGACHAD`;
         }
     })
     .catch(err => {

@@ -19,7 +19,7 @@ export default async function getChatters(channelName) {
         const percentage = Math.round((time_all / datediff_min) * 100, 2);
         const time = humanizeDuration(time_all * 60000, { language: "pl" });
 
-        return `${Censor(channelName)} spedził ${time} na PL twitch od 26 lipca, co daje ${percentage}% jego życia.`
+        return `${Censor(channelName)} spedził/a ${time} na PL twitch od 26 lipca, co daje ${percentage}% jego/j życia.`
         //return `${Censor(channelName)} spedził ${time} na PL twitch od 26 lipca.`
     })
     .catch(err => {

@@ -7,5 +7,5 @@ export default async function checkBlacklist(user_login){
         return `${user_login}, nie jest zjebem jasperSerduszko`;
     }
 
-    return `${user_login}, został zarejestrowany jako zjeb dnia ${new Date(data.when_added).toLocaleDateString("en-CA")} powód: ${data.associated}`;
+    return `${user_login}, został/a zarejestrowany/a jako zjeb dnia ${new Date(data.when_added).toLocaleDateString("en-CA")} powód: ${data.associated}`;
 }

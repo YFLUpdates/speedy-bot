@@ -23,8 +23,8 @@ export default async function hugC(channel, username, argument, args){
     }else if(argument === "send"){
         //        args0  arg1   arg2
         //!points send {user} {kwota}
-        if(!args[1] || args[1] == " " || args[1].toLowerCase() === usernameSmall) return `${usernameSmall}, zapomniałeś podać osobe TPFufun `;
-        if(!args[2] || !Number.isInteger(Number(args[2])) || Number(args[2]) === 0 || Number.isInteger(Number(args[2])) && Number(args[2]) < 0) return `${usernameSmall}, zapomniałeś podać kwote :| `;
+        if(!args[1] || args[1] == " " || args[1].toLowerCase() === usernameSmall) return `${usernameSmall}, zapomniałeś/aś podać osobe TPFufun `;
+        if(!args[2] || !Number.isInteger(Number(args[2])) || Number(args[2]) === 0 || Number.isInteger(Number(args[2])) && Number(args[2]) < 0) return `${usernameSmall}, zapomniałeś/aś podać kwote :| `;
         const receiver = args[1].replaceAll("@", "").toLowerCase();
         const ammount = Number(args[2]);
         const points = await getPoints(usernameSmall, channel);

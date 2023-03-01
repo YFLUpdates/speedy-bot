@@ -8,14 +8,6 @@ export default async function getWatchtime(user, target_channel) {
             return object.streamer === target_channel;
         });
 
-        // await Promise.all(
-        //     channels.map((i) => {
-        //         if(i.streamer === target_channel){
-        //             time_all += i.count * 5
-        //         }
-        //     })
-        // )
-
         return channels[indexOfObject] * 5;
     })
     .catch(err => {

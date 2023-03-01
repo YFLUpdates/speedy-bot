@@ -17,7 +17,7 @@ export default async function getChatters(channelName) {
         if(num > 0){
             return `BRUHBRUH Ulubieni streamerzy ${channelName}: ${fav_streamer.join(', ')}`;
         }else{
-            return `${channelName} nigdy nie oglądał żadnego kanału twitch aha`;
+            return `${channelName} nigdy nie oglądał/a żadnego kanału twitch aha`;
         }
     })
     .catch(err => {

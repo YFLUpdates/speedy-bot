@@ -10,7 +10,7 @@ export default async function hugC(channel, username, argument){
     let streamers = 0;
     let streamrsArray = [];
 
-    if(!argument || argument && argument.length < 3) return `${usernameSmall} zapomniałeś podać serwer (5city, notrp, cocorp, 77rp)`;
+    if(!argument || argument && argument.length < 3) return `${usernameSmall} zapomniałeś/aś podać serwer (5city, notrp, cocorp, 77rp)`;
 
     switch (argument) {
         case "5city":
