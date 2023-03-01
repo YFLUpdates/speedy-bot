@@ -1204,7 +1204,7 @@ client.on('message', async (channel, tags, message, self) => {
         const cleanSender = tags.username.toLowerCase();
         const points = await getPoints(cleanSender, cleanChannel);
 
-        if(!argumentClean || argumentClean !== ("red" || "black" || "green")){
+        if(!argumentClean || !["red", "black", "green"].includes(argumentClean)){
            return client.say(channel, `${cleanSender}, zapomniałeś/aś o kolorze (red - (x2), black - (x2), green - (x14)) `); 
         } 
 
