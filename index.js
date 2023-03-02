@@ -1291,12 +1291,12 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
         }
 
-        if(multiplyAmount === 5){
-            return client.say(channel, `${cleanSender} szatańska wygrana ${winAmount} okurwa FIRE - 🎲${dice1} 🎲${dice2} 🎲${dice3} `);
+        if(multiplyAmount === 66){
+            return client.say(channel, `${cleanSender} szatańska wygrana ${winAmount} okurwa FIRE x66 - 🎲${dice1} 🎲${dice2} 🎲${dice3} `);
         }
 
-        if(multiplyAmount === 3){
-            return client.say(channel, `${cleanSender} szczęśliwa trójka ${winAmount} JasperFajka2 - 🎲${dice1} 🎲${dice2} 🎲${dice3} `);
+        if(multiplyAmount === 33){
+            return client.say(channel, `${cleanSender} szczęśliwa trójka ${winAmount} JasperFajka2 x33 - 🎲${dice1} 🎲${dice2} 🎲${dice3} `);
         }
 
         return client.say(channel, `${cleanSender} wygrałeś/aś ${winAmount} punktów okurwa `);
