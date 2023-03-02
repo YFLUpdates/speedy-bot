@@ -25,7 +25,8 @@ async function isLive(){
         "86177006", //shavskyyy
         "49405731", //grabyyolo
         "727460432", //tuszol
-        "668805300" //1wron3k
+        "668805300", //1wron3k
+        "623028769" //mejny
     ]
 
     return await axios({
