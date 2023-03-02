@@ -6,4 +6,17 @@ import Truncate from "./Truncate.js";
 import topN from "./topN.js";
 import onlySpaces from "./onlySpaces.js";
 
-export { Censor, getRandomChatter, randomNumber, whosFamous, Truncate, topN, onlySpaces};
+import getYFLSMP from "./getYFLSMP.js";
+
+export {
+  Censor,
+  getRandomChatter,
+  randomNumber,
+  whosFamous,
+  Truncate,
+  topN,
+  onlySpaces,
+
+
+  getYFLSMP
+};

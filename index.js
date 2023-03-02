@@ -14,10 +14,12 @@ import {registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js"
 import subInsert from "./database/subInsert.js";
 import { intlFormatDistance } from "date-fns";
 import SelectStreams from "./components/SelectStreams.js";
-import rollWinColor from "./components/rollWinColor.js";
+
+import {rollWinColor} from "./components/gamble/index.js";
+import {rollDice} from "./components/dice/index.js";
 import gambleUpdate from "./functions/yfles/gambleUpdate.js";
-import emojiColor from "./functions/emojiColor.js";
-import multiplyColor from "./functions/multiplyColor.js";
+import {emojiColor, multiplyColor} from "./functions/gamble/index.js";
+import {multiplyDice} from "./functions/dice/index.js";
 
 dotenv.config()
 
@@ -1233,10 +1235,68 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${cleanSender} przegrałeś/aś wszystko beka - ${emojiColor(winnerColor)}`);
         }
         const winAmount = (betPoints * multiplyColor(winnerColor));
-        const updatePoints = await gambleUpdate(cleanChannel, `+${winAmount}`, cleanSender)
+        const updatePoints = await gambleUpdate(cleanChannel, `+${winAmount - betPoints}`, cleanSender)
 
         if(updatePoints === null){
             return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
+        }
+
+        return client.say(channel, `${cleanSender} wygrałeś/aś ${winAmount} punktów okurwa `);
+
+    }else if(["dice", "kosci"].includes(command)){
+        if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo", "#banduracartel"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.duels > (Date.now() - getMeCooldowns(channel).longer)) {
+            return;
+        }
+        channels_data[channel].cooldowns.duels = Date.now();
+
+        if(channels_data[channel].modules["dice"] === false) return client.say(channel, `${tags.username}, kości są wyłączone `);
+
+        const cleanSender = tags.username.toLowerCase();
+        const points = await getPoints(cleanSender, cleanChannel);
+
+        if(!argumentClean){
+            return client.say(channel, `${cleanSender}, zapomniałeś/aś o kwocie `); 
+        }
+
+        if(Number(argumentClean) > 5000 || Number(argumentClean) <= 0 || isNaN(argumentClean)){
+            return client.say(channel, `${cleanSender}, maksymalnie można obstawić 5000 punktów `); 
+        }
+
+        if(Number(argumentClean) > points){
+            return client.say(channel, `${cleanSender} nie masz tylu punktów aha `);
+        }
+
+        const dice1 = await rollDice();
+        const dice2 = await rollDice();
+        const dice3 = await rollDice();
+        const betPoints = Number(argumentClean);
+        const multiplyAmount = multiplyDice(dice1, dice2, dice3);
+
+        if(multiplyAmount === null){
+            const updatePoints = await gambleUpdate(cleanChannel, `-${betPoints}`, cleanSender)
+
+            if(updatePoints === null){
+                return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
+            }
+
+            return client.say(channel, `${cleanSender} przegrałeś/aś wszystko jasperSmiech - 🎲${dice1} 🎲${dice2} 🎲${dice3}`);
+        }
+
+        const winAmount = (betPoints * multiplyAmount);
+        const updatePoints = await gambleUpdate(cleanChannel, `+${winAmount - betPoints}`, cleanSender)
+
+        if(updatePoints === null){
+            return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
+        }
+
+        if(multiplyAmount === 5){
+            return client.say(channel, `${cleanSender} szatańska wygrana ${winAmount} okurwa FIRE - 🎲${dice1} 🎲${dice2} 🎲${dice3} `);
+        }
+
+        if(multiplyAmount === 3){
+            return client.say(channel, `${cleanSender} szczęśliwa trójka ${winAmount} JasperFajka2 - 🎲${dice1} 🎲${dice2} 🎲${dice3} `);
         }
 
         return client.say(channel, `${cleanSender} wygrałeś/aś ${winAmount} punktów okurwa `);
