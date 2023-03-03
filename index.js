@@ -1296,7 +1296,7 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
         if(multiplyAmount === 33){
-            return client.say(channel, `${cleanSender} szczęśliwa trójka ${winAmount} JasperFajka2 x33 - 🎲${dice1} 🎲${dice2} 🎲${dice3} `);
+            return client.say(channel, `${cleanSender} szczęśliwa trójka ${winAmount} PartyKirby 🍀 🍀 x33 - 🎲${dice1} 🎲${dice2} 🎲${dice3} `);
         }
 
         return client.say(channel, `${cleanSender} wygrałeś/aś ${winAmount} punktów okurwa - 🎲${dice1} 🎲${dice2} 🎲${dice3}`);
