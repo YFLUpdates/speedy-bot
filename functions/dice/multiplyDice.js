@@ -16,9 +16,9 @@ const multiplyDice = function(dice1, dice2, dice3) {
     return 2;
   }
 
-  if((dice1 + dice2 + dice3) === 7 || (dice1 + dice2 + dice3) === 14){
-    return 2;
-  }
+  // if((dice1 + dice2 + dice3) === 7 || (dice1 + dice2 + dice3) === 14){
+  //   return 2;
+  // }
 
   return null;
 
