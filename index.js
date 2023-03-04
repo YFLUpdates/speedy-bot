@@ -1347,6 +1347,8 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, `${cleanSender}, ustawiłeś/aś bota na ${argumentClean3} gier ok `)
 
         if(argumentClean === "dice"){
+            if(channels_data[channel].modules["dice"] === false) return client.say(channel, `${cleanSender}, kości są wyłączone `);
+
             for (let i = 0; i <= (Number(argumentClean3)-1); i++) {
                 await waitforme(7000);
                 const points = await getPoints(cleanSender, cleanChannel);
