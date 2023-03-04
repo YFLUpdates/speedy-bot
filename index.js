@@ -198,6 +198,16 @@ function dateIsValid(date) {
     return date instanceof Date && !isNaN(date);
 }
 client.on('message', async (channel, tags, message, self) => {
+    if(channel === "#grubamruwa"){
+        if(message.split(" ").includes("poka") && message.split(" ").includes("cyce") ||
+            message.split(" ").includes("poka") && message.split(" ").includes("cycuszki") ||
+            message.split(" ").includes("poka") && message.split(" ").includes("cycki") ||
+            message.split(" ").includes("fajne") && message.split(" ").includes("cyce") ||
+            message.split(" ").includes("fajne") && message.split(" ").includes("cycuszki"))
+        {
+            client.say(channel, `!terminate ${tags.username}`);
+        }
+    }
 	if(self || !message.startsWith('!')) return;
 
 	const args = message.slice(1).split(' ');
