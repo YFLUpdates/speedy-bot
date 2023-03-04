@@ -84,6 +84,7 @@ export default async function getYFLSMP() {
         "27784991", //skkf
         "74252955", //mamiko
         "440522125", //pokojwytrzezwien
+        "139316419", //lilqki
     ].join("&user_id=");
     const response = await fetch(
       `https://api.twitch.tv/helix/streams?user_id=${params}`,
