@@ -7,7 +7,7 @@ import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, Top3watchtimeCom, WiekCom,
 import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom, waitforme} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
-import { Truncate, topN, onlySpaces } from "./functions/index.js";
+import { Truncate, topN, onlySpaces, randomNumber } from "./functions/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 import {registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js";
@@ -1208,7 +1208,7 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["gamble"].includes(command)){
         if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo", "#banduracartel"].includes(channel)) return;
 
-        if (channels_data[channel].cooldowns.duels > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.duels > (Date.now() - randomNumber(7000, 10000))) {
             return;
         }
         channels_data[channel].cooldowns.duels = Date.now();
@@ -1256,7 +1256,7 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["dice", "kosci"].includes(command)){
         if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo", "#banduracartel"].includes(channel)) return;
 
-        if (channels_data[channel].cooldowns.duels > (Date.now() - getMeCooldowns(channel).longer)) {
+        if (channels_data[channel].cooldowns.duels > (Date.now() - randomNumber(7000, 10000))) {
             return;
         }
         channels_data[channel].cooldowns.duels = Date.now();
