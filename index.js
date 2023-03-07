@@ -203,6 +203,9 @@ client.on('message', async (channel, tags, message, self) => {
             message.split(" ").includes("poka") && message.split(" ").includes("cycuszki") ||
             message.split(" ").includes("poka") && message.split(" ").includes("cycki") ||
             message.split(" ").includes("fajne") && message.split(" ").includes("cyce") ||
+            message.split(" ").includes("siema") && message.split(" ").includes("schudniesz") ||
+            message.split(" ").includes("siema") && message.split(" ").includes("schudnij") ||
+            message.split(" ").includes("schudnij") ||
             message.split(" ").includes("fajne") && message.split(" ").includes("cycuszki"))
         {
             client.say(channel, `!terminate ${tags.username}`);
