@@ -5,7 +5,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -23,6 +24,14 @@
             "top3": 0,
             "ewron": 0,
             "watchtimeall": 0
+        },
+        "bet": {
+            "option1": [
+
+            ],
+            "option2": [
+                
+            ]
         }
     },
     "#grubamruwa": {
@@ -31,7 +40,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -57,7 +67,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -83,7 +94,8 @@
             "jwt": true,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -109,7 +121,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -135,7 +148,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -161,7 +175,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -187,7 +202,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -213,7 +229,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "vote_who": "None",
@@ -239,7 +256,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "vote_who": "None",
@@ -265,7 +283,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "vote_who": "None",
@@ -291,7 +310,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "vote_who": "None",
@@ -317,7 +337,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [
 
@@ -345,7 +366,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [
 
@@ -373,7 +395,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -399,7 +422,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -425,7 +449,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],
@@ -451,7 +476,8 @@
             "jwt": false,
             "vote": false,
             "gamble": false,
-            "dice": false
+            "dice": false,
+            "robot": false
         },
         "duels_list": [],
         "watchtime_top": [],

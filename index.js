@@ -10,7 +10,7 @@ import { RollOrMark, checkFan } from "./commands/templates/index.js";
 import { Truncate, topN, onlySpaces } from "./functions/index.js";
 import { checkSemps, sempTime } from "./functions/semps/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
-import {registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js";
+import {registerDiscord, registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js";
 import subInsert from "./database/subInsert.js";
 import { intlFormatDistance } from "date-fns";
 import SelectStreams from "./components/SelectStreams.js";
@@ -1377,6 +1377,26 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
         return client.say(channel, `${cleanSender} coś poszło nie tak aha `);
+
+    }else if(["connectdc"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.last = Date.now();
+        const cleanSender = tags.username.toLowerCase();
+
+        if(!argumentClean){
+            return client.say(channel, `${cleanSender}, zapomniałeś/aś o swoim ID na discord`); 
+        }
+        const req = registerDiscord(cleanSender, cleanChannel, argumentClean);
+
+        if(req === null){
+            return client.say(channel, `${cleanSender} coś poszło nie tak `);
+        }
+
+        client.say(channel, `${cleanSender} ${argumentClean} zostało ustawione jako twoje konto discord.`);
 
     }
 
