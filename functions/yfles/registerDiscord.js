@@ -6,7 +6,7 @@ export default async function registerDiscord(user, channel, discord_id){
         method: "put",
         data: {
             channel: channel,
-            discord_id: Number(discord_id),
+            discord_id: discord_id,
             date: new Date().toJSON().slice(0, 19).replace('T', ' ')
         },
         headers: {
