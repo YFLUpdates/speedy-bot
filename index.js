@@ -209,6 +209,7 @@ client.on('message', async (channel, tags, message, self) => {
             message.split(" ").includes("fajne") && message.split(" ").includes("cyce") ||
             message.split(" ").includes("siema") && message.split(" ").includes("schudniesz") ||
             message.split(" ").includes("siema") && message.split(" ").includes("schudnij") ||
+            message.split(" ").includes("ale") && message.split(" ").includes("tank") ||
             message.split(" ").includes("schudnij") ||
             message.split(" ").includes("fajne") && message.split(" ").includes("cycuszki"))
         {
