@@ -203,17 +203,18 @@ function dateIsValid(date) {
 }
 client.on('message', async (channel, tags, message, self) => {
     if(channel === "#grubamruwa"){
-        if(message.split(" ").includes("poka") && message.split(" ").includes("cyce") ||
-            message.split(" ").includes("poka") && message.split(" ").includes("cycuszki") ||
-            message.split(" ").includes("poka") && message.split(" ").includes("cycki") ||
-            message.split(" ").includes("fajne") && message.split(" ").includes("cyce") ||
-            message.split(" ").includes("siema") && message.split(" ").includes("schudniesz") ||
-            message.split(" ").includes("siema") && message.split(" ").includes("schudnij") ||
-            message.split(" ").includes("ale") && message.split(" ").includes("tank") ||
-            message.split(" ").includes("elo") && message.split(" ").includes("cysterna") ||
-            message.split(" ").includes("ale") && message.split(" ").includes("cysie") ||
-            message.split(" ").includes("schudnij") ||
-            message.split(" ").includes("fajne") && message.split(" ").includes("cycuszki"))
+        const messageContent = message.split(" ");
+        if(messageContent.includes("poka") && messageContent.includes("cyce") ||
+            messageContent.includes("poka") && messageContent.includes("cycuszki") ||
+            messageContent.includes("poka") && messageContent.includes("cycki") ||
+            messageContent.includes("fajne") && messageContent.includes("cyce") ||
+            messageContent.includes("siema") && messageContent.includes("schudniesz") ||
+            messageContent.includes("siema") && messageContent.includes("schudnij") ||
+            messageContent.includes("ale") && messageContent.includes("tank") ||
+            messageContent.includes("elo") && messageContent.includes("cysterna") ||
+            messageContent.includes("ale") && messageContent.includes("cysie") ||
+            messageContent.includes("schudnij") ||
+            messageContent.includes("fajne") && messageContent.includes("cycuszki"))
         {
             client.say(channel, `!terminate ${tags.username}`);
         }
