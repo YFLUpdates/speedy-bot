@@ -24,6 +24,7 @@ import twitchloggerTOP3 from "./commands/top3watchtime.js";
 import ksiezniczki from "./commands/ksiezniczki.js";
 import ileogladalkobiet from "./commands/ileogladalkobiet.js";
 import watchtimeall from "./commands/watchtimeall.js";
+import bmcSuby from "./requests/minecraft/bmcSuby.js";
 
 dotenv.config()
 
@@ -1339,6 +1340,23 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
         client.say(channel, `${cleanSender} ${argumentClean} zostało ustawione jako twoje konto discord.`);
+
+    }else if(["serwersubow", "bmcsuby"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+
+        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+            return;
+        }
+        channels_data[channel].cooldowns.last = Date.now();
+        const req = await bmcSuby();
+
+        if(req === null){
+            return client.say(channel, `${cleanSender} nie udało się pobrać danych z serwera mhm `);
+        }
+        if(req.players < 5){
+            return client.say(channel, `jasperSmile ${tags.username} na serwerze dla subów aktualnie jest ${req.online} osób FIRE`);
+        }
+        return client.say(channel, `jasperSmile ${tags.username} na serwerze dla subów aktualnie jest ${req.online} osób, np. ${req.players.join(", ")}`);
 
     }
 
