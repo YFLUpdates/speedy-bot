@@ -1,26 +1,40 @@
-import axios from "axios";
 import {registerToBL} from "../../functions/yfles/index.js";
+import { twitchlogger } from "../../requests/watchtime/index.js";
 
-async function getChannels(channelName, associated_channels){
-    return await axios.get(`https://xayo.pl/api/watchtime/${channelName}`, {headers: {'Content-type': 'application/json'}})
-    .then(async (data) => {
-        const channels = data.data;
-        let time_all = 0
-        let channels_time = 0
+async function getChannels(user_login, associated_channels){
+    const request = await twitchlogger(user_login);
+    let time_all = 0;
+    let channels_time = 0;
+    let top1 = "x";
 
-        await Promise.all(
-            channels.map((i) => {
-                time_all += i.count * 5
-                if(associated_channels.includes(i.streamer)){
-                    channels_time += i.count * 5
-                }
-            })
-        )
-        return {watchtime: channels_time / time_all, top1: channels[0].streamer || "x"};
-    })
-    .catch(err => {
+    if (request === null) {
         return null;
-    })
+    }
+
+    request.userChannels.sort((a, b) => {
+        return b.count - a.count;
+    });
+
+    await Promise.all(
+        request.userChannels.map((i, index) => {
+            time_all += i.count * 5;
+
+            const indexOfObject = request.channels.findIndex((object) => {
+                return object.broadcasterId === i.broadcasterId;
+            });
+
+            if(index === 0){
+                top1 = request.channels[indexOfObject].broadcasterLogin;
+            }
+
+            if(associated_channels.includes(request.channels[indexOfObject].broadcasterLogin)){
+                channels_time += i.count * 5
+            }
+
+        })
+    )
+
+    return {watchtime: channels_time / time_all, top1: top1 || "x"};
 }
 function messagesChannels(msgs, ratio, command_name, user){
     if (ratio.watchtime < 0.3){
