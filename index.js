@@ -3,12 +3,11 @@ import express from "express";
 import dotenv from "dotenv";
 import { promises as fs } from 'fs';
 
-import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, Top3watchtimeCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, OrgCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
-import { watchtimeAll, watchtimeGet, checkTimeout, missingAll, missing, duelsWorking, getPoints, getWatchtime, getChatters } from "./functions/requests/index.js";
+import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, OrgCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
+import { checkTimeout, missingAll, missing, duelsWorking, getPoints, getChatters } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom, waitforme} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
-import { Truncate, topN, onlySpaces } from "./functions/index.js";
-import { checkSemps, sempTime } from "./functions/semps/index.js";
+import { Truncate, onlySpaces } from "./functions/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 import {registerDiscord, registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js";
 import subInsert from "./database/subInsert.js";
@@ -20,6 +19,11 @@ import {rollDice} from "./components/dice/index.js";
 import gambleUpdate from "./functions/yfles/gambleUpdate.js";
 import {emojiColor, multiplyColor} from "./functions/gamble/index.js";
 import {multiplyDice, robotDice} from "./functions/dice/index.js";
+import twitchlogger from "./commands/watchtime/twitchlogger.js";
+import twitchloggerTOP3 from "./commands/top3watchtime.js";
+import ksiezniczki from "./commands/ksiezniczki.js";
+import ileogladalkobiet from "./commands/ileogladalkobiet.js";
+import watchtimeall from "./commands/watchtimeall.js";
 
 dotenv.config()
 
@@ -379,15 +383,13 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["ksiezniczki"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(args[0] && args[0].length > 3){
-            const semps = await checkSemps(args[0].replaceAll("@", "").toLowerCase());
+        const cleanSender = tags.username.toLowerCase();
 
-            client.say(channel, semps);
-        }else{
-            const semps = await checkSemps(tags.username.toLowerCase());
-
-            client.say(channel, semps);
+        if(argumentClean){
+            return client.say(channel, await ksiezniczki(cleanChannel, argumentClean)); 
         }
+
+        return client.say(channel, await ksiezniczki(cleanChannel, cleanSender));
 
     }else if(["semp", "ileogladalkobiet"].includes(command)){
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
@@ -397,15 +399,13 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["ileogladalkobiet"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
-        if(args[0]  && args[0].length > 3){
-            const semps = await sempTime(args[0].replaceAll("@", "").toLowerCase());
+        const cleanSender = tags.username.toLowerCase();
 
-            client.say(channel, semps);
-        }else{
-            const semps = await sempTime(tags.username.toLowerCase());
-
-            client.say(channel, semps);
+        if(argumentClean){
+            return client.say(channel, await ileogladalkobiet(cleanChannel, argumentClean)); 
         }
+
+        return client.say(channel, await ileogladalkobiet(cleanChannel, cleanSender));
 
     }else if(["watchtimeall"].includes(command)){
         const oddvar = channels_data[channel].odd.watchtimeall;
@@ -430,15 +430,13 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, oddMessage(tags.username));
         }
     
-        if(args[0] && args[0].length > 3){
-            const watchtime = await watchtimeAll(args[0].replaceAll("@", "").toLowerCase());
+        const cleanSender = tags.username.toLowerCase();
 
-            client.say(channel, watchtime);
-        }else{
-            const watchtime = await watchtimeAll(tags.username.toLowerCase());
-
-            client.say(channel, watchtime);
+        if(argumentClean){
+            return client.say(channel, await watchtimeall(cleanChannel, argumentClean)); 
         }
+
+        return client.say(channel, await watchtimeall(cleanChannel, cleanSender));
 
     }else if(["watchtime", "xayopl"].includes(command)){
         if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson", "#neexcsgo", "#banduracartel", "#shavskyyy"].includes(channel) && command === "watchtime") return;
@@ -450,27 +448,19 @@ client.on('message', async (channel, tags, message, self) => {
 
         if(channels_data[channel].modules["watchtime"] === false) return client.say(channel, `${tags.username}, ${command} jest wyłączone `);
 
+        const cleanSender = tags.username.toLowerCase();
 
-        if(args[0] && args[0].length > 3){
-
-             if(args[1]){
-                //User requests: User X a watchtime on selected channel
-                const watchtimeFunc = await watchtimeGet(args[0].replaceAll("@", "").toLowerCase(), args[1].replaceAll("@", "").toLowerCase());
-
-                client.say(channel, watchtimeFunc);
-             }else{
-                //User requests: User X a watchtime on current channel
-                const watchtimeFunc = await watchtimeGet(args[0].replaceAll("@", "").toLowerCase(), cleanChannel);
-
-                client.say(channel, watchtimeFunc);
-             }
-
-        }else{
-            //User requests his: Current channel on watchtime
-            const watchtimeFunc = await watchtimeGet(tags.username.toLowerCase(), cleanChannel);
-
-            client.say(channel, watchtimeFunc);
+        //sender watchtime
+        if(!argumentClean){
+            return client.say(channel, await twitchlogger(cleanChannel, cleanSender)); 
         }
+
+        //sender checks someone on the same channel
+        if(!args[1]){
+            return client.say(channel, await twitchlogger(cleanChannel, argumentClean)); 
+        }
+
+        return client.say(channel, await twitchlogger(cleanChannel, argumentClean, args[1])); 
 
     }else if(["gdzie", "przesladowanie", "where"].includes(command)){
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
@@ -624,10 +614,14 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, oddMessage(tags.username));
         }
 
-        /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await Top3watchtimeCom(cleanChannel, tags.username, argumentClean);
+        const cleanSender = tags.username.toLowerCase();
 
-        client.say(channel, commands);
+        if(argumentClean){
+            return client.say(channel, await twitchloggerTOP3(cleanChannel, argumentClean)); 
+        }
+
+        return client.say(channel, await twitchloggerTOP3(cleanChannel, cleanSender))
+
     }else if(["czyjestemzjebem"].includes(command)){
         if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
             return;
@@ -776,62 +770,6 @@ client.on('message', async (channel, tags, message, self) => {
             })
 
             client.say(channel, `${argumentClean}, jeśli akceptujesz pojedynek na kwotę ${Number(args[1])} punktów, wpisz !duel accept ${cleanSender}`)
-        }
-
-    }else if(["joinwatchtime", "jwt"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#banduracartel"].includes(channel)) return;
-
-        const badges = tags.badges || {};
-        const isBroadcaster = badges.broadcaster;
-        const isMod = badges.moderator;
-        const isModUp = isBroadcaster || isMod;
-        
-        const username = tags.username.toLowerCase();
-
-        if(argumentClean === "start" && isModUp || argumentClean === "start" && username === "3xanax"){
-
-            channels_data[channel].watchtime_top = [];
-            
-            channels_data[channel].modules["jwt"] = true;
-
-            client.say(channel, `${username}, dołączanie do watchtimu włączone Chatters !jwt `)
-        }else if(argumentClean === "stop" && isModUp || argumentClean === "stop" && username === "3xanax"){
-            channels_data[channel].modules["jwt"] = false;
-
-            client.say(channel, `${username}, dołączanie do watchtimu wyłączone ok aby wybrać osoby z największym watchtimem !jwt count`);
-        }else if(argumentClean === "count" && isModUp || argumentClean === "count" && username === "3xanax" ){
-            if(channels_data[channel].modules["jwt"] === true) return client.say(channel, `${username}, najpierw musisz wyłączyć dołączanie !jwt stop `);
-
-            if(channels_data[channel].watchtime_top.length < 5) return client.say(channel, `${username}, brakuje osób do losowania min. 5 `);
-
-            const top5 = topN(channels_data[channel].watchtime_top, 5);
-
-            client.say(channel, `${username}, najwięcej watchtimu mają: ${top5.map((list) => list.name).join(", ")}`);
-        }else{
-            const check_for_duplicate = channels_data[channel].watchtime_top.find(x => x.name === username);
-            
-            /* Checking if the duel exists. */
-            if(check_for_duplicate !== undefined) return;
-
-            if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
-                return;
-            }
-            channels_data[channel].cooldowns.last = Date.now();
-
-            if(channels_data[channel].modules["jwt"] === false) return client.say(channel, `${username}, moduł wyłączony `);
-
-            const watchtime = await getWatchtime(username, cleanChannel);
-
-            const check_for_duplicate2 = channels_data[channel].watchtime_top.find(x => x.name === username);
-
-            if(check_for_duplicate2 !== undefined) return;
-
-            channels_data[channel].watchtime_top.push({
-                name: username,
-                count: watchtime
-            })
-
-            client.say(channel, `${username}, zapisano do listy watchtime`);
         }
 
     }else if(["yflpoints", "punkty", "points"].includes(command)){
