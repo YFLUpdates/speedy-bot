@@ -142,7 +142,7 @@
             "watchtimeall": 0
         }
     },
-    "#dobrypt": {
+    "#dobrycsgo": {
         "modules": {
             "duels": false,
             "jwt": false,

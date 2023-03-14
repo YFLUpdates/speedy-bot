@@ -15,7 +15,7 @@ async function isLive(){
     const channels = [
         "412834368", //speedy
         "244310065", //adrian
-        "138649235", //josil
+        "89023440", //josil
         "484019542", //grubamruwa
         "99854815", //3xanax,
         "720775570", //xkaleson
