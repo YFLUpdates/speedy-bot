@@ -607,6 +607,134 @@
                 "pl": "Sprawdź czy ktoś został zarejestrowany jako zjeb lub zarejestruj go.",
                 "en": "lorem"
             }
+        },
+        {
+            "name": "dice",
+            "aliases": [
+
+            ],
+            "arguments": "{kwtoa}",
+            "usage": "",
+            "disabled": [
+                "xmerghani",
+                "mork",
+                "mrdzinold"
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Rzuć kostkami o punkty.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "gamble",
+            "aliases": [
+            ],
+            "arguments": "{red/black/green/blue/orange} {kwota}",
+            "usage": "",
+            "disabled": [
+                "xmerghani",
+                "mork",
+                "mrdzinold"
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Postaw na kolor który wyleci.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "permy",
+            "aliases": [
+                "perm"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Sprawdź ile osób dostało dzisiaj perma.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "serwersubow",
+            "aliases": [
+                "bmcsuby"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+                "wszędzie oprócz adrian1g__"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Sprawdź ile osób jest na serwerze dla subów.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "paszport",
+            "aliases": [
+                "passport"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+                "wszędzie oprócz adrian1g__"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Wygeneruj customowy paszport z twoim kontem ttv.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "med",
+            "aliases": [
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+                "wszędzie oprócz adrian1g__"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Wyślij wiadomość o stanie zdrowia jak na RP.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "cam2",
+            "aliases": [
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+                "wszędzie oprócz adrian1g__"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Kamera na żywo z pokoju adriana.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "connectdc",
+            "aliases": [
+
+            ],
+            "arguments": "{discord id}",
+            "usage": "",
+            "disabled": [
+                "wszędzie oprócz adrian1g__"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Połącz konto ttv z discord.",
+                "en": "lorem"
+            }
         }
     ]
 }
