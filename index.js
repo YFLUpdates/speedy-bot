@@ -444,7 +444,7 @@ client.on('message', async (channel, tags, message, self) => {
         return client.say(channel, await watchtimeall(cleanChannel, cleanSender));
 
     }else if(["watchtime", "xayopl"].includes(command)){
-        if(["#xspeedyq", "#grubamruwa", "#dobrypt", "#mrdzinold", "#xmerghani", "#xkaleson", "#neexcsgo", "#banduracartel", "#shavskyyy"].includes(channel) && command === "watchtime") return;
+        if(["#xspeedyq", "#grubamruwa", "#dobrycsgo", "#mrdzinold", "#xmerghani", "#xkaleson", "#neexcsgo", "#banduracartel", "#shavskyyy"].includes(channel) && command === "watchtime") return;
 
         if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
             return;
