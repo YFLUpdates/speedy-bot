@@ -36,10 +36,11 @@
     "express": "^4.18.2",
     "humanize-duration": "^3.27.3",
     "jsdom": "^20.0.1",
+    "mathjs": "^11.5.1",
     "mysql": "^2.18.1",
-    "tmi.js": "^1.8.5",
-    "weather-js": "^2.0.0",
     "sha256": "^0.2.0",
-    "mathjs": "^11.5.1"
+    "socket.io": "^4.6.1",
+    "tmi.js": "^1.8.5",
+    "weather-js": "^2.0.0"
   }
 }

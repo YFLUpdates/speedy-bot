@@ -1,44 +1,56 @@
 import tmi from "tmi.js";
 import express from "express";
+import http from "http";
+import { Server } from "socket.io";
 import dotenv from "dotenv";
-import { promises as fs } from 'fs';
 
-import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, OrgCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
+import {top5msgs, msgsCom, LoveCom, KtoCom, MarryCom, WiekCom, ZjebCom, MogemodaCom, KamerkiCom, AODCom, OfflinetimeCom, pointsCom, PogodaCom, ChattersCom, checkBlacklistCom, fiveM} from "./commands/index.js";
 import { checkTimeout, missingAll, missing, duelsWorking, getPoints, getChatters } from "./functions/requests/index.js";
 import {insertToDatabase, lastSeenUpdate, getMeCooldowns, getSubsPoints, getMultipleRandom, waitforme} from "./components/index.js";
 import { RollOrMark, checkFan } from "./commands/templates/index.js";
 import { Truncate, onlySpaces } from "./functions/index.js";
 import check_if_user_in_channel from "./functions/lewus/index.js";
 import {registerDiscord, registerToBL, removeFromBL, todayBans} from "./functions/yfles/index.js";
+import {oddMessage, dataFromFiles} from "./returns/index.js";
 import subInsert from "./database/subInsert.js";
-import { intlFormatDistance } from "date-fns";
 import SelectStreams from "./components/SelectStreams.js";
 
 import {rollWinColor} from "./components/gamble/index.js";
 import {rollDice} from "./components/dice/index.js";
 import gambleUpdate from "./functions/yfles/gambleUpdate.js";
 import {emojiColor, multiplyColor} from "./functions/gamble/index.js";
-import {multiplyDice, robotDice} from "./functions/dice/index.js";
+import {multiplyDice} from "./functions/dice/index.js";
 import twitchlogger from "./commands/watchtime/twitchlogger.js";
-import twitchloggerTOP3 from "./commands/top3watchtime.js";
+import twitchloggerTOP3 from "./commands/top3/twitchlogger.js";
 import ksiezniczki from "./commands/ksiezniczki.js";
 import ileogladalkobiet from "./commands/ileogladalkobiet.js";
 import watchtimeall from "./commands/watchtimeall.js";
 import bmcSuby from "./requests/minecraft/bmcSuby.js";
+import censorGrubamruwa from "./functions/censor/grubamruwa.js";
+import detectCooldown from "./returns/detectCooldown.js";
+import getPrices from "./components/tiktok/getPrices.js";
+import alertName from "./components/tiktok/alertName.js";
 
 dotenv.config()
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "https://overlay.kochamfortnite.pl"
+    }
+});
 const PORT = process.env.PORT || 3000;
 const joinThem = [ 'adrian1g__', 'grubamruwa', 'xspeedyq', 'dobrycsgo', 'mrdzinold', "xmerghani", "xkaleson", "neexcsgo", "banduracartel", "sl3dziv", "xmevron", "shavskyyy", "grabyyolo", "tuszol", "1wron3k", "mejnyy" ];
 //const joinThem = [ '3xanax' ];
 const message_number_to_trigger_odd = 3;
 const message_number_to_clear_odd = 6;
 
-let adrian1g_stream = "0";
 let adrian1g_keyword = null;
 let adrian1g_giveaway_list = [];
 let adrian1g_giveaywa_timer = 0;
+let tiktokCD = 0;
+
 let streams = {
   last_update: new Date(),
   streams: []
@@ -52,10 +64,11 @@ const client = new tmi.Client({
 	channels: joinThem
 });
 
-const znaniUsers = JSON.parse(await fs.readFile('./channels.json', 'UTF-8'));
-const bad_words = JSON.parse(await fs.readFile('./bad_words.json', 'UTF-8'));
-const channels_data = JSON.parse(await fs.readFile('./channels_data.json', 'UTF-8'));
-const commands = JSON.parse(await fs.readFile('./commands.json', 'UTF-8')).commands;
+const znaniUsers = await dataFromFiles("./channels.json");
+const bad_words = await dataFromFiles("./bad_words.json");
+const channels_data = await dataFromFiles("./channels_data.json");
+const commands_list = await dataFromFiles("./commands.json");
+const commands = commands_list.commands;
 
 app.set('json spaces', 2);
 app.use(express.json());
@@ -99,9 +112,26 @@ app.use((req, res, next) => {
   })
 })
 
-app.listen(PORT, () =>
+io.on('connection', (socket) => {
+    console.log('a user connected');
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+    // socket.on('register-alert', (msg) => {
+    //     io.emit('new-alert', {
+    //         user_login: "adrian1g__",
+    //         amount: "5",
+    //         type: "coffe"
+    //     });
+    // });
+});
+
+server.listen(PORT, () =>
   console.log(`API Server listening on port ${PORT}`)
 );
+
 setInterval(() => {
     lastSeenUpdate(joinThem)
 }, 10 * 60 * 1000);
@@ -185,7 +215,6 @@ client.on("subgift", (channel, username, streakMonths, recipient, methods, users
     if(["#xmerghani", "#mrdzinold", "#mork", "#banduracartel"].includes(channel)) return;
 
     const cleanChannel = channel.replaceAll("#", "");
-    let senderCount = ~~userstate["msg-param-sender-count"];
 
     subInsert(username.toLowerCase(), {
         channel: cleanChannel,
@@ -196,30 +225,14 @@ client.on("subgift", (channel, username, streakMonths, recipient, methods, users
     client.say(channel, `${username.toLowerCase()}, darmowe 250 punktów dodane catJAM`);
 });
 
-function oddMessage(user){
-    return `${user}, 3Heading wpiszę sobie komende`;
-}
-function dateIsValid(date) {
-    return date instanceof Date && !isNaN(date);
-}
 client.on('message', async (channel, tags, message, self) => {
     if(channel === "#grubamruwa"){
-        const messageContent = message.split(" ");
-        if(messageContent.includes("poka") && messageContent.includes("cyce") ||
-            messageContent.includes("poka") && messageContent.includes("cycuszki") ||
-            messageContent.includes("poka") && messageContent.includes("cycki") ||
-            messageContent.includes("fajne") && messageContent.includes("cyce") ||
-            messageContent.includes("siema") && messageContent.includes("schudniesz") ||
-            messageContent.includes("siema") && messageContent.includes("schudnij") ||
-            messageContent.includes("ale") && messageContent.includes("tank") ||
-            messageContent.includes("elo") && messageContent.includes("cysterna") ||
-            messageContent.includes("ale") && messageContent.includes("cysie") ||
-            messageContent.includes("schudnij") ||
-            messageContent.includes("fajne") && messageContent.includes("cycuszki"))
-        {
-            client.say(channel, `!terminate ${tags.username}`);
+        const censorCheck = censorGrubamruwa(message.split(" "));
+        if(censorCheck === true){
+            return client.say(channel, `!terminate ${tags.username}`);
         }
     }
+
 	if(self || !message.startsWith('!')) return;
 
 	const args = message.slice(1).split(' ');
@@ -231,7 +244,8 @@ client.on('message', async (channel, tags, message, self) => {
 
 	if(commands.opluj.aliases.includes(command)) {
         if(commands.opluj.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel)[`${commands.opluj.cooldown}`])) {
+
+        if(detectCooldown(channels_data[channel].cooldowns.last, commands.opluj.cooldown)){
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
@@ -242,7 +256,7 @@ client.on('message', async (channel, tags, message, self) => {
         
 	}else if(commands.kogut.aliases.includes(command)) {
         if(commands.kogut.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel)[`${commands.kogut.cooldown}`])) {
+        if(detectCooldown(channels_data[channel].cooldowns.last, commands.opluj.cooldown)){
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
@@ -253,7 +267,7 @@ client.on('message', async (channel, tags, message, self) => {
         
 	}else if(commands.przytul.aliases.includes(command)) {
         if(commands.przytul.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel)[`${commands.przytul.cooldown}`])) {
+        if(detectCooldown(channels_data[channel].cooldowns.last, commands.opluj.cooldown)){
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
@@ -264,7 +278,8 @@ client.on('message', async (channel, tags, message, self) => {
         
 	}else if(commands.zaprasza.aliases.includes(command)) {
         if(commands.zaprasza.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel)[`${commands.zaprasza.cooldown}`])) {
+
+        if(detectCooldown(channels_data[channel].cooldowns.last, commands.opluj.cooldown)){
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
@@ -275,7 +290,8 @@ client.on('message', async (channel, tags, message, self) => {
         
 	}else if(commands.kiss.aliases.includes(command)) {
         if(commands.kiss.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel)[`${commands.kiss.cooldown}`])) {
+
+        if(detectCooldown(channels_data[channel].cooldowns.last, commands.opluj.cooldown)){
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
@@ -286,8 +302,9 @@ client.on('message', async (channel, tags, message, self) => {
         
 	}else if(commands.yfl.aliases.includes(command)) {
         const COMMAND = commands.yfl;
+
         if(COMMAND.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${COMMAND.cooldown}`])) {
+        if(detectCooldown(channels_data[channel].cooldowns.longer, COMMAND.cooldown)){
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
@@ -300,12 +317,12 @@ client.on('message', async (channel, tags, message, self) => {
         
 	}else if(commands.ewron.aliases.includes(command)) {
         const COMMAND = commands.ewron;
+
         if(COMMAND.disabled.includes(cleanChannel)) return;
+
         const oddvar = channels_data[channel].odd.ewron;
 
-        /* Checking if the cooldown is greater than the current time minus the cooldown time. If it is, it
-        returns. */
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${COMMAND.cooldown}`])) {
+        if(detectCooldown(channels_data[channel].cooldowns.longer, COMMAND.cooldown)){
             ++channels_data[channel].odd.ewron;
             return;
         }
@@ -331,7 +348,8 @@ client.on('message', async (channel, tags, message, self) => {
 	}else if(commands.grendy.aliases.includes(command)) {
         const COMMAND = commands.grendy;
         if(COMMAND.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${COMMAND.cooldown}`])) {
+
+        if(detectCooldown(channels_data[channel].cooldowns.longer, COMMAND.cooldown)){
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
@@ -345,7 +363,8 @@ client.on('message', async (channel, tags, message, self) => {
 	}else if(commands.resp.aliases.includes(command)) {
         const COMMAND = commands.resp;
         if(COMMAND.disabled.includes(cleanChannel)) return;
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel)[`${COMMAND.cooldown}`])) {
+
+        if(detectCooldown(channels_data[channel].cooldowns.longer, COMMAND.cooldown)){
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
@@ -359,7 +378,7 @@ client.on('message', async (channel, tags, message, self) => {
 	}else if(["love"].includes(command)){
         if(["#grubamruwa", "#xmerghani"].includes(channel)) return;
         
-        if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
+        if(detectCooldown(channels_data[channel].cooldowns.last, classic)){
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
@@ -370,7 +389,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kto"].includes(command)){
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
+        if(detectCooldown(channels_data[channel].cooldowns.longer, longer)){
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
@@ -995,58 +1014,6 @@ client.on('message', async (channel, tags, message, self) => {
 
             client.say(channel, `${tags.username}, zapomniałeś podać gre (gta, fortnite, citizen)`);
         }
-    }else if(["org", "topg", "organizacja"].includes(command)){
-        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
-
-        if (channels_data[channel].cooldowns.special > (Date.now() - getMeCooldowns(channel).special)) {
-            return;
-        }
-        channels_data[channel].cooldowns.special = Date.now();
-
-        /* Taking the argumentClean variable and passing it to the EwronCom function. */
-        const commands = await OrgCom(cleanChannel, tags.username, argumentClean);
-
-        client.say(channel, commands);
-    }else if(["spoznienie", "kiedystream"].includes(command)){
-        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
-        
-        const badges = tags.badges || {};
-        const isBroadcaster = badges.broadcaster;
-        const isMod = badges.moderator;
-        const isVip = badges.vip;
-        const isModUp = isBroadcaster || isMod || isVip;
-
-        if(argumentClean === "set" && (isModUp || tags.username === "3xanax")){
-            if(args[1] === "0"){
-                adrian1g_stream = "0";
-
-                client.say(channel, `${tags.username}, wyzerowałeś godzine streama`);
-                return;
-            }
-            const date = new Date(args[1].replaceAll("#", " "));
-
-            if(date && dateIsValid(date)){
-                adrian1g_stream = date;
-
-                client.say(channel, `${tags.username}, ustawiłeś godzine streama na ${date.toLocaleString("pl")}`);
-                return;
-            }
-
-            return client.say(channel, `${tags.username}, podałeś złą date, format (2023-01-22#15:00)`);
-
-        }else{
-            if (channels_data[channel].cooldowns.last > (Date.now() - getMeCooldowns(channel).classic)) {
-                return;
-            }
-            channels_data[channel].cooldowns.last = Date.now();
-
-            if(adrian1g_stream === "0"){
-                return client.say(channel, `Nie ustawiono godziny streama mhm`);
-            }
-            const timeDiffSeconds = intlFormatDistance(adrian1g_stream, new Date(), { style: 'short', numeric: 'always', locale: 'pl' })
-
-            return client.say(channel, `oho adrian1g miał odpalić streama: ${timeDiffSeconds}`);
-        }
     }else if(["cam2"].includes(command)){
         if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
 
@@ -1257,70 +1224,6 @@ client.on('message', async (channel, tags, message, self) => {
 
         return client.say(channel, `${cleanSender} wygrałeś/aś ${winAmount} punktów okurwa - 🎲${dice1} 🎲${dice2} 🎲${dice3}`);
 
-    }else if(["robot"].includes(command)){
-        if(["#mrdzinold", "#xmerghani", "#mork", "#neexcsgo", "#banduracartel"].includes(channel)) return;
-
-        if (channels_data[channel].cooldowns.longer > (Date.now() - getMeCooldowns(channel).longer)) {
-            return;
-        }
-        channels_data[channel].cooldowns.longer = Date.now();
-
-        if(channels_data[channel].modules["robot"] === false) return client.say(channel, `${tags.username}, roboty są wyłączone `);
-
-        const cleanSender = tags.username.toLowerCase();
-        const points = await getPoints(cleanSender, cleanChannel);
-
-        if(!argumentClean){
-            return client.say(channel, `${cleanSender}, zapomniałeś/aś o grze `); 
-        }
-
-        if(argumentClean !== "dice"){
-            return client.say(channel, `${cleanSender}, nie wspierana gra hm (dostępne - dice) `); 
-        }
-
-        if(!args[1]){
-            return client.say(channel, `${cleanSender}, zapomniałeś/aś o kwocie mhm`); 
-        }
-        const argumentClean2 = args[1].replaceAll("@", "").toLowerCase();
-
-        if(Number(argumentClean2) > 5000 || Number(argumentClean2) <= 0 || isNaN(argumentClean2)){
-            return client.say(channel, `${cleanSender}, maksymalnie można obstawić 5000 punktów `); 
-        }
-
-        if(Number(argumentClean2) > points){
-            return client.say(channel, `${cleanSender} nie masz tylu punktów aha `);
-        }
-
-        if(!args[2]){
-            return client.say(channel, `${cleanSender}, zapomniałeś/aś ile razy ma zagrać za ciebie aha`); 
-        }
-        const argumentClean3 = args[2].replaceAll("@", "").toLowerCase();
-
-        if(Number(argumentClean3) > 10 || Number(argumentClean3) <= 0 || isNaN(argumentClean3)){
-            return client.say(channel, `${cleanSender}, maksymalnie można ustawić bota na 10 gier `); 
-        }
-
-        client.say(channel, `${cleanSender}, ustawiłeś/aś bota na ${argumentClean3} gier ok `)
-
-        if(argumentClean === "dice"){
-            if(channels_data[channel].modules["dice"] === false) return client.say(channel, `${cleanSender}, kości są wyłączone `);
-
-            for (let i = 0; i <= (Number(argumentClean3)-1); i++) {
-                await waitforme(7000);
-                const points = await getPoints(cleanSender, cleanChannel);
-
-                if(Number(argumentClean2) > points){
-                    return client.say(channel, `${cleanSender} nie masz tylu punktów aha `);
-                }
-
-                client.say(channel, await robotDice(cleanSender, cleanChannel, argumentClean2));
-
-            }
-            return;
-        }
-
-        return client.say(channel, `${cleanSender} coś poszło nie tak aha `);
-
     }else if(["connectdc"].includes(command)){
         if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
 
@@ -1358,6 +1261,50 @@ client.on('message', async (channel, tags, message, self) => {
         }
         return client.say(channel, `jasperSmile ${tags.username} na serwerze dla subów aktualnie jest ${req.online} osób, np. ${req.players.join(", ")}`);
 
+    }else if(["tiktok", "redeem", "buy"].includes(command)){
+        if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
+
+        if (tiktokCD > (Date.now() - 5000)) {
+            return;
+        }
+        tiktokCD = Date.now();
+
+        if(channels_data[channel].modules["tiktok"] === false) return client.say(channel, `${tags.username}, tiktok jest wyłączony `);
+
+        const cleanSender = tags.username.toLowerCase();
+        const points = await getPoints(cleanSender, cleanChannel);
+
+        if(!argumentClean){
+            return client.say(channel, `${cleanSender}, zapomniałeś/aś o rodzaju - (coffe, diamonds, dice, kiss, koniczynka, rose, szampan) `); 
+        }
+
+        if(!["coffe", "diamonds", "dice", "kiss", "koniczynka", "rose", "szampan"].includes(argumentClean)){
+            return client.say(channel, `${cleanSender}, nieznany rodzaj - (coffe, diamonds, dice, kiss, koniczynka, rose, szampan) `); 
+        }
+
+        if(!args[1] || Number(args[1]) <= 0 || isNaN(args[1])){
+            return client.say(channel, `${cleanSender}, nie podałeś/aś ilości mhm`); 
+        }
+
+        const price = getPrices(argumentClean);
+
+        if(points < price){
+            return client.say(channel, `${cleanSender}, nie masz tylu punktów aha`); 
+        }
+
+        const updatePoints = await gambleUpdate(cleanChannel, `-${(price*Number(args[1]))}`, cleanSender);
+
+        if(updatePoints === null){
+            return client.say(channel, `${cleanSender} coś się rozjebało przy aktualizowaniu punktów aha `);
+        }
+
+        io.emit('new-alert', {
+            user_login: tags.username,
+            amount: args[1],
+            type: argumentClean
+        });
+
+        return client.say(channel, `${cleanSender}, przesyła ${alertName(argumentClean)} x${args[1]} okurwa FIRE`); 
     }
 
 });

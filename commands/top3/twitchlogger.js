@@ -1,4 +1,4 @@
-import { twitchlogger } from "../requests/watchtime/index.js";
+import { twitchlogger } from "../../requests/watchtime/index.js";
 
 export default async function twitchloggerTOP3(channel, user_login){
     const request = await twitchlogger(user_login);
