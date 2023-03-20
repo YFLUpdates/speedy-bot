@@ -378,7 +378,7 @@ client.on('message', async (channel, tags, message, self) => {
 	}else if(["love"].includes(command)){
         if(["#grubamruwa", "#xmerghani"].includes(channel)) return;
         
-        if(detectCooldown(channels_data[channel].cooldowns.last, classic)){
+        if(detectCooldown(channels_data[channel].cooldowns.last, "classic")){
             return;
         }
         channels_data[channel].cooldowns.last = Date.now();
@@ -389,7 +389,7 @@ client.on('message', async (channel, tags, message, self) => {
         client.say(channel, commands);
 
     }else if(["kto"].includes(command)){
-        if(detectCooldown(channels_data[channel].cooldowns.longer, longer)){
+        if(detectCooldown(channels_data[channel].cooldowns.longer, "longer")){
             return;
         }
         channels_data[channel].cooldowns.longer = Date.now();
