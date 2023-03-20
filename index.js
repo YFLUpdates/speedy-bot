@@ -1286,6 +1286,10 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${cleanSender}, nie podałeś/aś ilości mhm`); 
         }
 
+        if(Number(args[1]) > 1000 ){
+            return client.say(channel, `${cleanSender}, maksymalnie można przesłać 1000 hehe`); 
+        }
+
         const price = getPrices(argumentClean);
 
         if(points < price){
