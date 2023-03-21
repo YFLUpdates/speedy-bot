@@ -1280,7 +1280,7 @@ client.on('message', async (channel, tags, message, self) => {
         const points = await getPoints(cleanSender, cleanChannel);
 
         if(!argumentClean){
-            return client.say(channel, `${cleanSender}, zapomniałeś/aś o rodzaju - rose(1k), coffe(2,5k), koniczynka(5k), kiss(7,5k), szampan(10k), diamonds(20k), dice(50k), lean(100k), ziolo(110k) -> https://yfl.es/alerts.png `); 
+            return client.say(channel, `${cleanSender}, zapomniałeś/aś o rodzaju -> !tiktok list aha`); 
         }
 
         if(argumentClean === "list"){
@@ -1288,11 +1288,15 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
         if(!["coffe", "diamonds", "dice", "kiss", "koniczynka", "rose", "szampan", "lean", "ziolo"].includes(argumentClean)){
-            return client.say(channel, `${cleanSender}, nieznany rodzaj - rose(1k), coffe(2,5k), koniczynka(5k), kiss(7,5k), szampan(10k), diamonds(20k), dice(50k), lean(100k), ziolo(110k) -> https://yfl.es/alerts.png`); 
+            return client.say(channel, `${cleanSender}, nieznany rodzaj -> !tiktok list aha`); 
         }
 
         if(!args[1] || Number(args[1]) <= 0 || isNaN(args[1])){
             return client.say(channel, `${cleanSender}, nie podałeś/aś ilości mhm`); 
+        }
+
+        if(Number(args[1]) !== Math.floor(args[1])){
+            return client.say(channel, `${cleanSender}, ale jestem mondry wyśle liczbe po przecinku 3Heading `); 
         }
 
         if(Number(args[1]) > 10000 ){
