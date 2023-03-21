@@ -1278,7 +1278,7 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${cleanSender}, zapomniałeś/aś o rodzaju - (coffe(2,5k), diamonds(20k), dice(50k), kiss(7,5k), koniczynka(5k), rose(1k), szampan(10k), lean(100k)) `); 
         }
 
-        if(!["coffe", "diamonds", "dice", "kiss", "koniczynka", "rose", "szampan"].includes(argumentClean)){
+        if(!["coffe", "diamonds", "dice", "kiss", "koniczynka", "rose", "szampan", "lean"].includes(argumentClean)){
             return client.say(channel, `${cleanSender}, nieznany rodzaj - (coffe(2,5k), diamonds(20k), dice(50k), kiss(7,5k), koniczynka(5k), rose(1k), szampan(10k), lean(100k)) `); 
         }
 
