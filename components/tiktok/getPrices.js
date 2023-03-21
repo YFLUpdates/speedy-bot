@@ -22,6 +22,9 @@ const getPrices = function (name) {
       case "szampan":
         price = 10000;
         break;
+      case "lean":
+        price = 100000;
+        break;
       default:
         price = 10000000000;
     }
