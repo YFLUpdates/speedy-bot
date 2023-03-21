@@ -1287,7 +1287,7 @@ client.on('message', async (channel, tags, message, self) => {
             return client.say(channel, `${cleanSender}, rose - 1k, coffe - 2,5k, koniczynka - 5k, kiss - 7,5k, szampan - 10k, diamonds - 20k, duck - 30k, dice - 50k, lean - 100k, ziolo - 110k -> https://yfl.es/alerts.png `); 
         }
 
-        if(argumentClean === "alert"){
+        if(argumentClean === "alerty"){
             return client.say(channel, `${cleanSender}, autorem alertów jest @Majhel FIRE GagriGagri `); 
         }
 
