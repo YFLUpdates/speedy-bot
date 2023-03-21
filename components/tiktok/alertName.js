@@ -23,10 +23,13 @@ const alertName = function (name) {
         source = "Szampany";
         break;
       case "lean":
-        source = "lean";
+        source = "Lean";
         break;
       case "ziolo":
-        source = "ziolo";
+        source = "Ziółko";
+        break;
+      case "duck":
+        source = "Kaczuszki";
         break;
       default:
         source = "nieznany";

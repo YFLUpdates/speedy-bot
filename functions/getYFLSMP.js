@@ -84,6 +84,13 @@ export default async function getYFLSMP() {
         "440522125", //pokojwytrzezwien
         "139316419", //lilqki
         "788430210", //achtenwlodar
+        "435886823", //korniexe
+        "435886823", //korniexe
+        "589800982", //vessen__
+        "501467075", //sarielov
+        "250729078", //andrej_here
+        "256991721", //madissu
+        "146420793", //p4chura
     ].join("&user_id=");
     const response = await fetch(
       `https://api.twitch.tv/helix/streams?user_id=${params}`,

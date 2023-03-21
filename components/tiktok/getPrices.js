@@ -28,6 +28,9 @@ const getPrices = function (name) {
       case "ziolo":
         price = 110000;
         break;
+      case "duck":
+        price = 30000;
+        break;
       default:
         price = 10000000000;
     }

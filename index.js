@@ -1284,10 +1284,10 @@ client.on('message', async (channel, tags, message, self) => {
         }
 
         if(argumentClean === "list"){
-            return client.say(channel, `${cleanSender}, rose - 1k, coffe - 2,5k, koniczynka - 5k, kiss - 7,5k, szampan - 10k, diamonds - 20k, dice - 50k, lean - 100k, ziolo - 110k -> https://yfl.es/alerts.png `); 
+            return client.say(channel, `${cleanSender}, rose - 1k, coffe - 2,5k, koniczynka - 5k, kiss - 7,5k, szampan - 10k, diamonds - 20k, duck - 30k, dice - 50k, lean - 100k, ziolo - 110k -> https://yfl.es/alerts.png `); 
         }
 
-        if(!["coffe", "diamonds", "dice", "kiss", "koniczynka", "rose", "szampan", "lean", "ziolo"].includes(argumentClean)){
+        if(!["coffe", "diamonds", "dice", "kiss", "koniczynka", "rose", "szampan", "lean", "ziolo", "duck"].includes(argumentClean)){
             return client.say(channel, `${cleanSender}, nieznany rodzaj -> !tiktok list aha`); 
         }
 
