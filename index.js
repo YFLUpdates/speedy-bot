@@ -1269,7 +1269,7 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["tiktok", "redeem", "buy"].includes(command)){
         if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
 
-        if (tiktokCD > (Date.now() - 5000)) {
+        if (tiktokCD > (Date.now() - 3000)) {
             return;
         }
         tiktokCD = Date.now();
@@ -1280,24 +1280,25 @@ client.on('message', async (channel, tags, message, self) => {
         const points = await getPoints(cleanSender, cleanChannel);
 
         if(!argumentClean){
-            return client.say(channel, `${cleanSender}, zapomniałeś/aś o rodzaju - (coffe(2,5k), diamonds(20k), dice(50k), kiss(7,5k), koniczynka(5k), rose(1k), szampan(10k), lean(100k)) `); 
+            return client.say(channel, `${cleanSender}, zapomniałeś/aś o rodzaju - rose(1k), coffe(2,5k), koniczynka(5k), kiss(7,5k), szampan(10k), diamonds(20k), dice(50k), lean(100k), ziolo(110k)  `); 
         }
 
-        if(!["coffe", "diamonds", "dice", "kiss", "koniczynka", "rose", "szampan", "lean"].includes(argumentClean)){
-            return client.say(channel, `${cleanSender}, nieznany rodzaj - (coffe(2,5k), diamonds(20k), dice(50k), kiss(7,5k), koniczynka(5k), rose(1k), szampan(10k), lean(100k)) `); 
+        if(!["coffe", "diamonds", "dice", "kiss", "koniczynka", "rose", "szampan", "lean", "ziolo"].includes(argumentClean)){
+            return client.say(channel, `${cleanSender}, nieznany rodzaj - rose(1k), coffe(2,5k), koniczynka(5k), kiss(7,5k), szampan(10k), diamonds(20k), dice(50k), lean(100k), ziolo(110k) `); 
         }
 
         if(!args[1] || Number(args[1]) <= 0 || isNaN(args[1])){
             return client.say(channel, `${cleanSender}, nie podałeś/aś ilości mhm`); 
         }
 
-        if(Number(args[1]) > 1000 ){
+        if(Number(args[1]) > 10000 ){
             return client.say(channel, `${cleanSender}, maksymalnie można przesłać 1000 hehe`); 
         }
 
         const price = getPrices(argumentClean);
+        const cost = price*args[1]
 
-        if(points < (price*args[1])){
+        if(points < cost){
             return client.say(channel, `${cleanSender}, nie masz tylu punktów aha`); 
         }
 
@@ -1313,7 +1314,7 @@ client.on('message', async (channel, tags, message, self) => {
             type: argumentClean
         });
 
-        return client.say(channel, `${cleanSender}, przesyła ${alertName(argumentClean)} x${args[1]} okurwa FIRE`); 
+        return client.say(channel, `${cleanSender}, przesyła ${alertName(argumentClean)} x${args[1]} za ${new Intl.NumberFormat('pl-PL').format(cost)} okurwa FIRE`); 
     }
 
 });

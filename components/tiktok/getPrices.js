@@ -25,6 +25,9 @@ const getPrices = function (name) {
       case "lean":
         price = 100000;
         break;
+      case "ziolo":
+        price = 110000;
+        break;
       default:
         price = 10000000000;
     }

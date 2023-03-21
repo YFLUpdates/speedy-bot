@@ -25,6 +25,9 @@ const alertName = function (name) {
       case "lean":
         source = "lean";
         break;
+      case "ziolo":
+        source = "ziolo";
+        break;
       default:
         source = "nieznany";
     }
