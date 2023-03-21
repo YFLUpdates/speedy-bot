@@ -39,15 +39,15 @@ export default async function hugC(channel, username, argument, args){
 
         if(req === null) return `${usernameSmall}, ${receiver} jeszcze nie został zarejestrowany, nie jesteś w stanie wysłać mu punktów`;
 
-        return `${usernameSmall}, wysłałeś ${ammount} punktów do ${receiver} GIGACHAD`;
+        return `${usernameSmall}, wysłałeś ${new Intl.NumberFormat('pl-PL').format(ammount)} punktów do ${receiver} GIGACHAD`;
 
     }else if(argument && argument.length > 3){
         const points = await getPoints(argument, channel);
 
-        return `${Censor(argument)}, ma ${points} punktów ok`;
+        return `${Censor(argument)}, ma ${new Intl.NumberFormat('pl-PL').format(points)} punktów ok`;
     }else{
         const points = await getPoints(usernameSmall, channel);
 
-        return `${usernameSmall}, masz ${points} punktów ok`;
+        return `${usernameSmall}, masz ${new Intl.NumberFormat('pl-PL').format(points)} punktów ok`;
     }
 }

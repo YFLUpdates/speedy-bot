@@ -56,7 +56,6 @@ export default async function getYFLSMP() {
         "52878701", //vgz2k
         "91538537", //pevor13
         "125658197", //nexe_
-        "411842058", //shiianah,
         "124026289", //parisplatynov
         "46152491", //testree
         "84413008", //cinkrofwest
@@ -68,14 +67,13 @@ export default async function getYFLSMP() {
         "157255697", //miszel
         "265367685", //qtjanina
         "68506724", //anterias
-        "92072223", //ortis
-        "236598813", //yoshi
+        "119992575", //takuu_
         "29357753", //zahaczai
-        "31468208", //kapitanalien
+        "28256228", //xlourx
         "32119244", //dzuniorjr
-        "884266115", //rybsongames_
+        "37983542", //pyka97
         "25031111", //ctsg
-        "57361005", //slayproxx
+        "238868406", //graf
         "102098555", //kasix
         "416083610", //remsua
         "28151265", //kubson92
@@ -86,7 +84,6 @@ export default async function getYFLSMP() {
         "440522125", //pokojwytrzezwien
         "139316419", //lilqki
         "788430210", //achtenwlodar
-        "85463072", //randombrucetv
     ].join("&user_id=");
     const response = await fetch(
       `https://api.twitch.tv/helix/streams?user_id=${params}`,
