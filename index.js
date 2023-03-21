@@ -843,6 +843,11 @@ client.on('message', async (channel, tags, message, self) => {
                 channels_data[channel].duels_list = [];
 
                 client.say(channel, `${tags.username}, wyczyściłeś wszystkie duele `)
+            }else if(args[0] === "overlayf5"){
+
+                io.emit('refresh-overlay', "true");
+
+                client.say(channel, `${tags.username}, odświeżono overlay. `)
             }
         }
 
