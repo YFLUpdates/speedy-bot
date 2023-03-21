@@ -1314,7 +1314,7 @@ client.on('message', async (channel, tags, message, self) => {
             type: argumentClean
         });
 
-        return client.say(channel, `${cleanSender}, przesyła ${alertName(argumentClean)} x${args[1]} za ${new Intl.NumberFormat('pl-PL').format(cost)} okurwa FIRE`); 
+        return client.say(channel, `${cleanSender}, przesyła ${alertName(argumentClean)} x${args[1]} za ${new Intl.NumberFormat('pl-PL').format(cost)} punktów okurwa FIRE`); 
     }
 
 });
