@@ -1269,7 +1269,7 @@ client.on('message', async (channel, tags, message, self) => {
     }else if(["tiktok", "redeem", "buy"].includes(command)){
         if(!["#adrian1g__", "#3xanax"].includes(channel)) return;
 
-        if (tiktokCD > (Date.now() - 3000)) {
+        if (tiktokCD > (Date.now() - 6000)) {
             return;
         }
         tiktokCD = Date.now();
