@@ -12,7 +12,7 @@
                 "modules",
                 "module"
             ],
-            "arguments": "{enable/disable/list/clearduels} {moduł}",
+            "arguments": "{enable/disable/list/clearduels/refreshoverlay} {moduł}",
             "usage": "",
             "disabled": [
             ],
@@ -28,16 +28,25 @@
             "name": "watchtime",
             "aliases": [
                 "watchtime",
-                "xayopl",
-                "wt"
+                "twitchlogger",
+                "xayopl"
             ],
             "arguments": "{user} {streamer}",
             "usage": "",
             "disabled": [
+                "xspeedyq", 
+                "grubamruwa", 
+                "dobrycsgo", 
+                "mrdzinold", 
+                "xmerghani", 
+                "xkaleson", 
+                "neexcsgo", 
+                "banduracartel", 
+                "shavskyyy"
             ],
             "cooldown": "longer",
             "description": {
-                "pl": "Pokazuje ile czasu spędził widz na streamie.",
+                "pl": "Pokazuje ile czasu spędził widz na streamie/kanałach.",
                 "en": "lorem"
             }
         },
@@ -420,37 +429,6 @@
             }
         },
         {
-            "name": "czyjestemzjebem",
-            "aliases": [
-                "czyjestemzjebem"
-            ],
-            "arguments": null,
-            "usage": "",
-            "disabled": [
-            ],
-            "cooldown": "classic",
-            "description": {
-                "pl": "Prosta piłka tak / nie.",
-                "en": "lorem"
-            }
-        },
-        {
-            "name": "mogemoda",
-            "aliases": [
-                "mogemoda",
-                "szansanamoda"
-            ],
-            "arguments": null,
-            "usage": "",
-            "disabled": [
-            ],
-            "cooldown": "classic",
-            "description": {
-                "pl": "Jaką masz szanse na dostanie moda.",
-                "en": "lorem"
-            }
-        },
-        {
             "name": "kamerki",
             "aliases": [
                 "kamerki"
@@ -496,27 +474,6 @@
             }
         },
         {
-            "name": "org",
-            "aliases": [
-                "organizacja",
-                "topg"
-            ],
-            "arguments": null,
-            "usage": "",
-            "disabled": [
-                "xmerghani",
-                "mork",
-                "mrdzinold",
-                "grubamruwa",
-                "xkaleson"
-            ],
-            "cooldown": "special",
-            "description": {
-                "pl": "Sprawdza kto z organizacji 1gieta jest na notrp.",
-                "en": "lorem"
-            }
-        },
-        {
             "name": "points",
             "aliases": [
                 "punkty",
@@ -526,9 +483,9 @@
             "arguments": "{user/ranking/send}",
             "usage": "",
             "disabled": [
-                "xmerghani",
-                "mork",
-                "mrdzinold"
+                "mrdzinold", 
+                "xmerghani", 
+                "banduracartel"
             ],
             "cooldown": "classic",
             "description": {
@@ -545,9 +502,10 @@
             "arguments": "{user/list} {kwota}",
             "usage": "",
             "disabled": [
-                "xmerghani",
-                "mork",
-                "mrdzinold"
+                "mrdzinold", 
+                "xmerghani", 
+                "neexcsgo", 
+                "banduracartel"
             ],
             "cooldown": "longer",
             "description": {
@@ -565,9 +523,9 @@
             "arguments": "{user}",
             "usage": "",
             "disabled": [
-                "xmerghani",
-                "mork",
-                "mrdzinold"
+                "mrdzinold", 
+                "xmerghani", 
+                "banduracartel"
             ],
             "cooldown": "classic",
             "description": {
@@ -596,6 +554,7 @@
         {
             "name": "zjeb",
             "aliases": [
+                "zjeb",
                 "blacklist"
             ],
             "arguments": "{nick/mark/unmark} {nick}",
@@ -611,14 +570,15 @@
         {
             "name": "dice",
             "aliases": [
-
+                "dice",
+                "kosci"
             ],
             "arguments": "{kwtoa}",
             "usage": "",
             "disabled": [
-                "xmerghani",
-                "mork",
-                "mrdzinold"
+                "mrdzinold", 
+                "xmerghani", 
+                "banduracartel"
             ],
             "cooldown": "longer",
             "description": {
@@ -629,13 +589,16 @@
         {
             "name": "gamble",
             "aliases": [
+                "gamble",
+                "roulette",
+                "ruletka"
             ],
             "arguments": "{red/black/green/blue/orange} {kwota}",
             "usage": "",
             "disabled": [
-                "xmerghani",
-                "mork",
-                "mrdzinold"
+                "mrdzinold", 
+                "xmerghani", 
+                "banduracartel"
             ],
             "cooldown": "longer",
             "description": {
@@ -646,7 +609,8 @@
         {
             "name": "permy",
             "aliases": [
-                "perm"
+                "perm",
+                "permy"
             ],
             "arguments": null,
             "usage": "",
@@ -655,22 +619,6 @@
             "cooldown": "classic",
             "description": {
                 "pl": "Sprawdź ile osób dostało dzisiaj perma.",
-                "en": "lorem"
-            }
-        },
-        {
-            "name": "serwersubow",
-            "aliases": [
-                "bmcsuby"
-            ],
-            "arguments": null,
-            "usage": "",
-            "disabled": [
-                "wszędzie oprócz adrian1g__"
-            ],
-            "cooldown": "classic",
-            "description": {
-                "pl": "Sprawdź ile osób jest na serwerze dla subów.",
                 "en": "lorem"
             }
         },
@@ -693,6 +641,7 @@
         {
             "name": "med",
             "aliases": [
+                "med"
             ],
             "arguments": null,
             "usage": "",
@@ -708,6 +657,7 @@
         {
             "name": "cam2",
             "aliases": [
+                "cam2"
             ],
             "arguments": null,
             "usage": "",
@@ -721,9 +671,42 @@
             }
         },
         {
+            "name": "avatar",
+            "aliases": [
+                "avatar"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+                "wszędzie oprócz adrian1g__"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Wysyła link do png avatara ttv.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "yflsmp",
+            "aliases": [
+                "yflsmp",
+                "smp"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+                "wszędzie oprócz adrian1g__"
+            ],
+            "cooldown": "classic",
+            "description": {
+                "pl": "Pokazuje liczbe streamów z YFLSMP.",
+                "en": "lorem"
+            }
+        },
+        {
             "name": "connectdc",
             "aliases": [
-
+                "connectdc"
             ],
             "arguments": "{discord id}",
             "usage": "",
@@ -733,6 +716,26 @@
             "cooldown": "classic",
             "description": {
                 "pl": "Połącz konto ttv z discord.",
+                "en": "lorem"
+            }
+        },
+        {
+            "name": "tiktok",
+            "aliases": [
+                "tiktok",
+                "redeem",
+                "buy"
+            ],
+            "arguments": null,
+            "usage": "",
+            "disabled": [
+                "mrdzinold", 
+                "xmerghani", 
+                "banduracartel"
+            ],
+            "cooldown": "longer",
+            "description": {
+                "pl": "Wysyłaj różyczki i inne ikony z tiktoka na overlay streamera.",
                 "en": "lorem"
             }
         }
